@@ -20,57 +20,57 @@ class CouponController extends Controller
     }
     public function getList(Request $request)
     {
-        // $coupons = Coupon::orderBy('created_at','DESC')->get();
-        // return Datatables::of($coupons)
-        //     ->addIndexColumn()
-        //     ->editColumn('coupon_name', function ($coupon){
-        //         return '<a href=""><b>'.$coupon->coupon_name.'</b></a>';
-        //     })
-        //     ->editColumn('coupon_code', function ($coupon){
-        //         return '<a href=""><b>'.$coupon->coupon_code.'</b></a>';
-        //     })
-        //     ->editColumn('coupon_times', function ($coupon){
-        //         return '<a href=""><b>'.$coupon->coupon_times.'</b></a>';
-        //     })
-        //     ->editColumn('coupon_condition', function ($coupon){
-        //         return '<a href=""><b>'.$coupon->coupon_condition.'</b></a>';
-        //     })
-        //     ->editColumn('coupon_number', function ($coupon){
-        //         return '<a href=""><b>'.$coupon->coupon_number.'</b></a>';
-        //     })
+        $coupons = Coupon::orderBy('created_at','DESC')->get();
+        return Datatables::of($coupons)
+            ->addIndexColumn()
+            ->editColumn('coupon_name', function ($coupon){
+                return '<a href=""><b>'.$coupon->coupon_name.'</b></a>';
+            })
+            ->editColumn('coupon_code', function ($coupon){
+                return '<a href=""><b>'.$coupon->coupon_code.'</b></a>';
+            })
+            ->editColumn('coupon_times', function ($coupon){
+                return '<a href=""><b>'.$coupon->coupon_times.'</b></a>';
+            })
+            ->editColumn('coupon_condition', function ($coupon){
+                return '<a href=""><b>'.$coupon->coupon_condition.'</b></a>';
+            })
+            ->editColumn('coupon_number', function ($coupon){
+                return '<a href=""><b>'.$coupon->coupon_number.'</b></a>';
+            })
             
-        //     ->addColumn('action', function ($coupon) {
-        //         return '
-        //              <a href="'.route('admin.coupon.edit', ['id' => $coupon->id]).'"
-        //                data-placement="top"
-        //                class="menu-link px-3" data-toggle="tooltip"
-        //                style="cursor:pointer;"
-        //                tooltip="Chỉnh sửa"
-        //                flow="up"
-        //                class="btn btn-xs btn-primary">
-        //                 <i class="fa-solid fa-pen-to-square text-warning"></i>
-        //              </a>
+            ->addColumn('action', function ($coupon) {
+                return '
+                     <a href="'.route('admin.coupon.edit', ['id' => $coupon->id]).'"
+                       data-placement="top"
+                       class="menu-link px-3" data-toggle="tooltip"
+                       style="cursor:pointer;"
+                       tooltip="Chỉnh sửa"
+                       flow="up"
+                       class="btn btn-xs btn-primary">
+                        <i class="fa-solid fa-pen-to-square text-warning"></i>
+                     </a>
 
-        //              <a
-        //                 style="cursor:pointer;"
-        //                 data-id="'.$coupon->id.'" data-token="{{csrf_token()}}"
-        //                 tooltip="Xóa"
-        //                 flow="up"
-        //                 class="menu-link px-3 text-warning delete">
-        //                 <i style="color:red" class="fa-solid fa-trash"></i>
-        //             </a>
-        //         ';
-        //     })
-        //     ->editColumn('created_at', function ($coupon) {
-        //         return '
-        //                     <div >
-        //                        '.date("H:i | d/m/Y", strtotime($coupon->created_at)).'
-        //                     </div>';
+                     <a
+                        style="cursor:pointer;"
+                        data-id="'.$coupon->id.'" data-token="{{csrf_token()}}"
+                        tooltip="Xóa"
+                        flow="up"
+                        class="menu-link px-3 text-warning delete">
+                        <i style="color:red" class="fa-solid fa-trash"></i>
+                    </a>
+                ';
+            })
+            ->editColumn('created_at', function ($coupon) {
+                return '
+                            <div >
+                               '.date("H:i | d/m/Y", strtotime($coupon->created_at)).'
+                            </div>';
 
-        //     })
+            })
 
-        //     ->rawColumns(['coupon_name', 'coupon_code','coupon_times', 'action','coupon_ condition','coupon_number','created_at'])
-        //     ->make(true);
+            ->rawColumns(['coupon_name', 'coupon_code','coupon_times', 'action','coupon_ condition','coupon_number','created_at'])
+            ->make(true);
 
         $coupon = Coupon::orderBy('id','DESC')->get();
         return view('admin.coupon.index')>with(compact('coupon'));

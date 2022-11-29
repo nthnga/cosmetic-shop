@@ -35,7 +35,7 @@
                     <!--begin::Table head-->
                     <thead>
                     <!--begin::Table row-->
-                    <tr style="text-transform: none !important;" class="text-start text-muted fw-bolder fs-7 gs-0">
+                    <tr style="text-transform: none !important;" class="text-start text-muted fw-bolder fs-7 gs-0" id="coupons">
                         <th style="text-transform: none !important;" class="min-w-125px">Tên mã giảm giá</th>
                         <th style="text-transform: none !important;" class="min-w-125px">Mã giảm giá</th>
                         <th style="text-transform: none !important;" class="min-w-125px">Số lượng mã</th>
@@ -57,7 +57,7 @@
     </div>
 @endsection
 @section('js')
-    <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
     <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -72,103 +72,99 @@
         </script>
     @endif
     <script>
-        $(document).ready(function(){
-            $(function() {
-                var table = $('#table').DataTable({
-                    language: {
-                        "decimal":        "",
-                        "emptyTable":     "Không có dữ liệu",
-                        "info":           "Hiển thị _START_ đến _END_ của _TOTAL_ mục",
-                        "infoEmpty":      "Hiển thị 0 đến 0 của 0 mục",
-                        "infoFiltered":   "(Được lọc từ _MAX_ tất cả mục)",
-                        "infoPostFix":    "",
-                        "thousands":      ",",
-                        "lengthMenu":     "Hiển thị _MENU_",
-                        "loadingRecords": "Đang tải ...",
-                        "processing":     "Đang tải ...",
-                        "search":         "Tìm kiếm:",
-                        "zeroRecords":    "Không có dữ liệu",
-                        "aria": {
-                            "sortAscending": ": Kích hoạt để sắp xếp cột tăng dần",
-                            "sortDescending": ": Kích hoạt để sắp xếp cột giảm dần"
-                        }
+        $(function() {
+            var table = $('#table').DataTable({
+                language: {
+                    "decimal":        "",
+                    "emptyTable":     "Không có dữ liệu",
+                    "info":           "Hiển thị _START_ đến _END_ của _TOTAL_ mục",
+                    "infoEmpty":      "Hiển thị 0 đến 0 của 0 mục",
+                    "infoFiltered":   "(Được lọc từ _MAX_ tất cả mục)",
+                    "infoPostFix":    "",
+                    "thousands":      ",",
+                    "lengthMenu":     "Hiển thị _MENU_",
+                    "loadingRecords": "Đang tải ...",
+                    "processing":     "Đang tải ...",
+                    "search":         "Tìm kiếm:",
+                    "zeroRecords":    "Không có dữ liệu",
+                    "aria": {
+                        "sortAscending": ": Kích hoạt để sắp xếp cột tăng dần",
+                        "sortDescending": ": Kích hoạt để sắp xếp cột giảm dần"
+                    }
+                },
+                processing: true,
+                searching: true,
+                ordering: false,
+                serverSide: true,
+                paging: true,
+                ajax:{
+                    type: "GET",
+                    datatype: "json",
+                    url: '/admin/coupons/get-list',
+                    data: function (d) {
+                        d.search = $('#searchCoupons').val();
                     },
-                    processing: true,
-                    searching: true,
-                    ordering: false,
-                    serverSide: true,
-                    paging: true,
-                    ajax:{
-                        type: "GET",
-                        datatype: "json",
-                        url: '/admin/coupon/get-list',
-                        data: function (d) {
-                            d.search = $('#searchCoupon').val();
-                        },
-                    },
-                    columns: [
-                        {data: 'coupon_name', name: 'coupon_name'},
-                        {data: 'coupon_code', name: 'coupon_code'},
-                        {data: 'coupon_times', name: 'coupon_times'},
-                        {data: 'coupon_condition', name: 'coupon_condition'},
-                        {data: 'coupon_number', name: 'coupon_number'},
-                        {data: 'created_at', name: 'created_at'},
-                        {data: 'action', name: 'action'}
-                    ]
-                });
-                // $('#searchCoupon').keyup(function(e){
-                //     table.draw();
-                //     e.preventDefault();
-                // });
+                },
+                columns: [
+                    {data: 'coupon_name', name: 'coupon_name'},
+                    {data: 'coupon_code', name: 'coupon_code'},
+                    {data: 'coupon_times', name: 'coupon_times'},
+                    {data: 'coupon_condition', name: 'coupon_condition'},
+                    {data: 'coupon_number', name: 'coupon_number'}
+                ]
+            });
+            $('#searchCoupons').keyup(function(e){
+                table.draw();
+                e.preventDefault();
             });
         });
-            // $(document).on('click', '.delete', function (){
-            //     Swal.fire({
-            //         title: 'Bạn có chắc chắn không?',
-            //         text: "Bạn sẽ không khôi phục được dữ liệu",
-            //         icon: 'warning',
-            //         showCancelButton: true,
-            //         reverseButtons: true,
-            //         confirmButtonColor: '#3083D6',
-            //         cancelButtonText: 'Hủy',
-            //         cancelButtonColor: '#F70008',
-            //         confirmButtonText: 'Đồng ý'
-            //     }).then((result)=>{
-            //         if (result.isConfirmed) {
-            //             var id = $(this).data("id");
-            //             var $this = $(this);
-            //             $.ajax({
-            //                 url: "/admin/coupon/"+id,
-            //                 method: 'DELETE',
-            //                 dataType: "JSON",
-            //                 headers: {
-            //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            //                 },
-            //                 data: {},
-            //                 success: function (data) {
-            //                     $('#table').DataTable().ajax.reload(null,true);
-            //                     if(data.check !== true){
-            //                         Swal.fire({
-            //                             position: 'center-center',
-            //                             icon: 'success',
-            //                             title: 'Đã xoá thành công',
-            //                             showConfirmButton: false,
-            //                             timer: 1500
-            //                         });
-            //                     }else{
-            //                         Swal.fire({
-            //                             position: 'center-center',
-            //                             icon: 'error',
-            //                             title: 'Xoá không thành công',
-            //                             showConfirmButton: false,
-            //                             timer: 1500
-            //                         });
-            //                     }
-            //                 }
-            //             });
-            //         }
-            //     });
-            // });
-        
+
+        $(document).on('click', '.delete', function (){
+            Swal.fire({
+                title: 'Bạn có chắc chắn không?',
+                text: "Bạn sẽ không khôi phục được dữ liệu",
+                icon: 'warning',
+                showCancelButton: true,
+                reverseButtons: true,
+                confirmButtonColor: '#3083D6',
+                cancelButtonText: 'Hủy',
+                cancelButtonColor: '#F70008',
+                confirmButtonText: 'Đồng ý'
+            }).then((result)=>{
+                if (result.isConfirmed) {
+                    var id = $(this).data("id");
+                    var $this = $(this);
+                    $.ajax({
+                        url: "/admin/coupons/"+id,
+                        method: 'DELETE',
+                        dataType: "JSON",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: {},
+                        success: function (data) {
+                            $('#table').DataTable().ajax.reload(null,true);
+                            if(data.check !== true){
+                                Swal.fire({
+                                    position: 'center-center',
+                                    icon: 'success',
+                                    title: 'Đã xoá thành công',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                            }else{
+                                Swal.fire({
+                                    position: 'center-center',
+                                    icon: 'error',
+                                    title: 'Xoá không thành công',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+                            }
+                        }
+                    });
+                }
+            });
+        });
     </script>
 @endsection
