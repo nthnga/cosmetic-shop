@@ -175,6 +175,7 @@
 
                                            </div>
                                        </div>
+                                    @endforeach
                                </div>
                                <div class="col-1">
                                        @if($order->status===\App\Models\Order::WAIT || $order->status===\App\Models\Order::CONFIRM)
@@ -190,7 +191,7 @@
                                    @endif
                                </div>
                            </div>
-                           @endforeach
+                        
                        </div>
                     @endforeach
                 </div>

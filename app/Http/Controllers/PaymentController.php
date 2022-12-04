@@ -9,6 +9,7 @@ use App\Models\OrderProduct;
 use App\Models\PaymentVNPAY;
 use App\Models\Product;
 use Carbon\Carbon;
+use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -17,13 +18,20 @@ use phpDocumentor\Reflection\Types\True_;
 
 class PaymentController extends Controller
 {
-    public function store(Request $request, $id)
+    public function store(Request $request)
     {
-        $product = Product::where('id',$id)->first();
+        $items = Cart::content();
+        $price_total = 0;
+        foreach ($items as $item){
+            $product = Product::where('id',$item->id)->first();
+            if ($product){
+                $price_total += ($product->sale_price*$item->qty);
+            }
+        }
         $vnp_TxnRef = 'VNPTF'.Carbon::now()->timestamp;
         $vnp_OrderInfo = 'Thanh toan don hang vnpay';
         $vnp_OrderType = 'other';
-        $vnp_Amount = (int)$product->sale_price*100;
+        $vnp_Amount = $price_total*100;
         $vnp_Locale = 'vn';
         if($request->input('bank_code')){
             $vnp_BankCode = $request->input('bank_code');
@@ -50,7 +58,7 @@ class PaymentController extends Controller
         }
         if($request->has('payment_type')){
             if((int)$request->input('payment_type') == Order::TRANSFER){
-               $this->storePayment($inputData,Order::TRANSFER,$product,$request->input('note'));
+               $this->storePayment($inputData,Order::TRANSFER,$items,$price_total,$request->input('note'));
                 ksort($inputData);
                 $query = "";
                 $i = 0;
@@ -77,37 +85,41 @@ class PaymentController extends Controller
 
                 return redirect($vnp_Url);
             }else{
-                $this->storePayment(null,Order::CASH,$product,$request->input('note'));
+                $this->storePayment(null,Order::CASH,$items,$price_total,$request->input('note'));
                 $request->session()->flash('success', 'Đặt hàng thành công');
                 return redirect()->intended('/account');
             }
         }
     }
 
-    public function storePayment($data = null,$type,$product,$note){
+    public function storePayment($data = null,$type,$items,$price_total,$note){
         $order = new Order();
         $order->customer_id = Auth::guard('web')->id();
-        $order->product_id = $product->id;
-        $order->total = (int)$product->sale_price;
+//        $order->product_id = $product->id;
+        $order->total = $price_total;
         $order->payment_type = $type;
         $order->note = $note;
         $order->status = Order::WAIT;
         $order->save();
 
-        $product =  Product::where('id',$product->id)->with(['category'])->first();
-        $orderDetail = new OrderProduct();
-        $orderDetail->order_id = $order->id;
-        $orderDetail->product_name = $product->name;
-        $orderDetail->product_category = $product->category->name;
-        $orderDetail->product_quantity = 1;
-        $orderDetail->product_sale_price = $product->sale_price;
-        $orderDetail->product_origin_price = $product->origin_price;
-        $orderDetail->total = $product->sale_price;
-        $orderDetail->product_id = $product->id;
-        $orderDetail->save();
-        if (!empty($data)) {
-            $this->storePaymentVnpay($data, $order->id);
+        foreach ($items as $item){
+            $product =  Product::where('id',$item->id)->with(['category'])->first();
+            $orderDetail = new OrderProduct();
+            $orderDetail->order_id = $order->id;
+            $orderDetail->product_name = $product->name;
+            $orderDetail->product_category = $product->category->name;
+            $orderDetail->product_quantity = 1;
+            $orderDetail->product_sale_price = $product->sale_price;
+            $orderDetail->product_origin_price = $product->origin_price;
+            $orderDetail->total = $product->sale_price;
+            $orderDetail->product_id = $product->id;
+            $orderDetail->save();
+            if (!empty($data)) {
+                $this->storePaymentVnpay($data, $order->id);
+            }
         }
+
+        Cart::destroy();
     }
 
     public function storePaymentVnpay($data, $orderId) {

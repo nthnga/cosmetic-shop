@@ -10,10 +10,9 @@ class Coupon extends Model
 {
     use HasFactory;
     use SoftDeletes;
-
-    public $timestamps = false;
+    
     protected $table = 'coupons';
-    protected $primaryKey = 'coupon_id';
+    protected $appends = ['type'];
     protected $fillable = [
         'coupon_name',
         'coupon_code',
@@ -21,4 +20,19 @@ class Coupon extends Model
         'coupon_condition',
         'coupon_number'
     ];
+
+    const TYPE = [
+        'PERCENT' => 1,
+        'MONEY' => 2
+    ];
+
+    public function getTypeAttribute()
+    {
+        if($this->coupon_condition == self::TYPE['PERCENT']){
+            $type = 'Giảm theo phần trăm';
+        } else{
+            $type = 'Giảm theo tiền mặt';
+        }
+        return $type;
+    }
 }

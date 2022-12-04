@@ -46,9 +46,9 @@
                         <div class="mb-10">
                             <label class="form-label">Tính năng: </label><span style="color: red;"> *</span>
                             <select name="coupon_condition" class="form-control mb-2">
-                                <option value="0">-----Chọn-----</option>
-                                <option value="1">---Giảm theo phần trăm---</option>
-                                <option value="2">---Giảm theo tiền mặt---</option>
+                                <option>-----Chọn-----</option>
+                                <option value="{{\App\Models\Coupon::TYPE['PERCENT']}}">---Giảm theo phần trăm---</option>
+                                <option value="{{\App\Models\Coupon::TYPE['MONEY']}}">---Giảm theo tiền mặt---</option>
                             </select>
                             @error('coupon_condtion')
                             <div style="color: red;" class="">{{$message}}</div>

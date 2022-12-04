@@ -140,10 +140,10 @@ Route::group([
 ], function () {
     Route::get('/add-card/{id}', [HomeController::class,'addToCard'])->name('home.addToCard');
 
-    Route::get('/checkout/{id}', [HomeController::class,'checkout'])->name('home.checkout');
+    Route::get('/checkout', [HomeController::class,'checkout'])->name('home.checkout');
 
     //thanh toán online
-    Route::post('/order/store/{id}', [PaymentController::class, 'store'])->name('home.order');
+    Route::post('/order/store', [PaymentController::class, 'store'])->name('home.order');
     Route::get('/order/return', [PaymentController::class, 'return']);
     
 

@@ -6,6 +6,7 @@
 
 @section('css')
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="/admin/css/user/index">
     <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
     <style>
         .btnAdd{
@@ -57,7 +58,7 @@
     </div>
 @endsection
 @section('js')
-<script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
     <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -109,8 +110,9 @@
                     {data: 'coupon_name', name: 'coupon_name'},
                     {data: 'coupon_code', name: 'coupon_code'},
                     {data: 'coupon_times', name: 'coupon_times'},
-                    {data: 'coupon_condition', name: 'coupon_condition'},
-                    {data: 'coupon_number', name: 'coupon_number'}
+                    {data: 'type', name: 'coupon_condition'},
+                    {data: 'coupon_number', name: 'coupon_number'},
+                    {data: 'action', name: 'action'}
                 ]
             });
             $('#searchCoupons').keyup(function(e){

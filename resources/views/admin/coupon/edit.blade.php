@@ -19,7 +19,7 @@
             <li class="breadcrumb-item active">Chỉnh sửa mã giảm giá</li>
         </ol>
     </div>
-    <form id="" class="form" action="{{route('admin.coupon.update',$coupon->id)}}" method="post" style="width: 96%!important; margin: 2%" enctype="multipart/form-data">
+    <form id="" class="form" action="{{route('admin.coupon.update',$coupon->id)}}" method="POST" style="width: 96%!important; margin: 2%" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="_method" value="put">
         <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10" style="margin-top: 10px">
@@ -42,10 +42,17 @@
                         </div>
                         <div class="mb-10">
                             <label class="form-label">Số lượng mã giảm giá: </label><span style="color: red;"> *</span>
+                            <input type="text" name="coupon_times" class="form-control mb-2" placeholder="Nhập tên..." value="@if(!empty(old("coupon_times"))){{old("coupon_times")}}@else {{$coupon->coupon_times}}@endif" />
+                            @error('coupon_times')
+                            <div style="color: red;" class="">{{$message}}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-10">
+                            <label class="form-label">Tính năng: </label><span style="color: red;"> *</span>
                             <select name="coupon_condition" class="form-control mb-2">
-                                <option value="">-----Chọn-----</option>
-                                <option value="">---Giảm theo phần trăm---</option>
-                                <option value="">---Giảm theo tiền mặt---</option>
+                                <option>-----Chọn-----</option>
+                                <option value="{{\App\Models\Coupon::TYPE['PERCENT']}}">---Giảm theo phần trăm---</option>
+                                <option value="{{\App\Models\Coupon::TYPE['MONEY']}}">---Giảm theo tiền mặt---</option>
                             </select>
                             @error('coupon_condtion')
                             <div style="color: red;" class="">{{$message}}</div>
@@ -71,8 +78,4 @@
     </form>
 @endsection
 @section('js')
-    <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
-    <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 @endsection

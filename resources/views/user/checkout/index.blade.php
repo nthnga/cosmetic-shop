@@ -20,7 +20,7 @@
     </div>
 
     <div class="container-fluid">
-        <form action="{{route('home.order',$product->id)}}" method="post">
+        <form action="{{route('home.order')}}" method="post">
             @csrf
         <div class="row">
                 <div class="col-lg-6">
@@ -43,11 +43,10 @@
                                 <label>Địa chỉ giao hàng</label>
                                 <input name="address" class="form-control" type="text" value="{{Auth::user()->address}}">
                             </div>
-                                <div class="col-md-12 form-group">
-                                    <label>Lời nhắn</label>
-                                    <textarea name="note" class="form-control" type="text"></textarea>
-                                </div>
-
+                            <div class="col-md-12 form-group">
+                                <label>Lời nhắn</label>
+                                <textarea name="note" class="form-control" type="text"></textarea>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -56,22 +55,21 @@
                     <div class="bg-light p-30 mb-5">
                         <div class="border-bottom">
                             <h6 class="mb-3">Danh sách sản phẩm</h6>
-                            @foreach ($product as $pro)
-                                <div class="d-flex justify-content-between">
-                                    <p>{{$product->name}}</p>
-                                    <p>{{number_format($product->sale_price,0, ',', '.')}}</p>
-                                </div> 
+                            @foreach ($products as $product)
+                                <div class="d-flex justify-content-between row">
+                                    <p class="col-8">{{$product->name}}</p>
+                                    <p class="col-2">{{$product->qty}}</p>
+                                    <div class="col-2">
+                                        <p  style="float: right">{{number_format($product->price,0, ',', '.')}}</p>
+                                    </div>
+                                </div>
                             @endforeach
 
                         </div>
                         <div class="border-bottom pt-3 pb-2">
                             <div class="d-flex justify-content-between mb-3">
-                                <h6>Số lượng sản phẩm</h6>
-                                <h6>1</h6>
-                            </div>
-                            <div class="d-flex justify-content-between mb-3">
                                 <h6>Tổng hoá đơn</h6>
-                                <h6>{{number_format($product->sale_price,0, ',', '.')}}</h6>
+                                <h6>{{Cart::total(),0, ',', '.'}}</h6>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <h6 class="font-weight-medium">Phí vận chuyển</h6>
@@ -81,7 +79,7 @@
                         <div class="pt-2">
                             <div class="d-flex justify-content-between mt-2">
                                 <h5>Tổng thanh toán</h5>
-                                <h5>{{\Gloudemans\Shoppingcart\Facades\Cart::total(),0,',','.'}}</h5>
+                                <h5>{{Cart::total(),0,',','.'}}</h5>
                             </div>
                         </div>
                         <div class="pt-2">

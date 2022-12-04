@@ -8,8 +8,10 @@ use App\Models\Order;
 use App\Models\Trademark;
 use App\Models\Rating;
 use Illuminate\Http\Request;
+use DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Gloudemans\Shoppingcart\Facades\Cart;
 
 
 
@@ -73,9 +75,29 @@ class HomeController
 
     public function show($id){
         $product = Product::where('id',$id)->with(['category','images'])->first();
+        
+        $product_news = Product::orderBy('created_at', 'DESC')->limit(4)->get();
+        $cate_product = Category::orderBy('id', 'DESC')->get();
+        $trademark_product = Trademark::orderBy('id', 'DESC')->get();
+
+        $detail_product = Product::join('categories','categories.id','=','products.category_id')
+        ->join('trademarks','trademarks.id','=','products.trademark_id')
+        ->where('products.id',$id)->get();
+
+        foreach($detail_product as $key -> $value)
+            $category_id = $value->category_id;
+
+        $related_product = Product::join('categories','categories.id','=','products.category_id')
+        ->join('trademarks','trademarks.id','=','products.trademark_id')
+        ->where('categories.id',$id)->get();
+
         return view('user.product.detail')->with([
-            'product' => $product
+            'product' => $product,
+            'related' => $related_product,
+            'product_news' => $product_news
         ]);
+
+
     }
 
     public function addToCard($id){
@@ -83,11 +105,11 @@ class HomeController
 
     }
 
-    public function checkout($id){
+    public function checkout(){
         if (Auth::check()){
-            $product = Product::findOrFail($id);
+            $items = Cart::content();
             return view('user.checkout.index')->with([
-                'product' => $product
+                'products' => $items,
             ]);
         }else{
             return redirect()->route('user.login.form');

@@ -126,7 +126,7 @@
                                     <img class=" w-100" style="height: 400px !important"  src="{{$product->images[0]->image_url}}" alt="">
                                     <div class="product-action">
                                         <a class="btn btn-outline-dark btn-square" href="{{route('user.product.add',$product->id)}}"><i class="fa fa-shopping-cart"></i></a>
-                                        <a class="btn btn-outline-dark btn-square" href=""><i class="far fa-heart"></i></a>
+                                        <a class="btn btn-outline-dark btn-square" href="{{route('home.show',$product->id)}}"><i class="far fa-eye"></i></a>
                                         <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
                                     </div>
                                 </a>

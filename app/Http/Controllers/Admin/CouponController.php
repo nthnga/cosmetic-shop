@@ -26,19 +26,6 @@ class CouponController extends Controller
             ->editColumn('coupon_name', function ($coupon){
                 return '<a href=""><b>'.$coupon->coupon_name.'</b></a>';
             })
-            ->editColumn('coupon_code', function ($coupon){
-                return '<a href=""><b>'.$coupon->coupon_code.'</b></a>';
-            })
-            ->editColumn('coupon_times', function ($coupon){
-                return '<a href=""><b>'.$coupon->coupon_times.'</b></a>';
-            })
-            ->editColumn('coupon_condition', function ($coupon){
-                return '<a href=""><b>'.$coupon->coupon_condition.'</b></a>';
-            })
-            ->editColumn('coupon_number', function ($coupon){
-                return '<a href=""><b>'.$coupon->coupon_number.'</b></a>';
-            })
-            
             ->addColumn('action', function ($coupon) {
                 return '
                      <a href="'.route('admin.coupon.edit', ['id' => $coupon->id]).'"
@@ -61,15 +48,15 @@ class CouponController extends Controller
                     </a>
                 ';
             })
-            ->editColumn('created_at', function ($coupon) {
-                return '
-                            <div >
-                               '.date("H:i | d/m/Y", strtotime($coupon->created_at)).'
-                            </div>';
+            // ->editColumn('created_at', function ($coupon) {
+            //     return '
+            //                 <div >
+            //                    '.date("H:i | d/m/Y", strtotime($coupon->created_at)).'
+            //                 </div>';
 
-            })
+            // })
 
-            ->rawColumns(['coupon_name', 'coupon_code','coupon_times', 'action','coupon_ condition','coupon_number','created_at'])
+            ->rawColumns(['coupon_name', 'action'])
             ->make(true);
 
         $coupon = Coupon::orderBy('id','DESC')->get();
@@ -115,24 +102,16 @@ class CouponController extends Controller
         $coupon->coupon_condition = $data['coupon_condition'];
         $coupon->coupon_number = $data['coupon_number'];
 
-        $coupon->update();
+        $coupon->save();
         $request->session()->flash('success', 'Cập nhật thành công');
-        DB::commit();
         return redirect()->route('admin.coupon.index');
     }
 
     public function destroy($id)
     {
-            $check = Coupon::where('coupon_id', $id)->first();
-            if(isset($check)){
-                $check = true;
-                return response()->json([
-                    'error' => 'Không thể xóa',
-                    'check' => $check
-                ]);
-            }else{
-                Coupon::destroy($id);
+               $coupon = Coupon::find($id);
+               $coupon->delete();
                 return response()->json(['success' => 'Thành công']);
-            }
+           
     }
 }

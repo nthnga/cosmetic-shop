@@ -17,7 +17,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Cart Start -->
     <div class="container-fluid">
         <div class="row px-xl-5">
@@ -88,7 +88,7 @@
                             <h5>Số tiền phải thanh toán</h5>
                             <h5>{{\Gloudemans\Shoppingcart\Facades\Cart::Total(),0,'.','.'}}</h5>
                         </div>
-                        <a class="btn btn-block btn-primary font-weight-bold my-3 py-3" href="{{route('home.checkout', $item->id)}}">Mua hàng</a>
+                        <a class="btn btn-block btn-primary font-weight-bold my-3 py-3" href="{{route('home.checkout')}}">Mua hàng</a>
                     </div>
                 </div>
             </div>
@@ -97,5 +97,5 @@
     <!-- Cart End -->
 @endsection
 @section('css')
-   
+
 @endsection
