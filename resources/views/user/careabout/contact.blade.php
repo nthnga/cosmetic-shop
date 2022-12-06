@@ -4,20 +4,6 @@
     Liên hệ
 @endsection
 
-<?php
-    if (isset($_POST['submit'])) {
-        $data=array('name' => $_POST['name'],
-        'email' => $_POST['email'],
-        'phone' => $_POST['phone'],
-        'title' => $_POST['title'],
-        'message' => $_POST['message'],
-        // 'name' => $_POST['name'],
-        // 'name' => $_POST['name'],
-        // 'name' => $_POST['name'],
-    );
-    }
-?>
-
 @section('content')
     <!-- Breadcrumb Start -->
     <div class="container-fluid">
@@ -37,7 +23,7 @@
             <div class="col-lg-7 mb-5">
                 <div class="contact-form bg-light p-30">
                     <div id="success"></div>
-                    <form name="sentMessage" id="contactForm" novalidate="novalidate" method="POST">
+                    <form action="{{route('home.contact.save')}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="control-group">
                             <label for="">Họ và tên</label>
@@ -65,7 +51,7 @@
                             <p class="help-block text-danger"></p>
                         </div>
                         <div>
-                            <button class="btn btn-primary py-2 px-4" name="submit" type="submit" id="sendMessageButton">Gửi</button>
+                            <button class="btn btn-primary py-2 px-4" name="submit" type="submit">Gửi</button>
                         </div>
                     </form>
                 </div>

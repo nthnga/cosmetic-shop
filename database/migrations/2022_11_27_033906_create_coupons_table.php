@@ -15,11 +15,11 @@ class CreateCouponsTable extends Migration
     {
         Schema::create('coupons', function (Blueprint $table) {
             $table->id();
-            $table->string('coupon_name')->nullable();;
-            $table->string('coupon_code')->nullable();;
-            $table->string('coupon_times')->nullable();;
-            $table->string('coupon_condition')->nullable();;
-            $table->string('coupon_number')->nullable();;
+            $table->string('coupon_name')->nullable();
+            $table->string('coupon_code')->nullable();
+            $table->string('coupon_times')->nullable();
+            $table->string('coupon_condition')->nullable();
+            $table->string('coupon_number')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

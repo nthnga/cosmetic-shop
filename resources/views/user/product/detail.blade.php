@@ -58,6 +58,19 @@
                     <p class="mb-4">{{$product->trademark_id}}</p>
                     <p class="mb-4"></p>
                     <div class="d-flex align-items-center mb-4 pt-2">
+                        <div class="input-group quantity mr-3" style="width: 130px;">
+                            <div class="input-group-btn">
+                                <button class="btn btn-primary btn-minus">
+                                    <i class="fa fa-minus"></i>
+                                </button>
+                            </div>
+                            <input type="text" class="form-control bg-secondary border-0 text-center" value="1">
+                            <div class="input-group-btn">
+                                <button class="btn btn-primary btn-plus">
+                                    <i class="fa fa-plus"></i>
+                                </button>
+                            </div>
+                        </div>
                         <div>
                             <a href="{{route('user.product.add', $product->id)}}" class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Thêm vào giỏ hàng</a>
                             <a style="margin-left: 20px" href="{{route('home.checkout',$product->id)}}" class="btn btn-primary px-3"><i class="fas fa-donate"></i> Mua ngay</a>
@@ -98,25 +111,38 @@
                         </div>
                         <div class="tab-pane fade" id="tab-pane-3">
                             <div class="row">
-                                <div class="col-md-6">
-                                    <div class="media mb-4">
-                                        <img src="/user/img/user.jpg" alt="Image" class="img-fluid mr-3 mt-1" style="width: 45px;">
-                                        <div class="media-body">
-                                            <h6>Hà Thị Đào<small> - <i>06:10 10/10/2022</i></small></h6>
-                                            <div class="text-primary mb-2">
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star"></i>
-                                                <i class="fas fa-star-half-alt"></i>
-                                                <i class="far fa-star"></i>
-                                            </div>Sản phẩm dùng ổn</p>
-                                        </div>
+                                <style type="text/css">
+                                    .style_comment{
+                                        /* border-radius: 10px;
+                                        border: 1px solid #ddd; */
+                                        height: 115px;
+                                    }
+                                </style>
+                                <div class=" row col-md-6 style_comment">
+                                    <div class="col-md-2">
+                                        <img width="100%" height="115px;" src="{{asset('/storage/images/products/cera.jpg')}}" class="img img-reponsive img-thumbnail">
+                                    </div>
+                                    <div class="col-md-10">
+                                        <p style="color: rgb(255, 47, 47);">Nguyễn Nga</p>
+                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore corporis facere tempora.
+                                        </p>
+                                    </div>
+                                    <p></p>
+                                    <div class="col-md-2">
+                                        <img width="100%" height="115px;" src="{{asset('/storage/images/products/cera.jpg')}}" class="img img-reponsive img-thumbnail">
+                                    </div>
+                                    <div class="col-md-10">
+                                        <p style="color: rgb(255, 47, 47);">Nguyễn Nga</p>
+                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore corporis facere tempora.
+                                        </p>
                                     </div>
                                 </div>
+                    
+                               
                                 <div class="col-md-6">
                                     <h4 class="mb-4">Đánh giá của bạn</h4>
                                     <small>Địa chỉ email của bạn sẽ không được công bố. Các trường bắt buộc được đánh dấu *</small>
-                                    {{-- <div class="d-flex my-3">
+                                    <div class="d-flex my-3">
                                         <div class="text-primary" style="cursor: pointer; color:#ccc; font-size:30px;">
                                             <i class="far fa-star"></i>
                                             <i class="far fa-star"></i>
@@ -124,24 +150,8 @@
                                             <i class="far fa-star"></i>
                                             <i class="far fa-star"></i>
                                         </div>
-                                    </div> --}}
-
-                                    <div class="d-flex my-3">
-                                        <div class="text-primary rating">
-                                            @for ($i = 1; $i <= 5; $i++)
-                                                {{-- @php
-                                                    if($i <= $rating){
-
-                                                    }
-                                                @endphp --}}
-                                                <i class="far fa-star rating" 
-                                                title="Đánh giá sao"
-
-                                                style="cursor: pointer; color:#ccc; font-size:30px;"></i>
-                                            @endfor
-                                            
-                                        </div>
                                     </div>
+
 
                                     <form>
                                         <div class="form-group">
@@ -229,4 +239,9 @@
             toastr.error("{!! session()->get('error') !!}");
         </script>
     @endif
+    <script type="text/javascript">
+        $(document).ready(function(){
+
+        });
+    </script>
 @endsection

@@ -78,7 +78,9 @@ class CouponController extends Controller
         $coupon->coupon_times = $data['coupon_times'];
         $coupon->coupon_condition = $data['coupon_condition'];
         $coupon->coupon_number = $data['coupon_number'];
-        
+        $coupon->start_time = $data['start_time'];
+        $coupon->end_time = $data['end_time'];
+
         $coupon->save();
         $request->session()->flash('success','Tạo mới thành công');
         return redirect()->route('admin.coupon.index');
@@ -101,6 +103,8 @@ class CouponController extends Controller
         $coupon->coupon_times = $data['coupon_times'];
         $coupon->coupon_condition = $data['coupon_condition'];
         $coupon->coupon_number = $data['coupon_number'];
+        $coupon->start_time = $data['start_time'];
+        $coupon->end_time = $data['end_time'];
 
         $coupon->save();
         $request->session()->flash('success', 'Cập nhật thành công');

@@ -18,7 +18,9 @@ class Coupon extends Model
         'coupon_code',
         'coupon_times',
         'coupon_condition',
-        'coupon_number'
+        'coupon_number',
+        'start_time',
+        'end_time'
     ];
 
     const TYPE = [

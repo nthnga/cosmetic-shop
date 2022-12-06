@@ -39,9 +39,11 @@
                     <tr style="text-transform: none !important;" class="text-start text-muted fw-bolder fs-7 gs-0" id="coupons">
                         <th style="text-transform: none !important;" class="min-w-125px">Tên mã giảm giá</th>
                         <th style="text-transform: none !important;" class="min-w-125px">Mã giảm giá</th>
-                        <th style="text-transform: none !important;" class="min-w-125px">Số lượng mã</th>
+                        <th style="text-transform: none !important;" class="min-w-125px">Số lượng</th>
                         <th style="text-transform: none !important;" class="min-w-125px">Tính năng</th>
-                        <th style="text-transform: none !important;" class="min-w-125px">Số % hoặc số tiền giảm</th>
+                        <th style="text-transform: none !important;" class="min-w-125px">Số giảm</th>
+                        <th style="text-transform: none !important;" class="min-w-125px">Ngày bắt đầu</th>
+                        <th style="text-transform: none !important;" class="min-w-125px">Ngày kết thúc</th>
                         <th style="text-align: start;text-transform: none !important;" class="min-w-125px">Chức năng</th>
                     </tr>
                     <!--end::Table row-->
@@ -112,6 +114,8 @@
                     {data: 'coupon_times', name: 'coupon_times'},
                     {data: 'type', name: 'coupon_condition'},
                     {data: 'coupon_number', name: 'coupon_number'},
+                    {data: 'start_time', name: 'start_time'},
+                    {data: 'end_time', name: 'end_time'},
                     {data: 'action', name: 'action'}
                 ]
             });

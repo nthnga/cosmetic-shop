@@ -132,7 +132,11 @@ Route::group([
     Route::get('/list-products', [HomeController::class,'listProduct'])->name('home.listProduct');
     Route::get('/search', [HomeController::class,'search'])->name('home.search');
     Route::get('/show/{id}', [HomeController::class,'show'])->name('home.show');
+
+    //Liên hệ 
     Route::get('/contact', [ContactController::class,'showContact'])->name('home.contact');
+    Route::post('/saveContact', [ContactController::class, 'save'])->name('home.contact.save');
+    
     Route::group([
         'namespace' => 'User',
         'prefix' => '/',
@@ -164,6 +168,7 @@ Route::group([
     Route::get('/product/cart/decrement/{id}', [CartController::class, 'decrement'])->name('user.product.decrement');
 
     //Đánh giá sản phẩm
+    
 });
 
 

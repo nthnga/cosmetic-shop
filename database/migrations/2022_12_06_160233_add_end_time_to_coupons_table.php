@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRatingTable extends Migration
+class AddEndTimeToCouponsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,8 @@ class CreateRatingTable extends Migration
      */
     public function up()
     {
-        Schema::create('ratings', function (Blueprint $table) {
-            $table->id();
-            $table->integer('product_id')->nullable();
-            $table->integer('rating')->nullable();
-            $table->integer('test')->nullable();
-            $table->timestamps();
+        Schema::table('coupons', function (Blueprint $table) {
+            $table->string('end_time')->nullable();
         });
     }
 
@@ -29,6 +25,8 @@ class CreateRatingTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ratings');
+        Schema::table('coupons', function (Blueprint $table) {
+            //
+        });
     }
 }

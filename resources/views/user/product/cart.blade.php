@@ -74,19 +74,43 @@
                 <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Tóm tắt giỏ hàng</span></h5>
                 <div class="bg-light p-30 mb-5">
                     <div class="border-bottom pb-2">
+                        @if(Session::get('coupon'))
+                            @foreach(Session::get('coupon') as $key => $cou)
+                                @php 
+                                $total_cart = (int)Cart::subtotal(null,null,'');
+                                $percent_sale = 0;
+                                if ($cou['coupon_condition']==1) {
+                                    $percent_sale = (int)$cou['coupon_number'];
+                                    $total_coupon = ($total_cart*((int)$cou['coupon_number']))/100;
+                                } else{
+                                    $total_coupon = $cou['coupon_number'];
+                                }
+                                $total_money = $total_cart-$total_coupon
+                                @endphp
+                            @endforeach
+						@endif 
                         <div class="d-flex justify-content-between mb-3">
                             <h6>Tổng tiền</h6>
-                            <h6>{{\Gloudemans\Shoppingcart\Facades\Cart::priceTotal(),0,'.','.'}}</h6>
+                            <h6>{{number_format($total_cart)}}</h6>
                         </div>
                         <div class="d-flex justify-content-between">
                             <h6 class="font-weight-medium">Phí giao hàng</h6>
-                            <h6 class="font-weight-medium">0đ</h6>
+                            <h6 class="font-weight-medium">0</h6>
+                        </div>
+                      
+                        <div class="d-flex justify-content-between">
+                            <h6 class="font-weight-medium">Số tiền giảm giá</h6>
+                            <h6 class="font-weight-medium">{{number_format($total_coupon)}}
+                                @if($percent_sale)
+                                ({{$percent_sale}}%)
+                                @endif
+                            </h6>
                         </div>
                     </div>
                     <div class="pt-2">
                         <div class="d-flex justify-content-between mt-2">
                             <h5>Số tiền phải thanh toán</h5>
-                            <h5>{{\Gloudemans\Shoppingcart\Facades\Cart::Total(),0,'.','.'}}</h5>
+                            <h5>{{number_format($total_money)}}</h5>
                         </div>
                         <a class="btn btn-block btn-primary font-weight-bold my-3 py-3" href="{{route('home.checkout')}}">Mua hàng</a>
                     </div>

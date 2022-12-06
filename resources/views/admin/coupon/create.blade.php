@@ -31,14 +31,14 @@
                         </div>
                         <div class="mb-10">
                             <label class="form-label">Mã giảm giá: </label><span style="color: red;"> *</span>
-                            <input type="text" name="coupon_code" class="form-control mb-2" placeholder="Nhập tên..." value="{{old('coupon_code')}}" />
+                            <input type="text" name="coupon_code" class="form-control mb-2" placeholder="Nhập mã giảm giá..." value="{{old('coupon_code')}}" />
                             @error('coupon_code')
                             <div style="color: red;" class="">{{$message}}</div>
                             @enderror
                         </div>
                         <div class="mb-10">
-                            <label class="form-label">Số lượng mã giảm giá: </label><span style="color: red;"> *</span>
-                            <input type="text" name="coupon_times" class="form-control mb-2" placeholder="Nhập tên..." value="{{old('coupon_times')}}" />
+                            <label class="form-label">Số lượng: </label><span style="color: red;"> *</span>
+                            <input type="text" name="coupon_times" class="form-control mb-2" placeholder="Nhập số lượng mã giảm giá..." value="{{old('coupon_times')}}" />
                             @error('coupon_times')
                             <div style="color: red;" class="">{{$message}}</div>
                             @enderror
@@ -55,9 +55,23 @@
                             @enderror
                         </div>
                         <div class="mb-10">
-                            <label class="form-label">Nhập số % hoặc số tiền giảm: </label><span style="color: red;"> *</span>
-                            <input type="text" name="coupon_number" class="form-control mb-2" placeholder="Nhập tên..." value="{{old('coupon_number')}}" />
+                            <label class="form-label">Số % / tiền giảm: </label><span style="color: red;"> *</span>
+                            <input type="text" name="coupon_number" class="form-control mb-2" placeholder="Nhập số phần trăm hoặc số tiền giảm..." value="{{old('coupon_number')}}" />
                             @error('coupon_number')
+                            <div style="color: red;" class="">{{$message}}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-10">
+                            <label class="form-label">Ngày bắt đầu: </label><span style="color: red;"> *</span>
+                            <input type="text" name="start_time" class="form-control mb-2" placeholder="Nhập ngày mã bắt đầu áp dụng..." value="{{old('start_time')}}" />
+                            @error('start_time')
+                            <div style="color: red;" class="">{{$message}}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-10">
+                            <label class="form-label">Ngày kết thúc: </label><span style="color: red;"> *</span>
+                            <input type="text" name="end_time" class="form-control mb-2" placeholder="Nhập ngày kết thúc áp dụng mã..." value="{{old('end_time')}}" />
+                            @error('end_time')
                             <div style="color: red;" class="">{{$message}}</div>
                             @enderror
                         </div>
@@ -74,31 +88,5 @@
     </form>
 @endsection
 @section('js')
-    <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
-    <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        function previewImages() {
-            var preview = document.querySelector('.gallery');
-            if (this.files) {
-                [].forEach.call(this.files, readAndPreview);
-            }
-            function readAndPreview(file) {
-                if (!/\.(jpe?g|png|gif)$/i.test(file.name)) {
-                    return alert(file.name + " is not an image");
-                }
-                var reader = new FileReader();
-                reader.addEventListener("load", function () {
-                    var image = new Image();
-                    image.title = file.name;
-                    image.src = this.result;
-
-                    preview.replaceChild(image,preview.childNodes[0]);
-                });
-                reader.readAsDataURL(file);
-            }
-        }
-        document.querySelector('#listImg').addEventListener("change", previewImages);
-    </script>
+    
 @endsection

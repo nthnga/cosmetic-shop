@@ -45,9 +45,12 @@ class HomeController
     
 
     public function listProduct(Request $request){
+
+        //Lọc theo giá
         $min = 0;
         $max = 0;
         $products = Product::orderBy('created_at', 'DESC')->get();
+        $trademarks = Trademark::orderBy('name', 'DESC')->get();
         if (isset($_GET['sort_by'])){
             $sort_by = $_GET['sort_by'];
             if ($sort_by == 'giam_dan'){
@@ -66,10 +69,15 @@ class HomeController
         } else{
             $products = Product::orderBy('created_at', 'desc')->paginate(16);
         }
+
+        //Loc theo thuong hieu
+
+
         return view('user.product.all')->with([
            'products' => $products,
            'amount_start' => $min,
            'amount_end' => $max,
+           'trademarks' => $trademarks,
         ]);
     }
 
@@ -80,21 +88,24 @@ class HomeController
         $cate_product = Category::orderBy('id', 'DESC')->get();
         $trademark_product = Trademark::orderBy('id', 'DESC')->get();
 
-        $detail_product = Product::join('categories','categories.id','=','products.category_id')
-        ->join('trademarks','trademarks.id','=','products.trademark_id')
-        ->where('products.id',$id)->get();
+        // $detail_product = Product::join('categories','categories.id','=','products.category_id')
+        // ->join('trademarks','trademarks.id','=','products.trademark_id')
+        // ->where('products.id',$id)->get();
 
-        foreach($detail_product as $key -> $value)
-            $category_id = $value->category_id;
+        // foreach($detail_product as $key -> $value){
+        //     $category_id = $value->category_id;
+        //     $id = $value->$id;
+        // }
+        // $related_product = Product::join('categories','categories.id','=','products.category_id')
+        // ->join('trademarks','trademarks.id','=','products.trademark_id')
+        // ->where('categories.id',$id)->get();
 
-        $related_product = Product::join('categories','categories.id','=','products.category_id')
-        ->join('trademarks','trademarks.id','=','products.trademark_id')
-        ->where('categories.id',$id)->get();
 
         return view('user.product.detail')->with([
             'product' => $product,
-            'related' => $related_product,
-            'product_news' => $product_news
+            // 'related' => $related_product,
+            'product_news' => $product_news,
+            
         ]);
 
 

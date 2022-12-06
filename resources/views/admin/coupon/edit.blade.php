@@ -35,14 +35,14 @@
                         </div>
                         <div class="mb-10">
                             <label class="form-label">Mã giảm giá: </label><span style="color: red;"> *</span>
-                            <input type="text" name="coupon_code" class="form-control mb-2" placeholder="Nhập tên..." value="@if(!empty(old("coupon_code"))){{old("coupon_code")}}@else {{$coupon->coupon_code}}@endif" />                            
+                            <input type="text" name="coupon_code" class="form-control mb-2" placeholder="Nhập mã giảm giá..." value="@if(!empty(old("coupon_code"))){{old("coupon_code")}}@else {{$coupon->coupon_code}}@endif" />                            
                             @error('coupon_code')
                             <div style="color: red;" class="">{{$message}}</div>
                             @enderror
                         </div>
                         <div class="mb-10">
-                            <label class="form-label">Số lượng mã giảm giá: </label><span style="color: red;"> *</span>
-                            <input type="text" name="coupon_times" class="form-control mb-2" placeholder="Nhập tên..." value="@if(!empty(old("coupon_times"))){{old("coupon_times")}}@else {{$coupon->coupon_times}}@endif" />
+                            <label class="form-label">Số lượng: </label><span style="color: red;"> *</span>
+                            <input type="text" name="coupon_times" class="form-control mb-2" placeholder="Nhập số lượng mã giảm giá..." value="@if(!empty(old("coupon_times"))){{old("coupon_times")}}@else {{$coupon->coupon_times}}@endif" />
                             @error('coupon_times')
                             <div style="color: red;" class="">{{$message}}</div>
                             @enderror
@@ -59,9 +59,23 @@
                             @enderror
                         </div>
                         <div class="mb-10">
-                            <label class="form-label">Nhập số % hoặc số tiền giảm: </label><span style="color: red;"> *</span>
-                            <input type="text" name="coupon_number" class="form-control mb-2" placeholder="Nhập tên..." value="@if(!empty(old("coupon_number"))){{old("coupon_number")}}@else {{$coupon->coupon_number}}@endif" />                            
+                            <label class="form-label">Số % / tiền giảm: </label><span style="color: red;"> *</span>
+                            <input type="text" name="coupon_number" class="form-control mb-2" placeholder="Nhập số phần trăm hoặc số tiền giảm..." value="@if(!empty(old("coupon_number"))){{old("coupon_number")}}@else {{$coupon->coupon_number}}@endif" />                            
                             @error('coupon_number')
+                            <div style="color: red;" class="">{{$message}}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-10">
+                            <label class="form-label">Ngày bắt đầu: </label><span style="color: red;"> *</span>
+                            <input type="text" name="start_time" class="form-control mb-2" placeholder="Nhập ngày mã bắt đầu áp dụng..." value="@if(!empty(old("start_time"))){{old("start_time")}}@else {{$coupon->start_time}}@endif" />                            
+                            @error('start_time')
+                            <div style="color: red;" class="">{{$message}}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-10">
+                            <label class="form-label">Ngày kết thúc: </label><span style="color: red;"> *</span>
+                            <input type="text" name="end_time" class="form-control mb-2" placeholder="Nhập ngày kết thúc áp dụng mã..." value="@if(!empty(old("end_time"))){{old("end_time")}}@else {{$coupon->end_time}}@endif" />                            
+                            @error('end_time')
                             <div style="color: red;" class="">{{$message}}</div>
                             @enderror
                         </div>

@@ -8,8 +8,10 @@ use App\Http\Controllers\Controller;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Coupon;
 use Carbon\Carbon;
-
+use Session;
+session_start();
 class CartController extends Controller
 {
     /**
@@ -27,7 +29,39 @@ class CartController extends Controller
     //check mã giảm giá
     function checkcoupon(Request $request){
         $data = $request->all();
-        print_r($data);
+        $coupon = Coupon::where('coupon_code',$data['coupon'])->first();
+        // print_r($coupon);
+        if($coupon){
+            $count_coupon = $coupon->count();
+            if($count_coupon>0){ 
+                $coupon_session = Session::get('coupon');
+                if($coupon_session==true){
+                    $is_avaiable = 0;
+                    if($is_avaiable==0){
+                        $cou[] = array(
+                            'coupon_code' => $coupon->coupon_code,
+                            'coupon_condition' => (int)$coupon->coupon_condition,
+                            'coupon_number' => (int)$coupon->coupon_number,
+
+                        );
+                        Session::put('coupon',$cou);
+                    }
+                }else{
+                    $cou[] = array(
+                            'coupon_code' => $coupon->coupon_code,
+                            'coupon_condition' => $coupon->coupon_condition,
+                            'coupon_number' => $coupon->coupon_number,
+
+                        );
+                    Session::put('coupon',$cou);
+                }
+                Session::save();
+                return redirect()->back()->with('message','Thêm mã giảm giá thành công');
+            }
+
+        }else{
+            return redirect()->back()->with('error','Mã giảm giá không đúng');
+        }
     }
 
     public function add(Request $request, $id=null){
