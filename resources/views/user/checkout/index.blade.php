@@ -60,7 +60,7 @@
                                     <p class="col-8">{{$product->name}}</p>
                                     <p class="col-2">{{$product->qty}}</p>
                                     <div class="col-2">
-                                        <p  style="float: right">{{number_format($product->price,0, ',', '.')}}</p>
+                                        <p  style="float: right">{{number_format($product->price*$product->qty,0, ',', '.')}}</p>
                                     </div>
                                 </div>
                             @endforeach
@@ -69,7 +69,12 @@
                         <div class="border-bottom pt-3 pb-2">
                             <div class="d-flex justify-content-between mb-3">
                                 <h6>Tổng hoá đơn</h6>
-                                <h6>{{Cart::total(),0, ',', '.'}}</h6>
+                                <h6>{{Cart::subtotal(),0, ',', '.'}}</h6>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <h6 class="font-weight-medium">Áp dụng mã giảm giá</h6>
+                                <h6 class="font-weight-medium">0
+                                </h6>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <h6 class="font-weight-medium">Phí vận chuyển</h6>
@@ -79,7 +84,7 @@
                         <div class="pt-2">
                             <div class="d-flex justify-content-between mt-2">
                                 <h5>Tổng thanh toán</h5>
-                                <h5>{{Cart::total(),0,',','.'}}</h5>
+                                <h5>{{Cart::subtotal(),0,',','.'}}</h5>
                             </div>
                         </div>
                         <div class="pt-2">

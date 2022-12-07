@@ -21,16 +21,25 @@ class CartController extends Controller
      */
     public function index()
     {
+        // Session::forget('coupon');
         $items = Cart::content();
-        return view('user.product.cart')->with(['items' => $items]);
-
+        return view('user.product.cart')->with([
+            'items' => $items,
+        ]);
     }
+
+    // public function reacToCart(){
+    //     $items = Cart::content();
+    //     return view('user.product.cart')->with([
+    //         'items' => $items,
+    //         'message' =>'Thêm mã giảm giá thành công'
+    //     ]);
+    // }
 
     //check mã giảm giá
     function checkcoupon(Request $request){
         $data = $request->all();
         $coupon = Coupon::where('coupon_code',$data['coupon'])->first();
-        // print_r($coupon);
         if($coupon){
             $count_coupon = $coupon->count();
             if($count_coupon>0){ 

@@ -141,6 +141,7 @@
             </div>
             <!-- Shop Product End -->
         </div>
+        {{ $products->links() }}
     </div>
 @section('js')
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>

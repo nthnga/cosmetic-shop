@@ -74,11 +74,16 @@
                 <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Tóm tắt giỏ hàng</span></h5>
                 <div class="bg-light p-30 mb-5">
                     <div class="border-bottom pb-2">
+                        @php 
+                            $total_cart = (int)Cart::subtotal(null,null,'');
+                            $percent_sale = 0;
+                            $total_coupon = 0;
+                            $total_money = $total_cart-$total_coupon;
+                        @endphp
+
                         @if(Session::get('coupon'))
                             @foreach(Session::get('coupon') as $key => $cou)
                                 @php 
-                                $total_cart = (int)Cart::subtotal(null,null,'');
-                                $percent_sale = 0;
                                 if ($cou['coupon_condition']==1) {
                                     $percent_sale = (int)$cou['coupon_number'];
                                     $total_coupon = ($total_cart*((int)$cou['coupon_number']))/100;
@@ -89,21 +94,18 @@
                                 @endphp
                             @endforeach
 						@endif 
+                        
                         <div class="d-flex justify-content-between mb-3">
                             <h6>Tổng tiền</h6>
                             <h6>{{number_format($total_cart)}}</h6>
                         </div>
                         <div class="d-flex justify-content-between">
-                            <h6 class="font-weight-medium">Phí giao hàng</h6>
-                            <h6 class="font-weight-medium">0</h6>
-                        </div>
-                      
-                        <div class="d-flex justify-content-between">
-                            <h6 class="font-weight-medium">Số tiền giảm giá</h6>
+                            <h6 class="font-weight-medium">Số tiền sau khi áp dụng mã giảm giá</h6>
                             <h6 class="font-weight-medium">{{number_format($total_coupon)}}
                                 @if($percent_sale)
                                 ({{$percent_sale}}%)
                                 @endif
+                                
                             </h6>
                         </div>
                     </div>

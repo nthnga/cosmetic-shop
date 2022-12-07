@@ -18,6 +18,7 @@ class Product extends Model
         'origin_price',
         'sale_price',
         'category_id',
+        'trademark_id',
         'user_id',
         'sold',
         'status',
@@ -49,6 +50,11 @@ class Product extends Model
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function trademark()
+    {
+        return $this->belongsTo(trademark::class);
     }
 
     public function images()

@@ -143,6 +143,10 @@ class OrderController extends Controller
     {
         $order = Order::findOrFail($id);
         $order->status = $request->input('status');
+
+        // if()
+
+
         $order->save();
         if ($order) {
             return response()->json([

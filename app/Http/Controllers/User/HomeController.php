@@ -65,9 +65,9 @@ class HomeController
         }elseif (isset($_GET['amount_start']) && ($_GET['amount_end'])){
             $min = $_GET['amount_start'];
             $max = $_GET['amount_end'];
-            $products = Product::whereBetween('sale_price', [$min, $max])->orderBy('sale_price', 'ASC')->paginate(16);
+            $products = Product::whereBetween('sale_price', [$min, $max])->orderBy('sale_price', 'ASC')->paginate(9);
         } else{
-            $products = Product::orderBy('created_at', 'desc')->paginate(16);
+            $products = Product::orderBy('created_at', 'desc')->paginate(9);
         }
 
         //Loc theo thuong hieu
@@ -82,23 +82,11 @@ class HomeController
     }
 
     public function show($id){
-        $product = Product::where('id',$id)->with(['category','images'])->first();
+        $product = Product::where('id',$id)->with(['category','images','trademark'])->first();
         
         $product_news = Product::orderBy('created_at', 'DESC')->limit(4)->get();
         $cate_product = Category::orderBy('id', 'DESC')->get();
         $trademark_product = Trademark::orderBy('id', 'DESC')->get();
-
-        // $detail_product = Product::join('categories','categories.id','=','products.category_id')
-        // ->join('trademarks','trademarks.id','=','products.trademark_id')
-        // ->where('products.id',$id)->get();
-
-        // foreach($detail_product as $key -> $value){
-        //     $category_id = $value->category_id;
-        //     $id = $value->$id;
-        // }
-        // $related_product = Product::join('categories','categories.id','=','products.category_id')
-        // ->join('trademarks','trademarks.id','=','products.trademark_id')
-        // ->where('categories.id',$id)->get();
 
 
         return view('user.product.detail')->with([

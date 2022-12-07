@@ -4,6 +4,10 @@
     Liên hệ
 @endsection
 
+@section('css')
+<link rel="stylesheet" href="sweetalert2.min.css">
+@endsection
+
 @section('content')
     <!-- Breadcrumb Start -->
     <div class="container-fluid">
@@ -51,7 +55,7 @@
                             <p class="help-block text-danger"></p>
                         </div>
                         <div>
-                            <button class="btn btn-primary py-2 px-4" name="submit" type="submit">Gửi</button>
+                            <button class="btn btn-primary py-2 px-4 button" type="submit">Gửi</button>
                         </div>
                     </form>
                 </div>
@@ -62,15 +66,30 @@
                     width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
                 <div class="bg-light p-30 mb-3">
-                    <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>Long Biên - Hà Nội</p>
-                    <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>cosmeticshop123@gmail.com</p>
-                    <p class="mb-2"><i class="fa fa-phone-alt text-primary mr-3"></i>+012 345 67890</p>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i><b>Long Biên - Hà Nội</b></p>
+                    <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i><i>cosmeticshop123@gmail.com</i></p>
+                    <p class="mb-2"><i class="fa fa-phone-alt text-primary mr-3"></i><b>+012 345 67890</b></p>
                 </div>
             </div>
         </div>
     </div>
 <!-- Contact End -->
 @endsection
-@section('css')
-   
+@section('js')
+<script src="sweetalert2.all.min.js"></script>
+<script>
+    document.querySelector('.button').addEventListener('click',(event)=>{
+        event.preventDefault();
+        Swal.fire({
+        title: 'Cosmetic shop đã nhận được yêu cầu của bạn!',
+        showClass: {
+            popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+            popup: 'animate__animated animate__fadeOutUp'
+        }
+        });
+    });
+
+</script>
 @endsection
