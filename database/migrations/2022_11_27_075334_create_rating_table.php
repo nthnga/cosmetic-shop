@@ -13,7 +13,7 @@ class CreateRatingTable extends Migration
      */
     public function up()
     {
-        Schema::create('ratings', function (Blueprint $table) {
+        Schema::create('rating', function (Blueprint $table) {
             $table->id();
             $table->integer('product_id')->nullable();
             $table->integer('rating')->nullable();
@@ -29,6 +29,6 @@ class CreateRatingTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ratings');
+        Schema::dropIfExists('rating');
     }
 }
