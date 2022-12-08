@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Category;
+use App\Models\Trademark;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Cache;
@@ -32,6 +33,9 @@ class ProductController extends Controller
             })
             ->editColumn('category_id', function ($product) {
                 return  $product->category?$product->category->name:"";
+            })
+            ->editColumn('trademark_id', function ($product) {
+                return  $product->trademark?$product->trademark->name:"";
             })
             ->editColumn('quantity', function ($product) {
                 return  $product->quantity;
@@ -77,7 +81,7 @@ class ProductController extends Controller
                             </div>';
 
             })
-            ->rawColumns(['name','category_id','quantity','image', 'action', 'created_at'])
+            ->rawColumns(['name','category_id','trademark_id','quantity','image', 'action', 'created_at'])
             ->make(true);
 
     }
@@ -85,8 +89,10 @@ class ProductController extends Controller
     public function create()
     {
         $categories = Category::get();
+        $trademarks = Trademark::get();
         return view('admin.products.create')->with([
-            'categories' => $categories
+            'categories' => $categories,
+            'trademarks' => $trademarks
         ]);
     }
 
@@ -102,6 +108,7 @@ class ProductController extends Controller
         $product->origin_price = $data['origin_price'];
         $product->sale_price = $data['sale_price'];
         $product->category_id = $data['category_id'];
+        $product->trademark_id = $data['trademark_id'];
         $product->status = $data['status'];
         $product->save();
 
@@ -127,9 +134,12 @@ class ProductController extends Controller
     {
         $product = Product::where('id',$id)->with(['category','images'])->first();
         $categories = Category::get();
+        
+        $trademarks = Trademark::get();
         return view('admin.products.edit')->with([
             'categories' => $categories,
-            'product' => $product
+            'product' => $product,
+            'trademarks' => $trademarks
         ]);
     }
 
@@ -144,6 +154,7 @@ class ProductController extends Controller
         $product->origin_price = $data['origin_price'];
         $product->sale_price = $data['sale_price'];
         $product->category_id = $data['category_id'];
+        $product->trademark_id = $data['trademark_id'];
         $product->status = $data['status'];
         $product->save();
 

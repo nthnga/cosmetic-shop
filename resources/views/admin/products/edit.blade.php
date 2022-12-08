@@ -49,6 +49,21 @@
                             <p style="color: red;">{{ $message }}</p>
                             @enderror
                         </div>
+                        <div class="form-group">
+                            <label>Thương hiệu</label><span style="color: red;"> *</span>
+                            <select class="form-control select2" name="trademark_id"  style="width: 100%;" id="trademark" required>
+                                <option value="0">-- Chọn thương hiệu --</option>
+                                @foreach($trademarks as $item)
+                                    @php
+                                        $selected="";
+                                        if($product->trademark_id == $item->id){
+                                          $selected = "selected";
+                                        }
+                                    @endphp
+                                    <option value="{{$item->id}}" {{$selected}}>{{$item->name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">

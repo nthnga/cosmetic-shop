@@ -105,7 +105,6 @@
                                 @if($percent_sale)
                                 ({{$percent_sale}}%)
                                 @endif
-                                
                             </h6>
                         </div>
                     </div>

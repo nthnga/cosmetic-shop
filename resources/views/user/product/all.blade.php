@@ -27,16 +27,26 @@
             <div class="col-lg-3 col-md-4">
                 <!-- Price Start -->
                 <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Lọc theo thương hiệu</span></h5>
-                <div class="bg-light p-4 mb-30">
-                    @foreach ($trademarks as $trademark)
-                        <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                            <input type="checkbox" class="custom-control-input" id="price-1">
-                            <label class="custom-control-label" for="price-1">{{$trademark->name}}</label>
-                        </div>
-                    @endforeach
-                    
-                </div>
-
+                <form action="{{route('home.listProduct')}}" method="GET">
+                    <div class="bg-light p-4 mb-30">
+                        @foreach ($trademarks as $trademark)
+                            @php
+                                
+                                $checked = [];
+                                if(isset($_GET['filter_trademark']))
+                                {
+                                    $checked = $_GET['filter_trademark'];
+                                }
+                            @endphp
+                            <div class="custom-control mb-3" style="padding-left: 0px;">
+                                <input type="checkbox" name="filter_trademark" value="{{$trademark->id}}" 
+                                @if (in_array($trademark->id, $checked)) checked @endif/>
+                                <label>{{$trademark->name}}</label>
+                            </div>
+                        @endforeach
+                        <input type="submit" name="filter_trademark" value="Lọc" class="btn-primary" style="margin-top: 30px; width: 80px; border: none">
+                    </div>
+                 </form>
                 <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Lọc theo giá</span></h5>
                 <div class="shop-grid-button d-flex align-items-center">
                       <form method="get" action="{{route('home.listProduct')}}">

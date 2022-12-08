@@ -15,6 +15,7 @@
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "livewire/livewire": "^2.5",
+        "nesbot/carbon": "^2.64",
         "yajra/laravel-datatables-oracle": "^9.20"
     },
     "require-dev": {

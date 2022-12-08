@@ -41,6 +41,7 @@
                         <th class="min-w-125px">Ảnh</th>
                         <th style="text-transform: none !important;" class="min-w-125px">Tên sản phẩm</th>
                         <th style="text-transform: none !important;" class="min-w-125px">Danh mục</th>
+                        <th style="text-transform: none !important;" class="min-w-125px">Thương hiệu</th>
                         <th style="text-align: center" class="min-w-125px">Số lượng</th>
                         <th style="text-align: center" class="min-w-125px">Trạng thái</th>
                         <th style="text-align: center" class="min-w-125px">Ngày tạo</th>
@@ -112,6 +113,7 @@
                     {data: 'image', name: 'image'},
                     {data: 'name', name: 'name'},
                     {data: 'category_id', name: 'category_id'},
+                    {data: 'trademark_id', name: 'trademark_id'},
                     {data: 'quantity', name: 'quantity'},
                     {data: 'status_text', name: 'status'},
                     {data: 'created_at', name: 'created_at'},

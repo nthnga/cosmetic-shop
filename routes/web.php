@@ -51,6 +51,10 @@ Route::group([
 ], function () {
     //Trang điều khiển
     Route::get('/dashboard',  [DashboardController::class, 'index'])->name('admin.dashboard');
+    
+    //Thống kê dashboard
+    Route::get('/filter-by-date',  [DashboardController::class, 'filterByDate']);
+    Route::get('/dashboard-filter',  [DashboardController::class, 'dashboard_filter']);
 
     // Quản lý người dùng
     Route::group(['prefix' => 'users'], function () {
@@ -123,6 +127,18 @@ Route::group([
         Route::get('/get-list', [OrderController::class, 'getList'])->name('admin.orders.getList');
         Route::post('/change-status/{id}', [OrderController::class, 'changeStatus'])->name('admin.orders.changeStatus');
     });
+
+    //Quản lý thông kê
+    // Route::group(['prefix' => 'statisticals'], function(){
+    //     Route::get('/', 'StatisticalController@index');
+    //     // ->name('backend.statistical.index');
+    //     Route::post('/filterByDate', 'StatisticalController@filterByDate');
+    //     // ->name('backend.statistical.filterByDate');
+    //     Route::post('/dayOrder', 'StatisticalController@dayOrder');
+    //     // ->name('backend.statistical.dayOrder');
+    //     Route::post('/filterAll', 'StatisticalController@filterAll');
+    //     // ->name('backend.statistical.filterAll');
+    // });
 
 });
 

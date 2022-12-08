@@ -70,6 +70,7 @@
                                     <i class="fa fa-plus"></i>
                                 </button>
                             </div>
+                            
                         </div>
                         <div>
                             <a href="{{route('user.product.add', $product->id)}}" class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Thêm vào giỏ hàng</a>
