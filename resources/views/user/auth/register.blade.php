@@ -24,11 +24,11 @@
                                 <form action="{{ route('user.register.store')  }}" method="POST">
                                     {{ csrf_field() }}
                                     <div class="form-floating mb-3">
-                                        <input name="name" class="form-control" id="inputEmail" type="text" placeholder="" required/>
+                                        <input name="name" class="form-control" id="inputEmail" type="text" placeholder="Nguyễn Văn A" required/>
                                         <label for="inputEmail">Họ tên</label>
                                     </div>
                                     <div class="form-floating mb-3">
-                                        <input name="email" class="form-control" id="inputEmail" type="email" placeholder="" required/>
+                                        <input name="email" class="form-control" id="inputEmail" type="email" placeholder="email@gmail.com" required/>
                                         <label for="inputEmail">Email</label>
                                     </div>
                                     <div class="form-floating mb-3">
@@ -57,7 +57,7 @@
                                 </form>
                             </div>
                             <div class="card-footer text-center py-3">
-                                <div class="small">Chào mừng trở lại</div>
+                                <div class="small"><i>Chào mừng bạn đã đến với Cosmetic Shop!</i></div>
                             </div>
                         </div>
                     </div>

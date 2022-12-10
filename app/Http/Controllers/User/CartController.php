@@ -21,20 +21,15 @@ class CartController extends Controller
      */
     public function index()
     {
-        // Session::forget('coupon');
+        if(!Session::get('is_use_coupon')){
+            Session::forget('coupon');
+        };
+        
         $items = Cart::content();
         return view('user.product.cart')->with([
             'items' => $items,
         ]);
     }
-
-    // public function reacToCart(){
-    //     $items = Cart::content();
-    //     return view('user.product.cart')->with([
-    //         'items' => $items,
-    //         'message' =>'Thêm mã giảm giá thành công'
-    //     ]);
-    // }
 
     //check mã giảm giá
     function checkcoupon(Request $request){
@@ -64,6 +59,7 @@ class CartController extends Controller
                         );
                     Session::put('coupon',$cou);
                 }
+                Session::put('is_use_coupon',true);
                 Session::save();
                 return redirect()->back()->with('message','Thêm mã giảm giá thành công');
             }

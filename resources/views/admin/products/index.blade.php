@@ -39,9 +39,9 @@
                     <!--begin::Table row-->
                     <tr style="text-transform: none !important;" class="text-start text-muted fw-bolder fs-7 gs-0">
                         <th class="min-w-125px">Ảnh</th>
-                        <th style="text-transform: none !important;" class="min-w-125px">Tên sản phẩm</th>
-                        <th style="text-transform: none !important;" class="min-w-125px">Danh mục</th>
-                        <th style="text-transform: none !important;" class="min-w-125px">Thương hiệu</th>
+                        <th style="text-transform: none !important; text-align: center" class="min-w-125px">Tên sản phẩm</th>
+                        <th style="text-transform: none !important; text-align: center" class="min-w-125px">Danh mục</th>
+                        <th style="text-transform: none !important; text-align: center;" class="min-w-125px">Thương hiệu</th>
                         <th style="text-align: center" class="min-w-125px">Số lượng</th>
                         <th style="text-align: center" class="min-w-125px">Trạng thái</th>
                         <th style="text-align: center" class="min-w-125px">Ngày tạo</th>

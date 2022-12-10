@@ -5,7 +5,7 @@
 @endsection
 
 @section('css')
-<link rel="stylesheet" href="sweetalert2.min.css">
+{{-- <link rel="stylesheet" href="sweetalert2.min.css"> --}}
 @endsection
 
 @section('content')
@@ -76,11 +76,11 @@
 <!-- Contact End -->
 @endsection
 @section('js')
-<script src="sweetalert2.all.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@if(Session::has('success'))
 <script>
-    document.querySelector('.button').addEventListener('click',(event)=>{
-        event.preventDefault();
-        Swal.fire({
+    // Swal.fire('Any fool can use a computer')
+    Swal.fire({
         title: 'Cosmetic shop đã nhận được yêu cầu của bạn!',
         showClass: {
             popup: 'animate__animated animate__fadeInDown'
@@ -88,8 +88,7 @@
         hideClass: {
             popup: 'animate__animated animate__fadeOutUp'
         }
-        });
     });
-
 </script>
+@endif
 @endsection

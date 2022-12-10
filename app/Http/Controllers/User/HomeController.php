@@ -66,11 +66,17 @@ class HomeController
             $min = $_GET['amount_start'];
             $max = $_GET['amount_end'];
             $products = Product::whereBetween('sale_price', [$min, $max])->orderBy('sale_price', 'ASC')->paginate(9);
-        } else{
+        }elseif (isset($_GET['trademark'])){
+            $filter_trademark = $_GET['trademark'];
+            $trademark_arr = explode(",", $filter_trademark);
+            $products = Product::whereIn('trademark_id', $trademark_arr)->orderBy('created_at', 'desc')->paginate(9)
+            ->appends(request()->query());
+
+        }else{
             $products = Product::orderBy('created_at', 'desc')->paginate(9);
         }
 
-        //Loc theo thuong hieu
+        $trademark_name = Trademark::orderBy('name', 'DESC')->get();
 
 
         return view('user.product.all')->with([
@@ -78,6 +84,7 @@ class HomeController
            'amount_start' => $min,
            'amount_end' => $max,
            'trademarks' => $trademarks,
+           'trademark_name' => $trademark_name
         ]);
     }
 

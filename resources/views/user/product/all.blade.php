@@ -23,30 +23,36 @@
     <!-- Breadcrumb End -->
     <div class="container-fluid">
         <div class="row px-xl-5">
-            <!-- Shop Sidebar Start -->
             <div class="col-lg-3 col-md-4">
-                <!-- Price Start -->
+                @foreach($trademark_name as $name)
+                @endforeach
                 <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Lọc theo thương hiệu</span></h5>
-                <form action="{{route('home.listProduct')}}" method="GET">
                     <div class="bg-light p-4 mb-30">
-                        @foreach ($trademarks as $trademark)
-                            @php
-                                
+                        @php
+                                $trademark_id = [];
+                                $trademark_arr = [];
+
                                 $checked = [];
-                                if(isset($_GET['filter_trademark']))
+                                if(isset($_GET['trademark']))
                                 {
-                                    $checked = $_GET['filter_trademark'];
+                                    $id = $_GET['trademark'];
+    
+                                }else{
+                                    $id = $name->trademark_id.",";
+                                    
                                 }
+                                $trademark_arr = explode(",", $id);
                             @endphp
+                        @foreach ($trademarks as $trademark)
                             <div class="custom-control mb-3" style="padding-left: 0px;">
-                                <input type="checkbox" name="filter_trademark" value="{{$trademark->id}}" 
-                                @if (in_array($trademark->id, $checked)) checked @endif/>
+                                <input type="checkbox" {{in_array($trademark->id,$trademark_arr) ? 'checked' : ''}}
+                                 class="filter_trademark" name="filter_trademark" data-filters="trademark" value="{{$trademark->id}}"/>
                                 <label>{{$trademark->name}}</label>
                             </div>
                         @endforeach
-                        <input type="submit" name="filter_trademark" value="Lọc" class="btn-primary" style="margin-top: 30px; width: 80px; border: none">
+                        {{-- <input type="submit" name="filter_trademark" value="Lọc" class="btn-primary" style="margin-top: 30px; width: 80px; border: none"> --}}
                     </div>
-                 </form>
+                 {{-- </form> --}}
                 <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Lọc theo giá</span></h5>
                 <div class="shop-grid-button d-flex align-items-center">
                       <form method="get" action="{{route('home.listProduct')}}">
@@ -170,6 +176,17 @@
             console.log(min);
             let max = $( "#amount_end" ).val();
            
+             $('.filter_trademark').click(function(){
+                var trademark = [], tempArray = [];
+                $.each($("[data-filters='trademark']:checked"), function(){
+                    tempArray.push($(this).val());
+                });
+                tempArray.reverse();
+                if(tempArray.length !== 0){
+                    trademark+='?trademark='+tempArray.toString();
+                }
+                window.location.href = trademark;
+                });
 
             $( "#slider-range" ).slider({
                 // orientation: "vertical",

@@ -15,19 +15,28 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use phpDocumentor\Reflection\Types\True_;
+use Session;
 
 class PaymentController extends Controller
 {
     public function store(Request $request)
     {
-        $items = Cart::content();
-        $price_total = 0;
-        foreach ($items as $item){
-            $product = Product::where('id',$item->id)->first();
-            if ($product){
-                $price_total += ($product->sale_price*$item->qty);
+         
+        $total_cart = (int)Cart::subtotal(null,null,'');
+        $total_coupon = 0;
+        $price_total = $total_cart-$total_coupon;
+
+        if(Session::get('coupon')){
+            foreach(Session::get('coupon') as $key => $cou){
+                if ($cou['coupon_condition']==1){
+                    $total_coupon = ($total_cart*((int)$cou['coupon_number']))/100;
+                }else{
+                    $total_coupon = $cou['coupon_number'];
+                }
             }
         }
+
+        $items = Cart::content();
         $vnp_TxnRef = 'VNPTF'.Carbon::now()->timestamp;
         $vnp_OrderInfo = 'Thanh toan don hang vnpay';
         $vnp_OrderType = 'other';
@@ -95,7 +104,6 @@ class PaymentController extends Controller
     public function storePayment($data = null,$type,$items,$price_total,$note){
         $order = new Order();
         $order->customer_id = Auth::guard('web')->id();
-//        $order->product_id = $product->id;
         $order->total = $price_total;
         $order->payment_type = $type;
         $order->note = $note;
@@ -118,7 +126,7 @@ class PaymentController extends Controller
                 $this->storePaymentVnpay($data, $order->id);
             }
         }
-
+        Session::forget('coupon');
         Cart::destroy();
     }
 

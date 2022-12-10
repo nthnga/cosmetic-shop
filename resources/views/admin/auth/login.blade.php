@@ -20,7 +20,7 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-5">
                         <div class="card shadow-lg border-0 rounded-lg mt-5">
-                            <div class="card-header"><h3 class="text-center font-weight-light my-4">Đăng nhập</h3></div>
+                            <div class="card-header"><h3 class="text-center font-weight-light my-4">Đăng nhập tài khoản danh cho Admin</h3></div>
                             <div class="card-body">
                                 <form action="{{ route('login.store')  }}" method="post">
                                    @csrf
@@ -44,7 +44,7 @@
                                 </form>
                             </div>
                             <div class="card-footer text-center py-3">
-                                <div class="small">Chào mừng trở lại</div>
+                                <div class="small">ADMIN COSMETIC SHOP</div>
                             </div>
                         </div>
                     </div>

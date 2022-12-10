@@ -54,6 +54,10 @@
                             <div style="color: red;" class="">{{$message}}</div>
                             @enderror
                         </div>
+                        
+                    </div>
+
+                    <div class="col-sm-6">
                         <div class="mb-10">
                             <label class="form-label">Số % / tiền giảm: </label><span style="color: red;"> *</span>
                             <input type="text" name="coupon_number" class="form-control mb-2" placeholder="Nhập số phần trăm hoặc số tiền giảm..." value="{{old('coupon_number')}}" />
@@ -63,19 +67,20 @@
                         </div>
                         <div class="mb-10">
                             <label class="form-label">Ngày bắt đầu: </label><span style="color: red;"> *</span>
-                            <input type="text" name="start_time" class="form-control mb-2" placeholder="Nhập ngày mã bắt đầu áp dụng..." value="{{old('start_time')}}" />
+                            <input type="date" name="start_time" class="form-control mb-2" placeholder="Nhập ngày mã bắt đầu áp dụng..." value="{{old('start_time')}}" />
                             @error('start_time')
                             <div style="color: red;" class="">{{$message}}</div>
                             @enderror
                         </div>
                         <div class="mb-10">
                             <label class="form-label">Ngày kết thúc: </label><span style="color: red;"> *</span>
-                            <input type="text" name="end_time" class="form-control mb-2" placeholder="Nhập ngày kết thúc áp dụng mã..." value="{{old('end_time')}}" />
+                            <input type="date" name="end_time" class="form-control mb-2" placeholder="Nhập ngày kết thúc áp dụng mã..." value="{{old('end_time')}}" />
                             @error('end_time')
                             <div style="color: red;" class="">{{$message}}</div>
                             @enderror
                         </div>
                     </div>
+
                 </div>
             </div>
             <div class="d-flex justify-content-end" style="margin-top: 20px">

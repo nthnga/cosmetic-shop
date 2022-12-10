@@ -53,12 +53,12 @@
                         <small class="pt-1">(99 Đánh giá)</small>
                     </div>
                     <h3 class="font-weight-semi-bold mb-4">{{number_format($product->sale_price,0, ',', '.') . ' '.'VNĐ'}}</h3>
-                    {{-- <p class="mb-4">{{$product->description}}</p> --}}
+                    
                     <p class="mb-4"><b>Số lượng trong giỏ hàng: </b>{{$product->quantity}}</p>
                     <p class="mb-4"><b>Danh mục: </b> {{$product->category->name}}</p>
                     <p class="mb-4"><b>Thương hiệu: </b>@if($product->trademark) {{$product->trademark->name}} @else Không có @endif</p>
                     <div class="d-flex align-items-center mb-4 pt-2">
-                        <div class="input-group quantity mr-3" style="width: 130px;">
+                        {{-- <div class="input-group quantity mr-3" style="width: 130px;">
                             <div class="input-group-btn">
                                 <button class="btn btn-primary btn-minus">
                                     <i class="fa fa-minus"></i>
@@ -71,7 +71,8 @@
                                 </button>
                             </div>
                             
-                        </div>
+                        </div> --}}
+                        
                         <div>
                             <a href="{{route('user.product.add', $product->id)}}" class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Thêm vào giỏ hàng</a>
                             <a style="margin-left: 20px" href="{{route('home.checkout',$product->id)}}" class="btn btn-primary px-3"><i class="fas fa-donate"></i> Mua ngay</a>

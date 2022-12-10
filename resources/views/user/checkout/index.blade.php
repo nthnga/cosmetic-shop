@@ -67,13 +67,33 @@
 
                         </div>
                         <div class="border-bottom pt-3 pb-2">
+                            @php 
+                                $total_cart = (int)Cart::subtotal(null,null,'');
+                                $percent_sale = 0;
+                                $total_coupon = 0;
+                                $total_money = $total_cart-$total_coupon;
+                            @endphp
+
+                            @if(Session::get('coupon'))
+                                @foreach(Session::get('coupon') as $key => $cou)
+                                    @php 
+                                    if ($cou['coupon_condition']==1) {
+                                        $percent_sale = (int)$cou['coupon_number'];
+                                        $total_coupon = ($total_cart*((int)$cou['coupon_number']))/100;
+                                    } else{
+                                        $total_coupon = $cou['coupon_number'];
+                                    }
+                                    $total_money = $total_cart-$total_coupon
+                                    @endphp
+                                @endforeach
+                            @endif 
                             <div class="d-flex justify-content-between mb-3">
                                 <h6>Tổng hoá đơn</h6>
-                                <h6>{{Cart::subtotal(),0, ',', '.'}}</h6>
+                                <h6>{{number_format($total_cart)}}</h6>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <h6 class="font-weight-medium">Áp dụng mã giảm giá</h6>
-                                <h6 class="font-weight-medium">0
+                                <h6 class="font-weight-medium">{{number_format($total_coupon)}}
                                 </h6>
                             </div>
                             <div class="d-flex justify-content-between">
@@ -84,7 +104,7 @@
                         <div class="pt-2">
                             <div class="d-flex justify-content-between mt-2">
                                 <h5>Tổng thanh toán</h5>
-                                <h5>{{Cart::subtotal(),0,',','.'}}</h5>
+                                <h5>{{number_format($total_money)}}</h5>
                             </div>
                         </div>
                         <div class="pt-2">
