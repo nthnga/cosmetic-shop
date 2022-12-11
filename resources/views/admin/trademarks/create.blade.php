@@ -34,7 +34,7 @@
                         </div>
                         <div class="mb-10">
                             <label class="form-label">Slug: </label><span style="color: red;"> *</span>
-                            <textarea class="form-control mb-2" style="width:100%;" name="slug" id="" rows="4" placeholder="Nhập mô tả..." >{{old('slug')}}</textarea>
+                            <input type="text" name="slug" class="form-control mb-2" placeholder="Slug..." value="{{old('slug')}}" />
                             @error('slug')
                             <div style="color: red;" class="">{{$message}}</div>
                             @enderror

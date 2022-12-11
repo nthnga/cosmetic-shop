@@ -7,8 +7,13 @@ use App\Models\Category;
 use App\Models\Order;
 use App\Models\Trademark;
 use App\Models\Rating;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 use DB;
+session_start();
+use App\Models\City;
+use App\Models\District;
+use App\Models\Ward;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Gloudemans\Shoppingcart\Facades\Cart;
@@ -95,30 +100,82 @@ class HomeController
         $cate_product = Category::orderBy('id', 'DESC')->get();
         $trademark_product = Trademark::orderBy('id', 'DESC')->get();
 
-
+        $rating = Rating::where('product_id',$id)->avg('rating');
+        $rating = round($rating);
+        $comment = Comment::with('user')->where('product_id',$id)->get();
         return view('user.product.detail')->with([
             'product' => $product,
             // 'related' => $related_product,
             'product_news' => $product_news,
-            
+            'rating'=>$rating,
+            'comment'=>$comment
         ]);
 
-
-    }
-
-    public function addToCard($id){
-        
+        $items = Cart::content();
+        return view('user.product.cart')->with([
+            'items' => $items,
+        ]);
 
     }
 
     public function checkout(){
+        $city = City::orderby('matp','ASC')->get(); 
+
         if (Auth::check()){
             $items = Cart::content();
             return view('user.checkout.index')->with([
                 'products' => $items,
+                'city' => $city
             ]);
         }else{
             return redirect()->route('user.login.form');
         }
+
+        $city = City::orderby('matp','ASC')->get();
+    }
+
+    public function selectDeliverHome(Request $request){
+    	$data = $request->all();
+    	if($data['action']){
+    		$output = '';
+    		if($data['action']=="city"){
+    			$select_province = District::where('matp',$data['ma_id'])->orderby('maqh','ASC')->get();
+    				$output.='<option>---Chọn quận huyện---</option>';
+    			foreach($select_province as $key => $province){
+    				$output.='<option value="'.$province->maqh.'">'.$province->name_quanhuyen.'</option>';
+    			}
+
+    		}else{
+
+    			$select_wards = Ward::where('maqh',$data['ma_id'])->orderby('xaid','ASC')->get();
+    			$output.='<option>---Chọn xã phường---</option>';
+    			foreach($select_wards as $key => $ward){
+    				$output.='<option value="'.$ward->xaid.'">'.$ward->name_xaphuong.'</option>';
+    			}
+    		}
+    		echo $output;
+    	}
+    	
+    }
+
+    public function insert_rating(Request $request){
+        $data = $request->all();
+        $rating = new Rating();
+        $rating->user_id = Auth::guard('web')->user()->id;
+        $rating->product_id = $data['product_id'];
+        $rating->rating = $data['index'];
+        $rating->save();
+        echo 'done';
+    }
+    public function comment_product(Request $request){
+        $data = $request->all();
+        $comment = new Comment();
+        $comment->user_id = $data['user_id'];
+        $comment->product_id = $data['product_id'];
+        $comment->name = $data['name_comment'];
+        $comment->email = $data['email_comment'];
+        $comment->content = $data['content_comment'];
+        $comment->save();
+        echo 'done';
     }
 }

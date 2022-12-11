@@ -16,6 +16,15 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                     Quản lý khách hàng
                 </a>
+                <a class="nav-link" href="{{route('admin.comment.index')}}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-comment"></i></div>
+                    Quản lý bình luận
+                </a>
+                <div class="sb-sidenav-menu-heading">Vận chuyển</div>
+                <a class="nav-link" href="{{route('admin.transport.create')}}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-truck"></i></div>
+                    Thêm vận chuyển
+                </a>
                 <div class="sb-sidenav-menu-heading">Sản phẩm</div>
                 <a class="nav-link" href="{{route('admin.categories.index')}}">
                     <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>

@@ -172,11 +172,7 @@
                 // return fales;
             });
 
-            let min = $( "#amount_start" ).val();
-            console.log(min);
-            let max = $( "#amount_end" ).val();
-           
-             $('.filter_trademark').click(function(){
+            $('.filter_trademark').click(function(){
                 var trademark = [], tempArray = [];
                 $.each($("[data-filters='trademark']:checked"), function(){
                     tempArray.push($(this).val());
@@ -187,6 +183,10 @@
                 }
                 window.location.href = trademark;
                 });
+
+            let min = $( "#amount_start" ).val();
+            console.log(min);
+            let max = $( "#amount_end" ).val();
 
             $( "#slider-range" ).slider({
                 // orientation: "vertical",

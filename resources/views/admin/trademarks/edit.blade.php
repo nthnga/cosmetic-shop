@@ -34,8 +34,9 @@
                             @enderror
                         </div>
                         <div class="mb-10">
-                            <label class="form-label">Mô tả: </label><span style="color: red;"> *</span>
-                            <textarea class="form-control mb-2" style="width:100%;" name="slug" id="" rows="4" placeholder="Nhập mô tả..." >@if(!empty(old("slug"))){{old("slug")}}@else {{$trademark->slug}}@endif</textarea>
+                            <label class="form-label">Slug: </label><span style="color: red;"> *</span>
+                            <input type="text" style="width:100%;" name="slug" placeholder="Slug..." value="@if(!empty(old("slug"))){{old("slug")}}@else {{$trademark->slug}}@endif"/>
+                            
                             @error('slug')
                             <div style="color: red;" class="">{{$message}}</div>
                             @enderror

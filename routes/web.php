@@ -18,6 +18,8 @@ use App\Http\Controllers\User\CartController;
 use App\Http\Controllers\Admin\TrademarkController;
 use App\Http\Controllers\Admin\CouponController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\CommentController;
+use App\Http\Controllers\Admin\TransportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +44,10 @@ Route::post('/login', [LoginController::class,'loginUser'])->name('user.login.st
 Route::get('/register', [RegisterController::class,'showRegisterForm'])->name('user.register.form');
 Route::post('/register', [RegisterController::class,'register'])->name('user.register.store');
 Route::get('/logout', [LogoutController::class,'logoutUser'])->name('user.logout');
+
+//Rating & Comment
+Route::post('/insert-rating',[HomeController::class,'insert_rating'])->name('insert-rating');
+Route::post('/comment-product',[HomeController::class,'comment_product'])->name('comment-product');
 
 //Admin - Trang quản lý
 Route::group([
@@ -128,6 +134,21 @@ Route::group([
         Route::post('/change-status/{id}', [OrderController::class, 'changeStatus'])->name('admin.orders.changeStatus');
     });
 
+        // Quản lý comment
+        Route::group(['prefix' => 'comment'], function () {
+            Route::get('/', [CommentController::class, 'index'])->name('admin.comment.index');
+        });
+        // Quản lý vận chuyển
+        Route::group(['prefix' => 'transport'], function () {
+            Route::get('/', [TransportController::class, 'index'])->name('admin.transport.index'); 
+            Route::get('/create', [TransportController::class, 'create'])->name('admin.transport.create'); 
+            Route::post('/select-delivery', [TransportController::class, 'select_delivery'])->name('admin.transport.select-delivery'); 
+            Route::post('/insert-delivery', [TransportController::class, 'insert_delivery'])->name('admin.transport.insert-delivery'); 
+            Route::post('/select-feeship', [TransportController::class, 'select_feeship'])->name('admin.transport.select-feeship'); 
+            Route::post('/update-delivery', [TransportController::class, 'update_delivery'])->name('admin.transport.update-delivery'); 
+            
+        });
+
     //Quản lý thông kê
     // Route::group(['prefix' => 'statisticals'], function(){
     //     Route::get('/', 'StatisticalController@index');
@@ -161,6 +182,7 @@ Route::group([
     Route::get('/add-card/{id}', [HomeController::class,'addToCard'])->name('home.addToCard');
 
     Route::get('/checkout', [HomeController::class,'checkout'])->name('home.checkout');
+    Route::post('select-deliver-home', [PaymentController::class, 'selectDeliverHome'])->name('home.transport.select-delivery');
 
     //thanh toán online
     Route::post('/order/store', [PaymentController::class, 'store'])->name('home.order');

@@ -170,7 +170,6 @@
                                            <div class="col-11">
                                                <span>Tên sản phẩm: {{$product->product_name}}</span><br>
                                                <span>Số lượng: {{$product->product_quantity}}</span><br>
-                                               <span>Giá bán: {{number_format($product->product_sale_price,0, ',', '.')}} đ</span><br>
                                                <span>Tổng tiền: {{number_format($product->total,0, ',', '.')}} đ</span><br>
 
                                            </div>

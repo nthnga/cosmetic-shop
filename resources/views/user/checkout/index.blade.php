@@ -47,6 +47,47 @@
                                 <label>Lời nhắn</label>
                                 <textarea name="note" class="form-control" type="text"></textarea>
                             </div>
+                            <div class="col-md-12">
+                                <div class="custom-control custom-checkbox">
+                                    <input type="checkbox" class="custom-control-input" id="shipto">
+                                    <label class="custom-control-label" for="shipto"  data-toggle="collapse" data-target="#shipping-address">Chọn địa điểm nhận hàng</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="collapse mb-5" id="shipping-address">
+                            <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Địa chỉ nhận hàng</span></h5>
+                            <div class="bg-light p-30">
+                                <form>
+                                    @csrf 
+                             
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Chọn thành phố</label>
+                                        <select name="city" id="city" class="form-control input-sm m-bot15 choose city">
+                                        
+                                                <option value="">--Chọn tỉnh thành phố--</option>
+                                            @foreach($city as $key => $ci)
+                                                <option value="{{$ci->matp}}">{{$ci->name_city}}</option>
+                                            @endforeach
+                                                
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Chọn quận huyện</label>
+                                        <select name="province" id="province" class="form-control input-sm m-bot15 province choose">
+                                                <option value="">--Chọn quận huyện--</option>
+                                            
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1">Chọn xã phường</label>
+                                        <select name="wards" id="wards" class="form-control input-sm m-bot15 wards">
+                                                <option value="">--Chọn xã phường--</option>   
+                                        </select>
+                                    </div>
+                               
+                                    <button type="button" name="cacula_transport" class="btn btn-info cacula_transport">Tính phí vận chuyển</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -176,5 +217,30 @@
                 return true;
             }
         }
+        $(document).ready(function(){
+            $('.choose').on('change',function(){
+                var action = $(this).attr('id');
+                var ma_id = $(this).val();
+                var _token = $('input[name="_token"]').val();
+                var result = '';
+                // alert(action);
+                //  alert(matp);
+                //   alert(_token);
+
+                if(action=='city'){
+                    result = 'province';
+                }else{
+                    result = 'wards';
+                }
+                $.ajax({
+                    url : '{{route('home.transport.select-delivery')}}',
+                    method: 'POST',
+                    data:{action:action,ma_id:ma_id,_token:_token},
+                    success:function(data){
+                    $('#'+result).html(data);     
+                    }
+                });
+            });
+        });
     </script>
 @endsection

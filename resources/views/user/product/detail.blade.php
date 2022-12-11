@@ -53,12 +53,11 @@
                         <small class="pt-1">(99 Đánh giá)</small>
                     </div>
                     <h3 class="font-weight-semi-bold mb-4">{{number_format($product->sale_price,0, ',', '.') . ' '.'VNĐ'}}</h3>
-                    
                     <p class="mb-4"><b>Số lượng trong giỏ hàng: </b>{{$product->quantity}}</p>
                     <p class="mb-4"><b>Danh mục: </b> {{$product->category->name}}</p>
                     <p class="mb-4"><b>Thương hiệu: </b>@if($product->trademark) {{$product->trademark->name}} @else Không có @endif</p>
                     <div class="d-flex align-items-center mb-4 pt-2">
-                        {{-- <div class="input-group quantity mr-3" style="width: 130px;">
+                        <div class="input-group quantity mr-3" style="width: 130px;">
                             <div class="input-group-btn">
                                 <button class="btn btn-primary btn-minus">
                                     <i class="fa fa-minus"></i>
@@ -71,11 +70,10 @@
                                 </button>
                             </div>
                             
-                        </div> --}}
-                        
+                        </div>
                         <div>
                             <a href="{{route('user.product.add', $product->id)}}" class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Thêm vào giỏ hàng</a>
-                            <a style="margin-left: 20px" href="{{route('home.checkout',$product->id)}}" class="btn btn-primary px-3"><i class="fas fa-donate"></i> Mua ngay</a>
+                            {{-- <a style="margin-left: 20px" href="{{route('home.checkout',$product->id)}}" class="btn btn-primary px-3"><i class="fas fa-donate"></i> Mua ngay</a> --}}
                         </div>
                         </div>
                     <div class="d-flex pt-2">
@@ -102,16 +100,16 @@
             <div class="col">
                 <div class="bg-light p-30">
                     <div class="nav nav-tabs mb-4">
-                        <a class="nav-item nav-link text-dark active" data-toggle="tab" href="#tab-pane-1">Mô tả</a>
+                        <a class="nav-item nav-link text-dark" data-toggle="tab" href="#tab-pane-1">Mô tả</a>
                         <a class="nav-item nav-link text-dark" data-toggle="tab" href="#tab-pane-2">Tin tức sản phẩm</a>
-                        <a class="nav-item nav-link text-dark" data-toggle="tab" href="#tab-pane-3">Đánh giá (0)</a>
+                        <a class="nav-item nav-link text-dark active" data-toggle="tab" href="#tab-pane-3">Đánh giá (0)</a>
                     </div>
                     <div class="tab-content">
-                        <div class="tab-pane fade show active" id="tab-pane-1">
+                        <div class="tab-pane fade " id="tab-pane-1">
                             <h4 class="mb-3">Thông tin sản phẩm</h4>
                             <p>{{$product->description}}</p>
                         </div>
-                        <div class="tab-pane fade" id="tab-pane-3">
+                        <div class="tab-pane fade show active" id="tab-pane-3">
                             <div class="row">
                                 <style type="text/css">
                                     .style_comment{
@@ -121,23 +119,17 @@
                                     }
                                 </style>
                                 <div class=" row col-md-6 style_comment">
+                                    @foreach($comment as $key => $comm)
                                     <div class="col-md-2">
-                                        <img width="100%" height="115px;" src="{{asset('/storage/images/products/cera.jpg')}}" class="img img-reponsive img-thumbnail">
+                                        <img width="100%" height="115px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/2048px-User-avatar.svg.png" class="img img-reponsive img-thumbnail">
                                     </div>
                                     <div class="col-md-10">
-                                        <p style="color: rgb(255, 47, 47);">Nguyễn Nga</p>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore corporis facere tempora.
+                                        <p style="color: rgb(255, 47, 47);">{{$comm->name}}</p>
+                                        <p>{{$comm->content}}
                                         </p>
                                     </div>
                                     <p></p>
-                                    <div class="col-md-2">
-                                        <img width="100%" height="115px;" src="{{asset('/storage/images/products/cera.jpg')}}" class="img img-reponsive img-thumbnail">
-                                    </div>
-                                    <div class="col-md-10">
-                                        <p style="color: rgb(255, 47, 47);">Nguyễn Nga</p>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore corporis facere tempora.
-                                        </p>
-                                    </div>
+                                    @endforeach
                                 </div>
                     
                                
@@ -145,31 +137,55 @@
                                     <h4 class="mb-4">Đánh giá của bạn</h4>
                                     <small>Địa chỉ email của bạn sẽ không được công bố. Các trường bắt buộc được đánh dấu *</small>
                                     <div class="d-flex my-3">
-                                        <div class="text-primary" style="cursor: pointer; color:#ccc; font-size:30px;">
+                                        {{-- <div class="text-primary" style="cursor: pointer; color:#ccc; font-size:30px;">
                                             <i class="far fa-star"></i>
                                             <i class="far fa-star"></i>
                                             <i class="far fa-star"></i>
                                             <i class="far fa-star"></i>
                                             <i class="far fa-star"></i>
-                                        </div>
+                                        </div> --}}
+                                        <style>
+                                           ul.list-inline.rating li {
+                                                display: inline;
+                                            }
+                                        </style>
+                                        <ul class="list-inline rating"  title="Average Rating">
+                                            @for($count=1; $count<=5; $count++)
+                                                @php
+                                                    if($count<=$rating){
+                                                        $color = 'color:#ffcc00;';
+                                                    }
+                                                    else {
+                                                        $color = 'color:#ccc;';
+                                                    }
+                                                
+                                                @endphp
+                                            
+                                            <li title="star_rating" id="{{$product->id}}-{{$count}}" data-index="{{$count}}"  data-product_id="{{$product->id}}" data-rating="{{$rating}}" class="rating" style="cursor:pointer; {{$color}} font-size:40px;">&#9733;</li>
+                                            @endfor
+
+                                        </ul>
                                     </div>
 
 
                                     <form>
+                                        @csrf
+                                        <input type="hidden" class="product_id_comment" value="{{$product->id}}">
+                                        <input type="hidden" class="user_id_comment" value="{{Auth::guard('web')->user()->id}}">
                                         <div class="form-group">
                                             <label for="message">Nội dung *</label>
-                                            <textarea id="message" cols="30" rows="5" class="form-control"></textarea>
+                                            <textarea id="content_comment" name="content" cols="30" rows="5" class="form-control"></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label for="name">Họ tên *</label>
-                                            <input type="text" class="form-control" id="name">
+                                            <input type="text" name="name" class="form-control" id="name_comment">
                                         </div>
                                         <div class="form-group">
                                             <label for="email">Email *</label>
-                                            <input type="email" class="form-control" id="email">
+                                            <input type="email" name="email" class="form-control" id="email_comment">
                                         </div>
                                         <div class="form-group mb-0">
-                                            <input type="submit" value="Gửi đánh giá" class="btn btn-primary px-3">
+                                            <input type="button" value="Gửi đánh giá" class="btn btn-primary px-3 comment-product">
                                         </div>
                                     </form>
                                 </div>
@@ -241,9 +257,101 @@
             toastr.error("{!! session()->get('error') !!}");
         </script>
     @endif
-    <script type="text/javascript">
+    {{-- <script type="text/javascript">
         $(document).ready(function(){
 
         });
+    </script> --}}
+    <script type="text/javascript">
+        function remove_background(product_id)
+         {
+          for(var count = 1; count <= 5; count++)
+          {
+           $('#'+product_id+'-'+count).css('color', '#ccc');
+          }
+        }
+        //hover chuột đánh giá sao
+       $(document).on('mouseenter', '.rating', function(){
+          var index = $(this).data("index");
+          var product_id = $(this).data('product_id');
+        // alert(index);
+        // alert(product_id);
+          remove_background(product_id);
+          for(var count = 1; count<=index; count++)
+          {
+           $('#'+product_id+'-'+count).css('color', '#ffcc00');
+          }
+        });
+       //nhả chuột ko đánh giá
+       $(document).on('mouseleave', '.rating', function(){
+          var index = $(this).data("index");
+          var product_id = $(this).data('product_id');
+          var rating = $(this).data("rating");
+          remove_background(product_id);
+          //alert(rating);
+          for(var count = 1; count<=rating; count++)
+          {
+           $('#'+product_id+'-'+count).css('color', '#ffcc00');
+          }
+         });
+    
+        //click đánh giá sao
+        $(document).on('click', '.rating', function(){
+              var index = $(this).data("index");
+              var product_id = $(this).data('product_id');
+                var _token = $('input[name="_token"]').val();
+                //alert(product_id);
+              $.ajax({
+               url:"{{route('insert-rating')}}",
+               method:"POST",
+               data:{index:index, product_id:product_id,_token:_token},
+               success:function(data)
+               {
+                if(data == 'done')
+                {
+                 alert("Bạn đã đánh giá "+index +" trên 5");
+                }
+                else
+                {
+                 alert("Lỗi đánh giá");
+                }
+               }
+        });
+              
+        });
+    </script>
+    <script>
+        $('.comment-product').click(function(){
+            var user_id = $('.user_id_comment').val();
+              var product_id = $('.product_id_comment').val();
+              var name_comment = $('#name_comment').val();
+              var content_comment = $('#content_comment').val();
+              var email_comment = $('#email_comment').val();
+                var _token = $('input[name="_token"]').val();
+                
+
+                // alert(name_comment);
+                // alert(content_comment);
+                // alert(email_comment);
+                $.ajax({
+                url:"{{route('comment-product')}}",
+                method:"POST",
+                data:{name_comment:name_comment,content_comment:content_comment,email_comment:email_comment,user_id:user_id, product_id:product_id,_token:_token},
+                success:function(data)
+                {
+                    if(data == 'done')
+                    {
+                    alert('Cảm ơn bạn đã đánh giá,chúng tôi sẽ xem xét hiển thị đánh giá của bạn nhé');
+                    $('#name_comment').val('');
+                    $('#content_comment').val('');
+                    $('#email_comment').val('');
+                    }
+                    else
+                    {
+                    alert("Lỗi đánh giá");
+                    }
+                }
+            })
+        })
     </script>
 @endsection
