@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Rating extends Model
 {
+    
     use HasFactory;
     protected $fillable = [
         'product_id',
@@ -18,4 +19,6 @@ class Rating extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
+
+    public $timestamps = false; //set time to false
 }

@@ -179,7 +179,7 @@ Route::group([
         'prefix' => '/',
         'middleware' => ['auth'],
 ], function () {
-    Route::get('/add-card/{id}', [HomeController::class,'addToCard'])->name('home.addToCard');
+    Route::post('/add-card/{id}', [HomeController::class,'addToCard'])->name('home.addToCard');
 
     Route::get('/checkout', [HomeController::class,'checkout'])->name('home.checkout');
     Route::post('select-deliver-home', [PaymentController::class, 'selectDeliverHome'])->name('home.transport.select-delivery');

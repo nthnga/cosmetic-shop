@@ -22,6 +22,11 @@
     <div class="container-fluid">
         <div class="row px-xl-5">
             <div class="col-lg-8 table-responsive mb-5">
+                @if(session('message'))
+                    <div class="row" style="margin-left:20px;">
+                        <h5 class="text-danger">{{session('message')}}</h5>
+                    </div>
+                @endif
                 <table class="table table-light table-borderless table-hover text-center mb-0">
                     <thead class="thead-dark">
                         <tr>
