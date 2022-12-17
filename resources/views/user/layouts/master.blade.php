@@ -3,11 +3,13 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Cosmetic Shop</title>
+    {{-- <title>Cosmetic Shop</title> --}}
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="Free HTML Templates" name="keywords">
-    <meta content="Free HTML Templates" name="description">
-
+    {{-- <meta content="{{$meta_keywords}}" name="keywords">
+    <meta content="{{$meta_des}}" name="description">
+    <meta name="title" content="{{$meta_title}}"/> --}}
+    <meta name="robots" content=""/>
+    <link  rel="icon" type="image/x-icon" href="" />
     <!-- Favicon -->
     <link href="/user/img/favicon.ico" rel="icon">
 
@@ -24,6 +26,8 @@
 
     <!-- Customized Bootstrap Stylesheet -->
     <link href="/user/css/style.css" rel="stylesheet">
+
+    {{-- <link  rel="canonical" href="{{$url_canonical}}" /> --}}
     @yield('css')
 
 </head>

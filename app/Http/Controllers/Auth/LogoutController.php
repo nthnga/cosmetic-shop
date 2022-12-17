@@ -15,7 +15,7 @@ class LogoutController extends Controller
         Auth::guard('web')->logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect()->route('user.login.form');
+        return redirect()->route('login');
     }
 
     public function logoutAdmin(Request $request)

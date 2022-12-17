@@ -40,7 +40,7 @@
                                 <input name="phone" class="form-control" type="text" value="{{Auth::user()->phone}}">
                             </div>
                             <div class="col-md-12 form-group">
-                                <label>Địa chỉ giao hàng</label>
+                                <label>Địa chỉ</label>
                                 <input name="address" class="form-control" type="text" value="{{Auth::user()->address}}">
                             </div>
                             <div class="col-md-12 form-group">
@@ -62,7 +62,7 @@
                              
                                     <div class="form-group">
                                         <label for="exampleInputPassword1">Chọn thành phố</label>
-                                        <select name="city" id="city" class="form-control input-sm m-bot15 choose city">
+                                        <select name="city" id="city" class="form-control input-sm m-bot15 choose_home city">
                                         
                                                 <option value="">--Chọn tỉnh thành phố--</option>
                                             @foreach($city as $key => $ci)
@@ -73,7 +73,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleInputPassword1">Chọn quận huyện</label>
-                                        <select name="province" id="province" class="form-control input-sm m-bot15 province choose">
+                                        <select name="province" id="province" class="form-control input-sm m-bot15 province choose_home">
                                                 <option value="">--Chọn quận huyện--</option>
                                             
                                         </select>
@@ -85,7 +85,7 @@
                                         </select>
                                     </div>
                                
-                                    <button type="button" name="cacula_transport" class="btn btn-info cacula_transport">Tính phí vận chuyển</button>
+                                    <button type="button" name="cacula_transport" class="btn btn-info calculate_delivery">Tính phí vận chuyển</button>
                                 </form>
                             </div>
                         </div>
@@ -99,7 +99,7 @@
                             @foreach ($products as $product)
                                 <div class="d-flex justify-content-between row">
                                     <p class="col-8">{{$product->name}}</p>
-                                    <p class="col-2">{{$product->qty}}</p>
+                                    <p class="col-2">{{$product->qty}} x {{$product->price}}</p>
                                     <div class="col-2">
                                         <p  style="float: right">{{number_format($product->price*$product->qty,0, ',', '.')}}</p>
                                     </div>
@@ -133,18 +133,31 @@
                                 <h6>{{number_format($total_cart)}}</h6>
                             </div>
                             <div class="d-flex justify-content-between">
+                                <h6 class="font-weight-medium">Phí vận chuyển</h6>
+                                @if((Session::get('fee')))
+                                    <h6 class="font-weight-medium">{{number_format(Session::get('fee'))}}</h6>
+                                @else
+                                    <h6 class="font-weight-medium">0</h6>
+                                @endif
+                            </div>
+                            <div class="d-flex justify-content-between">
                                 <h6 class="font-weight-medium">Áp dụng mã giảm giá</h6>
                                 <h6 class="font-weight-medium">{{number_format($total_coupon)}}
                                 </h6>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <h6 class="font-weight-medium">Phí vận chuyển</h6>
-                                <h6 class="font-weight-medium">0</h6>
                             </div>
                         </div>
                         <div class="pt-2">
                             <div class="d-flex justify-content-between mt-2">
                                 <h5>Tổng thanh toán</h5>
+                                @if((Session::get('fee')))
+                                    @php
+                                    $total_money = $total_money + Session::get('fee');
+                                    @endphp
+                                @else
+                                    @php
+                                    $total_money = $total_money + 0;
+                                    @endphp
+                                @endif
                                 <h5>{{number_format($total_money)}}</h5>
                             </div>
                         </div>
@@ -217,30 +230,56 @@
                 return true;
             }
         }
-        $(document).ready(function(){
-            $('.choose').on('change',function(){
-                var action = $(this).attr('id');
-                var ma_id = $(this).val();
-                var _token = $('input[name="_token"]').val();
-                var result = '';
-                // alert(action);
-                //  alert(matp);
-                //   alert(_token);
+        
+    </script>
 
-                if(action=='city'){
-                    result = 'province';
-                }else{
-                    result = 'wards';
-                }
-                $.ajax({
-                    url : '{{route('home.transport.select-delivery')}}',
-                    method: 'POST',
-                    data:{action:action,ma_id:ma_id,_token:_token},
-                    success:function(data){
-                    $('#'+result).html(data);     
-                    }
-                });
-            });
+    <script>
+        
+        $('.choose_home').on('change',function(){
+        var action = $(this).attr('id');
+        var ma_id = $(this).val();
+        var _token = $('input[name="_token"]').val();
+        var result = '';
+        // alert(action);
+        //  alert(matp);
+        //   alert(_token);
+
+        if(action=='city'){
+            result = 'province';
+        }else{
+            result = 'wards';
+        }
+        $.ajax({
+            url : '{{route('home.transport.select-delivery')}}',
+            method: 'POST',
+            data:{action:action,ma_id:ma_id,_token:_token},
+            success:function(data){
+                $('#'+result).html(data);     
+            }
         });
+    }); 
+
+    </script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+        $('.calculate_delivery').click(function(){
+            var matp = $('.city').val();
+            var maqh = $('.province').val();
+            var xaid = $('.wards').val();
+            var _token = $('input[name="_token"]').val();
+            if(matp == '' && maqh =='' && xaid ==''){
+                alert('Làm ơn chọn để tính phí vận chuyển');
+            }else{
+                $.ajax({
+                url : '{{route('home.transport.calculate_fee')}}',
+                method: 'POST',
+                data:{matp:matp,maqh:maqh,xaid:xaid,_token:_token},
+                success:function(){
+                location.reload(); 
+                }
+                });
+            } 
+        });
+    });
     </script>
 @endsection

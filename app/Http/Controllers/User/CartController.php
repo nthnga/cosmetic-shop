@@ -19,6 +19,7 @@ class CartController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
         if(!Session::get('is_use_coupon')){
@@ -33,6 +34,7 @@ class CartController extends Controller
 
     //check mã giảm giá
     function checkcoupon(Request $request){
+        // dd(1);
         $data = $request->all();
         $coupon = Coupon::where('coupon_code',$data['coupon'])->first();
         if($coupon){
@@ -70,7 +72,7 @@ class CartController extends Controller
     }
 
     public function add(Request $request, $id=null){
-        $qty = $request->get('qty');
+        $qty = $request->input('qty');
         if(empty($qty)){
             $qty = 1;
         }

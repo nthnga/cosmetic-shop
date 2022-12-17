@@ -9,8 +9,9 @@ use App\Models\Trademark;
 use App\Models\Rating;
 use App\Models\Comment;
 use Illuminate\Http\Request;
+use App\Models\Transport;
 use DB;
-session_start();
+use Mail;
 use App\Models\City;
 use App\Models\District;
 use App\Models\Ward;
@@ -18,17 +19,27 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Gloudemans\Shoppingcart\Facades\Cart;
 
-
+session_start();
 
 class HomeController
 {
 
-    public function index(){
+    public function index(Request $request){
+        //seo-metagg
+        $meta_des = "Mỹ phẩm hàng real. Cosmetic shop!";
+        $meta_keywords = "my pham hang auth, mỹ phẩm chất lượng, khuyến mại ";
+        $meta_title = "Cosmetic shop mỹ phẩm chất lượng";
+        $url_canonical = $request->url();
+
         $product_sellings = Product::orderBy('sold', 'DESC')->limit(8)->get();
         $product_news = Product::orderBy('created_at', 'DESC')->limit(8)->get();
         return view('user.home')->with([
             'product_sellings' => $product_sellings,
             'product_news' => $product_news,
+            'meta_des' => $meta_des,
+            'meta_keywords' => $meta_keywords,
+            'meta_title' => $meta_title,
+            'url_canonical' => $url_canonical
         ]);
     }
 
@@ -53,9 +64,10 @@ class HomeController
 
         //Lọc theo giá
         $min = 0;
-        $max = 0;
+        $max = 0; 
         $products = Product::orderBy('created_at', 'DESC')->get();
         $trademarks = Trademark::orderBy('name', 'DESC')->get();
+        $categories = Category::orderBy('created_at', 'DESC')->get();
         if (isset($_GET['sort_by'])){
             $sort_by = $_GET['sort_by'];
             if ($sort_by == 'giam_dan'){
@@ -77,19 +89,27 @@ class HomeController
             $products = Product::whereIn('trademark_id', $trademark_arr)->orderBy('created_at', 'desc')->paginate(9)
             ->appends(request()->query());
 
+        }elseif (isset($_GET['category'])){
+            $filter_category = $_GET['category'];
+            $cate_arr = explode(",", $filter_category);
+            $products = Product::whereIn('category_id', $cate_arr)->orderBy('created_at', 'desc')->paginate(9)
+            ->appends(request()->query());
+
         }else{
             $products = Product::orderBy('created_at', 'desc')->paginate(9);
         }
 
         $trademark_name = Trademark::orderBy('name', 'DESC')->get();
-
+        $category_name = Category::orderBy('created_at', 'DESC')->get();
 
         return view('user.product.all')->with([
            'products' => $products,
            'amount_start' => $min,
            'amount_end' => $max,
            'trademarks' => $trademarks,
-           'trademark_name' => $trademark_name
+           'trademark_name' => $trademark_name,
+           'categories' => $categories,
+           'category_name' => $category_name,
         ]);
     }
 
@@ -128,13 +148,30 @@ class HomeController
                 'city' => $city
             ]);
         }else{
-            return redirect()->route('user.login.form');
+            return redirect()->route('login');
         }
-
-        $city = City::orderby('matp','ASC')->get();
     }
 
-    public function selectDeliverHome(Request $request){
+    public function calculate_fee(Request $request){
+        $data = $request->all();
+        if($data['matp']){
+          $feeship = Transport::where('transport_matp',$data['matp'])->where('transport_maqh',$data['maqh'])->where('transport_xaid',$data['xaid'])->get();
+          if($feeship){
+            $count_feeship = $feeship->count();
+            if($count_feeship>0){
+             foreach($feeship as $key => $fee){
+              Session::put('fee',$fee->fee_ship);
+              Session::save();
+            }
+          }else{ 
+            Session::put('fee',25000);
+            Session::save();
+          }
+        }
+      
+      }
+      }
+    public function select_delivery(Request $request){
     	$data = $request->all();
     	if($data['action']){
     		$output = '';
@@ -177,5 +214,12 @@ class HomeController
         $comment->content = $data['content_comment'];
         $comment->save();
         echo 'done';
+    }
+
+    public function send_mail(){
+        $name = 'Nguyen Thi Hang Nga';
+        Mail::send('user.email.send', compact('name'), function($email) use($name){
+            $email->to('nthnga0703@gmail.com', $name);
+        });
     }
 }

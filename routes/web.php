@@ -39,16 +39,20 @@ Route::post('/admin/login', [LoginController::class, 'login'])->name('login.stor
 Route::get('/admin/logout', [LogoutController::class,'logoutAdmin'])->name('logout');
 
 //Auth User
-Route::get('/login', [LoginController::class,'showLoginForm'])->name('user.login.form');
+// Route::get('/login', [LoginController::class,'showLoginForm'])->name('user.login.form');
+Route::get('/login', [LoginController::class,'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class,'loginUser'])->name('user.login.store');
 Route::get('/register', [RegisterController::class,'showRegisterForm'])->name('user.register.form');
 Route::post('/register', [RegisterController::class,'register'])->name('user.register.store');
 Route::get('/logout', [LogoutController::class,'logoutUser'])->name('user.logout');
 
+Route::get('/senMail',[HomeController::class,'send_mail']);
+
 //Rating & Comment
 Route::post('/insert-rating',[HomeController::class,'insert_rating'])->name('insert-rating');
 Route::post('/comment-product',[HomeController::class,'comment_product'])->name('comment-product');
 
+Route::post('/senMail',[HomeController::class,'send_mail']);
 //Admin - Trang quản lý
 Route::group([
     'namespace' => 'Admin',
@@ -57,10 +61,12 @@ Route::group([
 ], function () {
     //Trang điều khiển
     Route::get('/dashboard',  [DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/show_order)',  [DashboardController::class, 'showOrder'])->name('admin.dashboard.show');
     
     //Thống kê dashboard
-    Route::get('/filter-by-date',  [DashboardController::class, 'filterByDate']);
-    Route::get('/dashboard-filter',  [DashboardController::class, 'dashboard_filter']);
+    Route::post('/filter-by-date',  [DashboardController::class, 'filterByDate'])->name('admin.dashboard.filterByDate');
+    Route::post('/dashboard-filter',  [DashboardController::class, 'dashboard_filter'])->name('admin.dashboard.dashboardfilter');
+    Route::post('/days-order',  [DashboardController::class, 'days_order'])->name('admin.dashboard.daysOrder');
 
     // Quản lý người dùng
     Route::group(['prefix' => 'users'], function () {
@@ -131,23 +137,28 @@ Route::group([
     Route::group(['prefix' => 'orders'], function () {
         Route::get('/', [OrderController::class, 'index'])->name('admin.orders.index');
         Route::get('/get-list', [OrderController::class, 'getList'])->name('admin.orders.getList');
+        Route::get('/order-detail/{id}', [OrderController::class, 'orderDetail'])->name('admin.orders.detailOrder');
         Route::post('/change-status/{id}', [OrderController::class, 'changeStatus'])->name('admin.orders.changeStatus');
     });
 
-        // Quản lý comment
-        Route::group(['prefix' => 'comment'], function () {
-            Route::get('/', [CommentController::class, 'index'])->name('admin.comment.index');
-        });
-        // Quản lý vận chuyển
-        Route::group(['prefix' => 'transport'], function () {
-            Route::get('/', [TransportController::class, 'index'])->name('admin.transport.index'); 
-            Route::get('/create', [TransportController::class, 'create'])->name('admin.transport.create'); 
-            Route::post('/select-delivery', [TransportController::class, 'select_delivery'])->name('admin.transport.select-delivery'); 
-            Route::post('/insert-delivery', [TransportController::class, 'insert_delivery'])->name('admin.transport.insert-delivery'); 
-            Route::post('/select-feeship', [TransportController::class, 'select_feeship'])->name('admin.transport.select-feeship'); 
-            Route::post('/update-delivery', [TransportController::class, 'update_delivery'])->name('admin.transport.update-delivery'); 
+    // Quản lý comment
+    Route::group(['prefix' => 'comment'], function () {
+        Route::get('/', [CommentController::class, 'index'])->name('admin.comment.index');
+        Route::get('/select-active', [CommentController::class, 'select_active'])->name('admin.comment.select-active');
+        Route::get('/delete-comment/{id}', [CommentController::class, 'delete_comment'])->name('admin.comment.delete_comment');
+    });
+
+    // Quản lý vận chuyển
+    Route::group(['prefix' => 'transport'], function () {
+        Route::get('/', [TransportController::class, 'index'])->name('admin.transport.index'); 
+        Route::get('/delete-delivery', [TransportController::class, 'delete_delivery'])->name('admin.transport.delete-delivery'); 
+        Route::get('/create', [TransportController::class, 'create'])->name('admin.transport.create'); 
+        Route::post('/select-delivery', [TransportController::class, 'select_delivery'])->name('admin.transport.select-delivery'); 
+        Route::post('/insert-delivery', [TransportController::class, 'insert_delivery'])->name('admin.transport.insert-delivery'); 
+        Route::post('/select-feeship', [TransportController::class, 'select_feeship'])->name('admin.transport.select-feeship'); 
+        Route::post('/update-delivery', [TransportController::class, 'update_delivery'])->name('admin.transport.update-delivery');  
             
-        });
+    });
 
     //Quản lý thông kê
     // Route::group(['prefix' => 'statisticals'], function(){
@@ -179,23 +190,29 @@ Route::group([
         'prefix' => '/',
         'middleware' => ['auth'],
 ], function () {
+
+    //Coupon
+    Route::get('check_coupon', [CartController::class, 'checkcoupon'])->name('user.product.checkcoupon');
+    Route::post('test', [CartController::class, 'test'])->name('user.product.test');
+
     Route::get('/add-card/{id}', [HomeController::class,'addToCard'])->name('home.addToCard');
 
+    //Thah toán
     Route::get('/checkout', [HomeController::class,'checkout'])->name('home.checkout');
-    Route::post('select-deliver-home', [PaymentController::class, 'selectDeliverHome'])->name('home.transport.select-delivery');
+    Route::post('select-deliver-home', [HomeController::class, 'select_delivery'])->name('home.transport.select-delivery');
+    Route::post('calculate-fee', [HomeController::class, 'calculate_fee'])->name('home.transport.calculate_fee');
 
     //thanh toán online
     Route::post('/order/store', [PaymentController::class, 'store'])->name('home.order');
     Route::get('/order/return', [PaymentController::class, 'return']);
     
-
+    //Tài khoản cus
     Route::get('/account', [AccountController::class,'index'])->name('home.account');
+    Route::post('/account/{id}',[AccountController::class, 'update'])->name('home.account.update');
+    Route::post('/resetPW/{id}',[AccountController::class, 'resetPassword'])->name('home.account.resetPassW');
 
     Route::post('/request-cancel/{id}', [UserOrder::class,'cancelOrder'])->name('home.cancelOrder');
     Route::post('/undo-cancel/{id}', [UserOrder::class,'undoCancel'])->name('home.undoCancel');
-
-    //Coupon
-    Route::post('check_coupon', [CartController::class, 'checkcoupon'])->name('user.product.checkcoupon');
 
     //Giỏ hàng
     Route::get('/cart', [CartController::class, 'index'])->name('user.product.cart');

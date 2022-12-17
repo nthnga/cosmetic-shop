@@ -148,7 +148,7 @@ class ProductController extends Controller
         $data = $request->all();
         $product = Product::findOrFail($id);
         $product->name = $data['name'];
-       $product->user_id = Auth::guard('admin')->user()->id;
+        $product->user_id = Auth::guard('admin')->user()->id;
         $product->description = $data['description'];
         $product->quantity = $data['quantity'];
         $product->origin_price = $data['origin_price'];

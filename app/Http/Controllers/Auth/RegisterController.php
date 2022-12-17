@@ -34,6 +34,6 @@ class RegisterController extends Controller
         $customer->phone = $request->input('phone');
         $customer->save();
         $request->session()->flash('success','Đăng ký tài khoản thành công!');
-        return redirect()->route('user.login.form');
+        return redirect()->route('login');
     }
 }

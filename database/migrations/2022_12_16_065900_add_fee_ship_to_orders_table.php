@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCommentsTable extends Migration
+class AddFeeShipToOrdersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,8 @@ class CreateCommentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('comments', function (Blueprint $table) {
-            $table->id();
-            $table->integer('post_id');
-            $table->integer('customer_id');
-            $table->text('comment_body');
-            $table->timestamps();
+        Schema::table('orders', function (Blueprint $table) {
+            $table->integer('fee_ship')->nullable();
         });
     }
 
@@ -29,6 +25,8 @@ class CreateCommentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('comments');
+        Schema::table('orders', function (Blueprint $table) {
+            //
+        });
     }
 }

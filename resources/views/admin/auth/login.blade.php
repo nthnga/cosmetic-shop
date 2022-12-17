@@ -68,11 +68,11 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="/admin/js/scripts.js"></script>
 <script type="text/javascript" src="/admin/js/toastr/toastr.min.js"></script>
-@error('login')
+{{-- @error('login')
 <script>
     toastr.error("{{$message}}");
 </script>
-@enderror
+@enderror --}}
 @if(Session::has('success'))
     <script>
         toastr.success("{!! session()->get('success') !!}");

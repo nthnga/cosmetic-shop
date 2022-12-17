@@ -64,7 +64,7 @@
                     <input type="text" name="fee_ship" class="form-control fee_ship" id="exampleInputEmail1" placeholder="Phí">
                 </div>
                
-                <button type="button" name="add_delivery" class="btn btn-info add_delivery">Thêm phí vận chuyển</button>
+                <button type="button" name="add_delivery" class="btn btn-info add_delivery" style="margin: 20px 0 20px 0;">Thêm phí vận chuyển</button>
                 </form>
                 <div id="load_delivery">
                                 
@@ -175,5 +175,19 @@
 
 
             });
+            $(document).on('click','.btn-delete-transport',function(){
+                var transport_id = $(this).data('transport_id');
+            
+            $.ajax({
+                url : '{{route('admin.transport.delete-delivery')}}',
+                method: 'GET',
+                data:{transport_id:transport_id},
+                success:function(data){
+                    alert('Xóa vận chuyển thành công.');
+                    fetch_delivery();
+                }
+            });
+            })
     </script>
+
 @endsection

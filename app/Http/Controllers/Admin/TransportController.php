@@ -57,6 +57,7 @@ class TransportController extends Controller
 						<th>Tên quận huyện</th> 
 						<th>Tên xã phường</th>
 						<th>Phí ship</th>
+                        <th>Quản lý</th>
 					</tr>  
 				</thread>
 				<tbody>
@@ -70,6 +71,7 @@ class TransportController extends Controller
 						<td>'.$fee->province->name_quanhuyen.'</td>
 						<td>'.$fee->wards->name_xaphuong.'</td>
 						<td contenteditable data-feeship_id="'.$fee->id.'" class="fee_feeship_edit">'.number_format($fee->fee_ship,0,',','.').'</td>
+                        <td><input data-transport_id='.$fee->id.' type="button" class="btn btn-danger btn-sm btn-delete-transport" value="Xóa vận chuyển"></td>
 					</tr>
 					';
 				}
@@ -83,7 +85,11 @@ class TransportController extends Controller
 
 		
 	}
-    
+    public function delete_delivery(Request $request){
+        $data = $request->all();
+        Transport::find($data['transport_id'])->delete();
+        
+    }
     public function select_delivery(Request $request){
     	$data = $request->all();
     	if($data['action']){

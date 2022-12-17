@@ -19,10 +19,14 @@ class Order extends Model
         'product_id',
         'payment_type',
         'update_by',
+        'coupon',
         'note',
+        'fee_ship',
+        // 'order_date'
     ];
 
     protected $appends = ['status_text','payment_text'];
+
 
     const WAIT = 0;
     const CONFIRM = 1;

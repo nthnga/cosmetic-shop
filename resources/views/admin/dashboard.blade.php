@@ -7,7 +7,24 @@
 @section('css')
 <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
-{{-- <link rel="stylesheet" href="/resources/demos/style.css"> --}}
+
+<link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="/admin/css/user/index">
+    <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
+    <style>
+        .btnAdd{
+            position: absolute !important;
+            top: 105px !important;
+            right: 25px !important;
+        }
+        #customers > tbody > tr > td:nth-child(3),
+        #customers > tbody > tr > td:nth-child(4),
+        #customers > tbody > tr > td:nth-child(6),
+        #customers > tbody > tr > td:nth-child(7) {
+            text-align: center !important;
+        }
+    </style>
+
 @endsection
 
 @section('content')
@@ -20,8 +37,8 @@
             <div class="col-xl-3 col-md-6">
                 <div class="card bg-primary text-white mb-4">
                     <div class="card-body">
-                        Tổng doanh thu
-                        <h2>{{7560000}}</h2>
+                        Tổng đơn hàng
+                        <h2>{{50000000}}</h2>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between">
                         <a class="small text-white stretched-link" href="#">View Details</a>
@@ -32,12 +49,12 @@
             <div class="col-xl-3 col-md-6">
                 <div class="card bg-info text-white mb-4">
                     <div class="card-body">
-                        Đơn hàng
-                        <h2>{{$orders}}</h2>
+                        Thương hiệu sản phẩm
+                        <h2>{{$trademarks}}</h2>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between">
-                        <a class="small text-white stretched-link" href="{{route('admin.orders.index')}}">
-                            Chi tiết đơn hàng
+                        <a class="small text-white stretched-link" href="{{route('admin.trademarks.index')}}">
+                            Danh sách thương hiệu
                         </a>
                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                     </div>
@@ -68,6 +85,47 @@
                 </div>
             </div>
         </div>
+
+        <h4>Đơn hàng mới nhất</h4>
+        <div class="card mb-4 row">
+            <div class="card-body">
+                <table class="table table-striped" id="order">
+                    <thead>
+                      <tr>
+                        <th>Mã đơn hàng</th>
+                        <th>Khách hàng</th>
+                        {{-- <th>Tên sản phẩm</th> --}}
+                        <th>Tổng tiền</th>
+                        <th>Trạng thái</th>
+                        <th>Ngày tạo</th>        
+                      </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($orders as $item) 
+                            <tr>
+                                <td>{{$item->id}}</td>
+                                <td>{{$item->customer->name}}</td>
+                                {{-- <td>{{$item->}}</td> --}}
+                                <td>{{$item->total}}</td>
+                                <td>{{$item->status_text}}</td>
+                                <td>{{$item->created_at}}</td>
+                            </tr> 
+                        @endforeach
+                    </tbody>
+                </table>
+                <div class="card-footer d-flex align-items-center justify-content-between">
+                    <a class="small stretched-link" href="{{route('admin.orders.index')}}">
+                        <h6><b>Đi đến đơn hàng</b></h6>
+                    </a>
+                    <div class="small"><i class="fa-solid fa fa-eye" style="color: brown"></i></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <h1>Doanh thu tháng</h1>
+        </div>
+    
         <div class="row">
             <h3 class="mt-4 title_thongkedoanhso" style="text-align: center; color:rgb(100, 230, 237);">---Biểu đồ thống kê doanh số---</h3>
             <form action="" autocomplete="off" style="margin-right: 20px; display:flex;" method="POST">
@@ -84,10 +142,10 @@
                     <p>Lọc theo
                         <select name="" class="dashboard-filter form-control" >
                             <option>Chọn</option>
-                            <option value="tuan">Thống kê 7 ngày</option>
-                            <option value="thangtruoc">Thống kê tháng trước</option>
-                            <option value="thangnay">Thống kê thời điểm hiện tại</option>
-                            <option value="nam">Thống kê theo năm</option>
+                            <option value="week">Thống kê 7 ngày</option>
+                            <option value="lastmonth">Thống kê tháng trước</option>
+                            <option value="thismonth">Thống kê tháng hiện tại</option>
+                            <option value="year">Thống kê theo năm</option>
                         </select>
                     </p>
                 </div>
@@ -102,35 +160,28 @@
 @endsection
 @section('js')
 
-
 <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
 <script>
     $(document).ready(function (){
-        var chart = new Morris.Line({
+
+        chart30daysorder();
+
+        var chart = new Morris.Area({
             // ID of the element in which to draw the chart.
             element: 'chart',
 
             lineColors:['#819C79','#fc8710','#FF6541','#A4ADD3','#766B56'],
-            // Chart data records -- each entry in this array corresponds to a point on
-            // the chart.
+
             //3 cái dưới dùng cho Line, Area 
             
-            // pointFillColors:['#ffffff'],
-            // pointStrokeColors: ['blue'],
-            // fillOpacity: 0.3,
+            pointFillColors:['#ffffff'],
+            pointStrokeColors: ['blue'],
+            fillOpacity: 0.3,
             hideHover:'auto',
             parseTime: false,
-            data: [
-                { period: '2008', value: 20 },
-                { period: '2009', value: 10 },
-                { period: '2010', value: 5 },
-                { period: '2011', value: 5 },
-                { period: '2012', value: 20 }
-            ],
-            // The name of the data record attribute that contains x-values.
             xkey: 'period',
             // A list of names of data record attributes that contain y-values.
             ykeys: ['order','revenue','profit','quantity'],
@@ -156,6 +207,21 @@
             duration: "slow"
         });
 
+        function chart30daysorder(){
+            var _token = $('input[ name = "_token" ]').val();
+            $.ajax({
+                url:"{{route('admin.dashboard.daysOrder')}}",
+                method:"POST",
+                dataType:"JSON",
+                data:{_token:_token},
+
+                success:function(data)
+                    {
+                        chart.setData(data);
+                    }
+            });
+        }
+
         $('#btn-dashboard-filter').click(function(){
             // alert('suscessful');
             var _token = $('input[ name = "_token" ]').val();
@@ -165,7 +231,7 @@
             // alert(to_date);
 
             $.ajax({
-                url:"{{url('/filter-by-date')}}",
+                url:"{{route('admin.dashboard.filterByDate')}}",
                 method:"POST",
                 dataType:"JSON",
                 data:{from_date:from_date,to_date:to_date,_token:_token},
@@ -177,15 +243,16 @@
             });
         });
 
-        $('#dashboard-filter').chage(function(){
+        $('.dashboard-filter').change(function(){
             
             var dashboard_value = $(this).val();
             var _token = $('input[ name = "_token" ]').val();
             
-            alert(dashboard_value);
+            // alert(dashboard_value);
 
             $.ajax({
-                url:"{{url('/dashboard-filter')}}",
+                // _token: "{{ csrf_token() }}",
+                url:"{{route('admin.dashboard.dashboardfilter')}}",
                 method:"POST",
                 dataType:"JSON",
                 data:{dashboard_value:dashboard_value,_token:_token},
@@ -196,7 +263,7 @@
                     }
             });
         });
-
     });
+    
 </script>
 @endsection

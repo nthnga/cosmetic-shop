@@ -14,7 +14,7 @@
                             <a href="{{route('home.account')}}" class="dropdown-item" type="button">Quản lý tài khoản</a>
                             <a href="{{route('user.logout')}}" class="dropdown-item" type="button">Đăng xuất</a>
                         @else
-                            <a href="{{route('user.login.form')}}" class="dropdown-item" type="button">Đăng nhập</a>
+                            <a href="{{route('login')}}" class="dropdown-item" type="button">Đăng nhập</a>
                             <a href="{{route('user.register.form')}}" class="dropdown-item" type="button">Đăng ký</a>
                         @endif
                     </div>

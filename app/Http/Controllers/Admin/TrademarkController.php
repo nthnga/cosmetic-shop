@@ -100,6 +100,7 @@ class TrademarkController extends Controller
         return redirect()->route('admin.trademarks.index');
     }
 
+
     public  function edit($id)
     {
         $trademark = Trademark::findOrFail($id);

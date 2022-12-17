@@ -10,7 +10,7 @@ class Comment extends Model
     use HasFactory;
     public $timestamps = false; //set time to false
     protected $fillable = [
-    	'user_id', 'content', 'email','name','product_id'
+    	'user_id', 'content', 'email','name','product_id', 'status'
     ];
  	protected $table = 'comments';
      public function product(){

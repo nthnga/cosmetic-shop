@@ -8,19 +8,6 @@
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="/admin/css/user/index">
     <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
-    <style>
-        .btnAdd{
-            position: absolute !important;
-            top: 105px !important;
-            right: 25px !important;
-        }
-        #customers > tbody > tr > td:nth-child(3),
-        #customers > tbody > tr > td:nth-child(4),
-        #customers > tbody > tr > td:nth-child(6),
-        #customers > tbody > tr > td:nth-child(7) {
-            text-align: center !important;
-        }
-    </style>
 @endsection
 
 @section('content')
@@ -40,21 +27,38 @@
                         <th>Comment</th>
                         <th>Email</th>
                         <th>Sản phẩm</th>
+                        <th>Duyệt bình luận</th>
+                        <th>Quản lý</th>
+                       
                       </tr>
                     </thead>
                     <tbody>
                         @foreach($comment as $key => $comm)
+                        
                       <tr>
                         <td>{{$key}}</td>
                         <td>{{$comm->name}}</td>
                         <td>{{$comm->content}}</td>
                         <td>{{$comm->email}}</td>
                         <td><a href="{{route('home.show',[$comm->product->id])}}" target="_blank">{{$comm->product->name}}</a></td>
-                      </tr>
+                        <td>
+                            <select class="form-control select-active-comment">
+                                @if($comm->status==0)
+                                <option selected data-comment_id="{{$comm->id}}" value="0">Không</option>
+                                <option data-comment_id="{{$comm->id}}" value="1">Có</option>
+                                @else
+                                <option data-comment_id="{{$comm->id}}" value="0">Không</option>
+                                <option selected data-comment_id="{{$comm->id}}" value="1">Có</option>
+                                @endif
+                            </select>
+                            
+                        </td>
+                        <td><a href="{{route('admin.comment.delete_comment',[$comm->id])}}" onclick="return confirm('Bạn muốn xóa bình luận này?')" class="btn btn-danger btn-sm">Xóa</a></td>
+                      </tr> 
 
                      @endforeach
                     </tbody>
-                  </table>
+                </table>
             </div>
         </div>
     </div>
@@ -79,4 +83,20 @@
             $('#comment').DataTable();
         } );    
     </script>    
+    <script>
+        $('.select-active-comment').change(function(){
+            var value = $(this).find(':selected').val();
+            var comment_id = $(this).find(':selected').data('comment_id')
+            $.ajax({
+                url : '{{route('admin.comment.select-active')}}',
+                method: 'GET',
+                data:{value:value,comment_id:comment_id},
+                success:function(){
+                    alert('Thay đổi trạng thái thành công.');
+                    location.reload();
+                }
+            });
+
+        })
+    </script>
 @endsection

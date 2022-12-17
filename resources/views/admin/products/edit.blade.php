@@ -96,6 +96,7 @@
                             </select>
 
                         </div>
+                    
                         <div class="form-group">
                             <label>Giá bán</label><span style="color: red;"> *</span>
                             <input class="form-control"  value="@if(!empty(old("sale_price"))){{old("sale_price")}}@else {{$product->sale_price}}@endif" required name="sale_price" placeholder="Nhập giá bán">

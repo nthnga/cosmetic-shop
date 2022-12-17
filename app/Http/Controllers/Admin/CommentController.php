@@ -12,9 +12,23 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function select_active(Request $request){
+        $data = $request->all();
+
+        $comment = Comment::find($data['comment_id']);
+        
+        $comment->status = $data['value'];
+        $comment->save();
+
+
+    }
+    public function delete_comment($id){
+        $comment = Comment::find($id)->delete();
+        return redirect()->back();
+    }
     public function index()
     {
-        $comment = Comment::with('product')->get();
+        $comment = Comment::with('product')->orderBy('id','desc')->get();
         return view('admin.comment.index',compact('comment'));
     }
 

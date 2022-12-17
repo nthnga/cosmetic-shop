@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use phpDocumentor\Reflection\Types\True_;
 use Session;
+use Mail;
 
 class PaymentController extends Controller
 {
@@ -24,7 +25,7 @@ class PaymentController extends Controller
          
         $total_cart = (int)Cart::subtotal(null,null,'');
         $total_coupon = 0;
-        $price_total = $total_cart-$total_coupon;
+        $price_total = $total_cart;
 
         if(Session::get('coupon')){
             foreach(Session::get('coupon') as $key => $cou){
@@ -33,6 +34,7 @@ class PaymentController extends Controller
                 }else{
                     $total_coupon = $cou['coupon_number'];
                 }
+                $price_total = $total_cart-$total_coupon;
             }
         }
 
@@ -67,7 +69,7 @@ class PaymentController extends Controller
         }
         if($request->has('payment_type')){
             if((int)$request->input('payment_type') == Order::TRANSFER){
-               $this->storePayment($inputData,Order::TRANSFER,$items,$price_total,$request->input('note'));
+               $this->storePayment($inputData,Order::TRANSFER,$items,$price_total,$total_coupon,$request->input('note'));
                 ksort($inputData);
                 $query = "";
                 $i = 0;
@@ -88,23 +90,24 @@ class PaymentController extends Controller
                 }
 
 //                dd($vnp_Url);
-//
+// //
 //                https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=55000000&vnp_Command=pay&vnp_CreateDate=20221012153028&vnp_CurrCode=VND&vnp_IpAddr=127.0.0.1&vnp_Locale=vi&vnp_OrderInfo=Thanh+to%C3%A1n+%C4%91%C6%A1n+h%C3%A0ng+qua+v%C3%AD+VNPAY&vnp_OrderType=other&vnp_ReturnUrl=http%3A%2F%2F127.0.0.1%3A8000%2Freturn&vnp_TmnCode=PE0X413P&vnp_TxnRef=VNPTF1665588628&vnp_Version=2.1.0&vnp_SecureHash=8a4a50629684c108c89c39c138814bb90b2eb1334b8090c73716b1db4409fbf5fe1007e1cbcee70b343e0f4e574b078d749191c32549daaaa00578da1952d4d6
 //                https://sandbox.vnpayment.vn/paymentv2/vpcpay.html?vnp_Amount=1806000&vnp_Command=pay&vnp_CreateDate=20210801153333&vnp_CurrCode=VND&vnp_IpAddr=127.0.0.1&vnp_Locale=vn&vnp_OrderInfo=Thanh+toan+don+hang+%3A5&vnp_OrderType=other&vnp_ReturnUrl=https%3A%2F%2Fdomainmerchant.vn%2FReturnUrl&vnp_TmnCode=DEMOV210&vnp_TxnRef=5&vnp_Version=2.1.0&vnp_SecureHash=3e0d61a0c0534b2e36680b3f7277743e8784cc4e1d68fa7d276e79c23be7d6318d338b477910a27992f5057bb1582bd44bd82ae8009ffaf6d141219218625c42
 
                 return redirect($vnp_Url);
             }else{
-                $this->storePayment(null,Order::CASH,$items,$price_total,$request->input('note'));
+                $this->storePayment(null,Order::CASH,$items,$price_total,$total_coupon,$request->input('note'));
                 $request->session()->flash('success', 'Đặt hàng thành công');
                 return redirect()->intended('/account');
             }
         }
     }
 
-    public function storePayment($data = null,$type,$items,$price_total,$note){
+    public function storePayment($data = null,$type,$items,$price_total,$total_coupon,$note){
         $order = new Order();
         $order->customer_id = Auth::guard('web')->id();
         $order->total = $price_total;
+        $order->coupon = $total_coupon;
         $order->payment_type = $type;
         $order->note = $note;
         $order->status = Order::WAIT;
@@ -116,7 +119,7 @@ class PaymentController extends Controller
             $orderDetail->order_id = $order->id;
             $orderDetail->product_name = $product->name;
             $orderDetail->product_category = $product->category->name;
-            $orderDetail->product_quantity = 1;
+            $orderDetail->product_quantity = $item->qty;
             $orderDetail->product_sale_price = $product->sale_price;
             $orderDetail->product_origin_price = $product->origin_price;
             $orderDetail->total = $product->sale_price;
@@ -127,6 +130,14 @@ class PaymentController extends Controller
             }
         }
         Session::forget('coupon');
+
+        //Gui mail
+        // $auth = Auth::user();
+        // Mail::send('user.email.sendMailOrder', compact('order','auth'), function($email) use($auth){
+        //     $email->subject('Cosmetic Shop - Xác nhận đơn hàng');
+        //     $email->to($auth->name, $auth->email);
+        // });
+
         Cart::destroy();
     }
 

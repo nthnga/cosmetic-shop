@@ -74,7 +74,7 @@
                 <div id="London" class="tabcontent">
                     <div class="row">
                         <div class="col-lg-6">
-                        <form action="" method="post">
+                        <form action="{{route('home.account.update',Auth::id())}}" method="POST">
                             @csrf
                                 <div class="bg-light p-30">
                                     <h5 class="section-title text-uppercase text-center mb-3"><span class=" pr-3">Thông tin cá nhân</span></h5>
@@ -103,7 +103,7 @@
                         </form>
                         </div>
                         <div class="col-lg-6">
-                        <form action="" method="post">
+                        <form action="{{route('home.account.resetPassW',Auth::id())}}" method="POST">
                             @csrf
                             <div class="bg-light p-30">
                                 <h5 class="section-title text-center text-uppercase mb-3"><span class=" pr-3">Cập nhật mật khẩu</span></h5>
@@ -170,11 +170,19 @@
                                            <div class="col-11">
                                                <span>Tên sản phẩm: {{$product->product_name}}</span><br>
                                                <span>Số lượng: {{$product->product_quantity}}</span><br>
-                                               <span>Tổng tiền: {{number_format($product->total,0, ',', '.')}} đ</span><br>
+                                               <span>Đơn giá sản phẩm: {{number_format($product->total,0, ',', '.')}} đ</span><br>
 
                                            </div>
                                        </div>
                                     @endforeach
+                                    <div style="border-bottom: 1px solid lightgray;margin: 2px 4px">
+                                        <b>
+                                            <span style="color: rgb(47, 0, 255);">Phí vận chuyển: {{number_format(Session::get('fee'))}}đ</span><br>
+                                            <span style="color: rgb(255, 0, 200);">Mã giảm giá: {{number_format($order->coupon)}} đ</span><br>
+                                            <h5><span style="color: red;">===> Tổng thanh toán: {{number_format($order->total + Session::get('fee'),0, ',', '.')}} đ</span></h5>
+                                        </b>
+                                        
+                                    </div>
                                </div>
                                <div class="col-1">
                                        @if($order->status===\App\Models\Order::WAIT || $order->status===\App\Models\Order::CONFIRM)

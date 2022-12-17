@@ -69,7 +69,7 @@
                 </table>
             </div>
             <div class="col-lg-4">
-                <form class="mb-30" method="POST" action="{{route('user.product.checkcoupon')}}">
+                <form class="mb-30" method="GET" action="{{route('user.product.checkcoupon')}}">
                     @csrf
                     <div class="input-group">
                         <input type="text" class="form-control border-0 p-4" name="coupon" placeholder="Nhập mã giảm giá">

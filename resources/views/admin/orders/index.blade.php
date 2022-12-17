@@ -184,6 +184,23 @@
             });
         });
 
+        // $(document).on('click', '.viewDetail', function (event){
+        //     event.preventDefault();
+        //     let $this = $(this);
+        //     let URL = $this.attr('href');
+
+        //     $.ajax(
+        //         {
+        //             url: URL
+        //         }).done(function(results){
+        //             console.log(results)
+        //             $("#modal-preview-transaction .content").html(results.html);
+        //             $("#modal-preview-transaction").modal({
+        //             show : true
+        //         })
+        //         });
+        // });
+
         $(document).on('click', '.cancelOrder', function (){
             Swal.fire({
                 title: 'Bạn có chắn chắn huỷ không?',
@@ -313,4 +330,5 @@
             });
         });
     </script>
+    
 @endsection

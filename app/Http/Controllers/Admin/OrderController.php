@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Models\User;
+use App\Models\Transport;
+use App\Models\Coupon;
+use App\Models\Product;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -34,16 +38,23 @@ class OrderController extends Controller
                       <a
                          data-id="'.$orders->id.'"
                          class="menu-link px-3 text-warning confirmOrder"
-                         style="cursor:pointer;"
+                         style="cursor:pointer;text-decoration: none; padding 2px"
                          tooltip="Xác nhận" flow="up"  data-token="{{csrf_token()}}">
                         <i class="fa-solid fa-circle-check"></i>
                       </a>
                        <a
                             data-id="'.$orders->id.'"
-                            style="color: red; cursor:pointer;"
+                            style="color: red; cursor:pointer;text-decoration: none"
                             class="menu-link px-3 cancelOrder" data-token="{{csrf_token()}}"
                             tooltip="Huỷ" flow="up">
                             <i class="fa-solid fa-circle-xmark"></i>
+                        </a>
+                        <a
+                            href="'.route("admin.orders.detailOrder",["id" => $orders->id]).'"
+                            style="color: green; cursor:pointer;text-decoration: none"
+                            class="menu-link px-3 viewDetail" data-token="{{csrf_token()}}"
+                            tooltip="Xem chi tiết" flow="up">
+                            <i class="fa-solid fa fa-eye"></i>
                         </a>
                     ';
                 } else if($orders->status == Order::CONFIRM) {
@@ -51,16 +62,23 @@ class OrderController extends Controller
                       <a
                          data-id="'.$orders->id.'"
                          class="menu-link px-3 text-primary shipping"
-                         style="cursor:pointer"
+                         style="cursor:pointer;text-decoration: none"
                          tooltip="Giao hàng" flow="up" data-token="{{csrf_token()}}">
                         <i class="fa-solid fa-truck"></i>
                       </a>
                        <a
                             data-id="'.$orders->id.'"
-                            style="color: red; cursor:pointer;"
+                            style="color: red; cursor:pointer;text-decoration: none;"
                             class="menu-link px-3 cancelOrder" data-token="{{csrf_token()}}"
                             tooltip="Huỷ" flow="up">
                             <i class="fa-solid fa-circle-xmark"></i>
+                        </a>
+                        <a
+                            href="'.route("admin.orders.detailOrder",["id" => $orders->id]).'"
+                            style="color: green; cursor:pointer;text-decoration: none"
+                            class="menu-link px-3 viewDetail" data-token="{{csrf_token()}}"
+                            tooltip="Xem chi tiết" flow="up">
+                            <i class="fa-solid fa fa-eye"></i>
                         </a>
                     ';
                 } else if($orders->status == Order::SHIPPING) {
@@ -68,22 +86,60 @@ class OrderController extends Controller
                       <a
                          data-id="'.$orders->id.'"
                          class="menu-link px-3 complete"
-                         style="cursor:pointer;color: mediumpurple"
+                         style="cursor:pointer;color: mediumpurple;text-decoration: none"
                          tooltip="Đã giao" flow="up"  data-token="{{csrf_token()}}">
                         <i class="fas fa-calendar-check"></i>
                       </a>
+                      <a
+                            data-id="'.$orders->id.'"
+                            style="color: red; cursor:pointer;text-decoration: none;"
+                            class="menu-link px-3 cancelOrder" data-token="{{csrf_token()}}"
+                            tooltip="Huỷ" flow="up">
+                            <i class="fa-solid fa-circle-xmark"></i>
+                        </a>
+                      <a
+                            href="'.route("admin.orders.detailOrder",["id" => $orders->id]).'"
+                            style="color: green; cursor:pointer;text-decoration: none"
+                            class="menu-link px-3 viewDetail" data-token="{{csrf_token()}}"
+                            tooltip="Xem chi tiết" flow="up">
+                            <i class="fa-solid fa fa-eye"></i>
+                        </a>
                     ';
                 } else if($orders->status == Order::REQUESTCANEL){
                     return '
                       <a
                          data-id="'.$orders->id.'"
                          class="menu-link px-3 cancelOrder"
-                         style="cursor:pointer;color: red"
+                         style="cursor:pointer;color: red;text-decoration: none"
                          tooltip="Xác nhận huỷ" flow="up"  data-token="{{csrf_token()}}">
                         <i class="fas fa-calendar-times"></i>
                       </a>
+                      <a
+                         data-id="'.$orders->id.'"
+                         class="menu-link px-3 complete"
+                         style="cursor:pointer;color: mediumpurple;text-decoration: none"
+                         tooltip="Đã giao" flow="up"  data-token="{{csrf_token()}}">
+                        <i class="fas fa-calendar-check"></i>
+                      </a>
+                      <a
+                            href="'.route("admin.orders.detailOrder",["id" => $orders->id]).'"
+                            style="color: green; cursor:pointer;text-decoration: none"
+                            class="menu-link px-3 viewDetail" data-token="{{csrf_token()}}"
+                            tooltip="Xem chi tiết" flow="up">
+                            <i class="fa-solid fa fa-eye"></i>
+                        </a>
                     ';
-                };
+                }else{
+                    return '
+                    <a
+                        href="'.route("admin.orders.detailOrder",["id" => $orders->id]).'"
+                        style="color: green; cursor:pointer;text-decoration: none"
+                        class="menu-link px-3 viewDetail" data-token="{{csrf_token()}}"
+                        tooltip="Xem chi tiết" flow="up">
+                        <i class="fa-solid fa fa-eye"></i>
+                    </a>
+                    ';
+                }
             })
             ->editColumn('status', function ($orders) {
                 if($orders->status == Order::WAIT)
@@ -139,12 +195,29 @@ class OrderController extends Controller
             ->make(true);
     }
 
+    public function orderDetail($id){
+            $order = Order::with(['order_details'])->find($id);
+            $customer = Customer::find($order->customer_id);
+            return view("admin.orders.detail")->with([
+                'order' => $order,
+                'customer' =>  $customer
+            ]);
+
+    }
+
     public function changeStatus(Request $request, $id)
     {
-        $order = Order::findOrFail($id);
+        $order = Order::with(['order_details'])->findOrFail($id);
         $order->status = $request->input('status');
 
-        // if()
+        if( $order->status==Order::COMPLETE){
+            foreach($order->order_details as $order_detail){
+                $product = Product::find($order_detail->product_id);
+                $product->sold += $order_detail->product_quantity;
+                $product->quantity -= $order_detail->product_quantity;
+                $product->save();
+            }
+        }
 
 
         $order->save();

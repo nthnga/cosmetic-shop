@@ -4,6 +4,11 @@
     Tất cả sản phẩm
 @endsection
 
+@section('css')
+    <link rel="stylesheet" href="sweetalert2.min.css">
+@endsection
+
+
 @section('content')
     <!-- Breadcrumb Start -->
     <div class="container-fluid">
@@ -53,38 +58,41 @@
                         <small class="pt-1">(99 Đánh giá)</small>
                     </div>
                     <h3 class="font-weight-semi-bold mb-4">{{number_format($product->sale_price,0, ',', '.') . ' '.'VNĐ'}}</h3>
-                    <p class="mb-4"><b>Số lượng trong giỏ hàng: </b>{{$product->quantity}}</p>
+                    <p class="mb-4"><b>Số lượng trong kho còn: </b>{{$product->quantity}} sản phẩm</p>
                     <p class="mb-4"><b>Danh mục: </b> {{$product->category->name}}</p>
                     <p class="mb-4"><b>Thương hiệu: </b>@if($product->trademark) {{$product->trademark->name}} @else Không có @endif</p>
                     <div class="d-flex align-items-center mb-4 pt-2">
-                        <div class="input-group quantity mr-3" style="width: 130px;">
-                            <div class="input-group-btn">
-                                <button class="btn btn-primary btn-minus">
-                                    <i class="fa fa-minus"></i>
-                                </button>
+                        <form action="{{route('user.product.add', $product->id)}}">
+                            @csrf
+                            <div class="input-group quantity mr-3" style="width: 130px;">
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-primary btn-minus">
+                                        <i class="fa fa-minus"></i>
+                                    </button>
+                                </div>
+                                <input type="text" name="qty" class="form-control bg-secondary border-0 text-center" value="1">
+                                <div class="input-group-btn">
+                                    <button type="button" class="btn btn-primary btn-plus">
+                                        <i class="fa fa-plus"></i>
+                                    </button>
+                                </div>
                             </div>
-                            <input type="text" class="form-control bg-secondary border-0 text-center" value="1">
-                            <div class="input-group-btn">
-                                <button class="btn btn-primary btn-plus">
-                                    <i class="fa fa-plus"></i>
-                                </button>
+                            <div class="button-add" style="margin-top: 20px;">
+                                <button type="submit" class="btn btn-primary px-3" ><i class="fa fa-shopping-cart mr-1"></i> Thêm vào giỏ hàng</a>
+                                {{-- <a style="margin-left: 20px" href="{{route('home.checkout',$product->id)}}" class="btn btn-primary px-3"><i class="fas fa-donate"></i> Mua ngay</a> --}}
                             </div>
-                            
-                        </div>
-                        <div>
-                            <a href="{{route('user.product.add', $product->id)}}" class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Thêm vào giỏ hàng</a>
-                            {{-- <a style="margin-left: 20px" href="{{route('home.checkout',$product->id)}}" class="btn btn-primary px-3"><i class="fas fa-donate"></i> Mua ngay</a> --}}
-                        </div>
-                        </div>
+                        </form>
+                    </div>
                     <div class="d-flex pt-2">
                         <strong class="text-dark mr-2">Chia sẻ:</strong>
                         <div class="d-inline-flex">
-                            <a class="text-dark px-2" href="">
-                                <i class="fab fa-facebook-f"></i>
-                            </a>
-                            <a class="text-dark px-2" href="">
-                                <i class="fab fa-twitter"></i>
-                            </a>
+                            {{-- Share facebook --}}
+                            <div id="fb-root"></div>
+                            <script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v15.0" 
+                            nonce="yfnSEM3o"></script>
+                            <div class="fb-share-button" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button_count" data-size="large"><a target="_blank" 
+                                href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Chia sẻ</a>
+                            </div>
                             <a class="text-dark px-2" href="">
                                 <i class="fab fa-linkedin-in"></i>
                             </a>
@@ -121,10 +129,12 @@
                                 <div class=" row col-md-6 style_comment">
                                     @foreach($comment as $key => $comm)
                                     <div class="col-md-2">
-                                        <img width="100%" height="115px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/2048px-User-avatar.svg.png" class="img img-reponsive img-thumbnail">
+                                        <img width="60%" height="80px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/2048px-User-avatar.svg.png" class="img img-reponsive img-thumbnail">
+                                        
                                     </div>
+                                    
                                     <div class="col-md-10">
-                                        <p style="color: rgb(255, 47, 47);">{{$comm->name}}</p>
+                                        <p style="color: rgb(255, 47, 47);">{{$comm->name}} || {{$comm->created_at}}</p>
                                         <p>{{$comm->content}}
                                         </p>
                                     </div>
@@ -135,15 +145,7 @@
                                
                                 <div class="col-md-6">
                                     <h4 class="mb-4">Đánh giá của bạn</h4>
-                                    <small>Địa chỉ email của bạn sẽ không được công bố. Các trường bắt buộc được đánh dấu *</small>
                                     <div class="d-flex my-3">
-                                        {{-- <div class="text-primary" style="cursor: pointer; color:#ccc; font-size:30px;">
-                                            <i class="far fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                        </div> --}}
                                         <style>
                                            ul.list-inline.rating li {
                                                 display: inline;
@@ -167,27 +169,32 @@
                                         </ul>
                                     </div>
 
-
-                                    <form>
+                                    @if(isset(Auth::guard('web')->user()->id))
+                                    <form action="{{route('comment-product')}}" method="POST">
                                         @csrf
                                         <input type="hidden" class="product_id_comment" value="{{$product->id}}">
+                                        
                                         <input type="hidden" class="user_id_comment" value="{{Auth::guard('web')->user()->id}}">
+ 
                                         <div class="form-group">
                                             <label for="message">Nội dung *</label>
                                             <textarea id="content_comment" name="content" cols="30" rows="5" class="form-control"></textarea>
                                         </div>
                                         <div class="form-group">
                                             <label for="name">Họ tên *</label>
-                                            <input type="text" name="name" class="form-control" id="name_comment">
+                                            <input type="text" name="name" value="{{Auth::user()->name}}" class="form-control" id="name_comment">
                                         </div>
                                         <div class="form-group">
                                             <label for="email">Email *</label>
-                                            <input type="email" name="email" class="form-control" id="email_comment">
+                                            <input type="email" name="email" value="{{Auth::user()->email}}" class="form-control" id="email_comment">
                                         </div>
                                         <div class="form-group mb-0">
                                             <input type="button" value="Gửi đánh giá" class="btn btn-primary px-3 comment-product">
                                         </div>
                                     </form>
+                                    @else
+                                    <a href="{{route('login')}}" class="btn btn-warning">Đăng nhập để đánh giá</a>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -248,6 +255,7 @@
     <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
     <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="sweetalert2.all.min.js"></script>
     @if(Session::has('success'))
         <script>
             toastr.success("{!! session()->get('success') !!}");
@@ -341,7 +349,7 @@
                 {
                     if(data == 'done')
                     {
-                    alert('Cảm ơn bạn đã đánh giá,chúng tôi sẽ xem xét hiển thị đánh giá của bạn nhé');
+                    alert('Cảm ơn bạn đã đánh giá,chúng tôi sẽ xem xét hiển thị đánh giá của bạn!');
                     $('#name_comment').val('');
                     $('#content_comment').val('');
                     $('#email_comment').val('');

@@ -16,6 +16,7 @@ class Product extends Model
         'description',
         'quantity',
         'origin_price',
+        'entry price',
         'sale_price',
         'category_id',
         'trademark_id',

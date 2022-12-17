@@ -51,7 +51,7 @@
                                         <label for="inputPassword">Mật khẩu</label>
                                     </div>
                                     <div class="d-flex align-items-center justify-content-between mt-4 mb-0">
-                                        <a class="small" href="{{route('user.login.form')}}">Bạn đã có tài khoản? Đăng nhập</a>
+                                        <a class="small" href="{{route('login')}}">Bạn đã có tài khoản? Đăng nhập</a>
                                         <button class="btn btn-primary" type="submit">Đăng ký</button>
                                     </div>
                                 </form>
