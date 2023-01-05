@@ -122,7 +122,7 @@ class DashboardController
         $today = Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d H:i:s');
 
         $order_date = Carbon::now('Asia/Ho_Chi_Minh')->format('Y-m-d');
-        $order->created_at = now();
+        $order->created_at = $today;
         $order->$order_date = $order_date;
         $order->save();
 

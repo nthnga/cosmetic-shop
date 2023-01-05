@@ -6,6 +6,69 @@
 
 @section('css')
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <style>
+        .content {
+            position: absolute;
+            right: 0;
+        }
+
+        .content:hover {
+            cursor: pointer;
+        }
+
+        .percent {
+            margin: 7px;
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .down {
+            color: white;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .BKTD5e {
+            background-color: rgba(255, 212, 36, 0.9);
+        }
+
+        .BKTD5e::after {
+            content: "";
+            width: 14px;
+            height: 3px;
+            left: 0px;
+            bottom: -11px;
+            position: absolute;
+            border-color: transparent rgba(255, 212, 36, 0.9);
+            border-style: solid;
+            border-width: 0px 23px 11px;
+        }
+
+        .yHNF9n {
+            width: 45px;
+            height: 55px;
+        }
+
+        ._3LjrMb {
+            display: inline-block;
+            box-sizing: border-box;
+            position: relative;
+            padding: 4px 2px 3px;
+            font-weight: 700;
+        }
+
+        .R6rql6 {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            position: relative;
+            font-weight: 400;
+            line-height: 0.8125rem;
+            color: rgb(238, 77, 45);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -124,10 +187,10 @@
                                     <div class="dropdown-menu dropdown-menu-right">
                                         <form>
                                             @csrf
-                                            <a class="dropdown-item"
+                                            {{-- <a class="dropdown-item"
                                                 href="{{ \Illuminate\Support\Facades\Request::url() }}?sort_by=none">
                                                 <---Sắp xếp theo--->
-                                            </a>
+                                            </a> --}}
                                             <a class="dropdown-item"
                                                 href="{{ \Illuminate\Support\Facades\Request::url() }}?sort_by=tang_dan">
                                                 <---Gía thấp đến cao--->
@@ -147,7 +210,7 @@
                                         </form>
                                     </div>
                                 </div>
-                                <div class="btn-group ml-2">
+                                {{-- <div class="btn-group ml-2">
                                     <button type="button" class="btn btn-sm btn-light dropdown-toggle"
                                         data-toggle="dropdown">Số lượng</button>
                                     <div class="dropdown-menu dropdown-menu-right">
@@ -155,7 +218,7 @@
                                         <a class="dropdown-item" href="#">20</a>
                                         <a class="dropdown-item" href="#">30</a>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -164,6 +227,14 @@
                         <div class="col-lg-4 col-md-6 col-sm-6 pb-1 product">
                             <div class="product-item bg-light mb-4">
                                 <div class="product-img position-relative overflow-hidden">
+                                    <div class="content">
+                                        <div class="_3LjrMb yHNF9n BKTD5e shopee-badge">
+                                            <div class="R6rql6">
+                                                <span class="percent">{{ round(((($product->sale_price + 50000) - $product->sale_price)/($product->sale_price + 50000))*100) }}%</span>
+                                                <span class="down">Giảm</span>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <a href="{{ route('home.show', $product->id) }}">
                                         <img class=" w-100" style="height: 400px !important"
                                             src="{{ $product->images[0]->image_url }}" alt="">
@@ -192,10 +263,13 @@
                                         {{ $product->name }}
                                     </a>
                                     <div class="d-flex align-items-center justify-content-center mt-2">
-                                        <h5>{{ number_format($product->sale_price, 0, ',', '.') }}</h5>
-                                        <h6 class="text-muted ml-2">
-                                            <del>{{ number_format($product->sale_price + 50000, 0, ',', '.') }}</del>
-                                        </h6>
+                                        <h5 style="color: #d93232;font-size: 25px;"><b style="font-size: 18px;
+                                            text-decoration: underline;">đ</b>{{number_format($product->sale_price,0, ',', '.')}}</h5>
+                                        <h6 class="text-muted ml-2"><del style="margin-right: 15px;color: #d7bbbb;">{{number_format($product->sale_price+50000,0, ',', '.')}}đ</del></h6>
+                                        <p style="margin: 0 15px;"><b>Đã bán: </b>{{$product->sold}} </p>
+                                    </div>
+                                    <div>
+                                        <span style="font-family: Courier New"><i class='fa fa-truck' style="font-size: 15px;color: #0b7a8b;"></i> Miễn phí vận chuyển</span>
                                     </div>
                                     <div class="d-flex align-items-center justify-content-center mb-1">
                                         <small class="fa fa-star text-primary mr-1"></small>
@@ -255,7 +329,7 @@
             });
 
             let min = $("#amount_start").val();
-            console.log(min);
+            // console.log(min);
             let max = $("#amount_end").val();
 
             $("#slider-range").slider({

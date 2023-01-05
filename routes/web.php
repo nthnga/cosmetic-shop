@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\User\AccountController;
 use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\ContactController;
@@ -46,13 +47,16 @@ Route::get('/register', [RegisterController::class,'showRegisterForm'])->name('u
 Route::post('/register', [RegisterController::class,'register'])->name('user.register.store');
 Route::get('/logout', [LogoutController::class,'logoutUser'])->name('user.logout');
 
-Route::get('/senMail',[HomeController::class,'send_mail']);
-
 //Rating & Comment
 Route::post('/insert-rating',[HomeController::class,'insert_rating'])->name('insert-rating');
 Route::post('/comment-product',[HomeController::class,'comment_product'])->name('comment-product');
 
-Route::post('/senMail',[HomeController::class,'send_mail']);
+//SendMail
+Route::get('/send-mail', [HomeController::class, 'send_mail'])->name('mail.sendMail');
+Route::get('/send-coupon-vip', [MailController::class, 'send_coupon_vip'])->name('mail.sendCoupon1');
+Route::get('/send-coupon', [MailController::class, 'send_coupon'])->name('mail.sendCoupon');
+// Route::get('/mail_example', [MailController::class, 'mail_example'])->name('mail.sendCoupon');
+
 //Admin - Trang quản lý
 Route::group([
     'namespace' => 'Admin',
@@ -133,6 +137,7 @@ Route::group([
         Route::delete('/{id}',[CouponController::class, 'destroy'])->name('admin.coupon.destroy');
     });
 
+
     // Quản lý đơn hàng
     Route::group(['prefix' => 'orders'], function () {
         Route::get('/', [OrderController::class, 'index'])->name('admin.orders.index');
@@ -151,7 +156,7 @@ Route::group([
     // Quản lý vận chuyển
     Route::group(['prefix' => 'transport'], function () {
         Route::get('/', [TransportController::class, 'index'])->name('admin.transport.index'); 
-        Route::get('/delete-delivery', [TransportController::class, 'delete_delivery'])->name('admin.transport.delete-delivery'); 
+        Route::get('/delete-delivery', [TransportController::class, 'delete_delivery'])->name('admin.transport.delete-delivery');
         Route::get('/create', [TransportController::class, 'create'])->name('admin.transport.create'); 
         Route::post('/select-delivery', [TransportController::class, 'select_delivery'])->name('admin.transport.select-delivery'); 
         Route::post('/insert-delivery', [TransportController::class, 'insert_delivery'])->name('admin.transport.insert-delivery'); 
@@ -172,6 +177,12 @@ Route::group([
     //     // ->name('backend.statistical.filterAll');
     // });
 
+    // //Quan lý liên hệ
+    // Route::group(['prefix' => 'transport'], function () {
+    //     Route::get('/', [TransportController::class, 'index'])->name('admin.contacts.index');  
+            
+    // });
+
 });
 
 
@@ -179,6 +190,7 @@ Route::group([
     Route::get('/', [HomeController::class,'index'])->name('home');
     Route::get('/list-products', [HomeController::class,'listProduct'])->name('home.listProduct');
     Route::get('/search', [HomeController::class,'search'])->name('home.search');
+    Route::get('/coupon', [HomeController::class,'coupon_user'])->name('home.coupon');
     Route::get('/show/{id}', [HomeController::class,'show'])->name('home.show');
 
     //Liên hệ 
@@ -222,7 +234,6 @@ Route::group([
     Route::get('/product/cart/increment/{id}', [CartController::class, 'increment'])->name('user.product.increment');
     Route::get('/product/cart/decrement/{id}', [CartController::class, 'decrement'])->name('user.product.decrement');
 
-    //Đánh giá sản phẩm
     
 });
 

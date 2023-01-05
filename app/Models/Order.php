@@ -22,7 +22,7 @@ class Order extends Model
         'coupon',
         'note',
         'fee_ship',
-        // 'order_date'
+        'order_date'
     ];
 
     protected $appends = ['status_text','payment_text'];

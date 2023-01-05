@@ -107,9 +107,15 @@ class PaymentController extends Controller
         $order = new Order();
         $order->customer_id = Auth::guard('web')->id();
         $order->total = $price_total;
-        $order->coupon = $total_coupon;
+        $order->coupon = $total_coupon?$total_coupon:0;
         $order->payment_type = $type;
         $order->note = $note;
+        if( Session::get('fee')){
+            $order->fee_ship = Session::get('fee');
+        }else{
+            $order->fee_ship = 0;
+        }
+        
         $order->status = Order::WAIT;
         $order->save();
 
@@ -130,14 +136,7 @@ class PaymentController extends Controller
             }
         }
         Session::forget('coupon');
-
-        //Gui mail
-        // $auth = Auth::user();
-        // Mail::send('user.email.sendMailOrder', compact('order','auth'), function($email) use($auth){
-        //     $email->subject('Cosmetic Shop - Xác nhận đơn hàng');
-        //     $email->to($auth->name, $auth->email);
-        // });
-
+        Session::forget('fee');
         Cart::destroy();
     }
 

@@ -183,7 +183,7 @@ class OrderController extends Controller
                 return '<b>'. date("H:i | d/m/Y", strtotime($orders->created_at)).'</b>';
             })
             ->editColumn('total', function ($orders) {
-                return '<b>'. number_format($orders->total,0, ',', '.').'</b>';
+                return '<b>'. number_format((int)$orders->total + (int)$orders->fee_ship - (int)$orders->coupon).'</b>';
             })
             ->editColumn('id', function ($orders) {
                 return '<a href="#" style="text-decoration: none"><b>'.$orders->id.'</b></a>';

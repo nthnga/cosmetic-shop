@@ -29,7 +29,9 @@
             <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Trang chủ</a></li>
             <li class="breadcrumb-item active">Danh sách mã giảm giá</li>
         </ol>
-        <a class="btn btn-primary btnAdd" href="{{route('admin.coupon.create')}}">Tạo mã giảm giá</a>
+            <a class="btn btn-primary btnAdd" href="{{route('admin.coupon.create')}}">Tạo mã giảm giá</a>
+            <p><a class="btn btn-info" href="{{route('mail.sendCoupon')}}">Gửi mã giảm giá tới khách hàng 1</a></p>
+            <p><a class="btn btn-info" href="{{route('mail.sendCoupon')}}">Gửi mã giảm giá tới khách hàng</a></p>
         <div class="card mb-4">
             <div class="card-body">
                 <table class="table align-middle table-row-dashed fs-6 gy-5" id="table">

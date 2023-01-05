@@ -92,7 +92,7 @@
                                             <input name="phone" class="form-control" type="text" value="{{Auth::user()->phone}}" required>
                                         </div>
                                         <div class="col-md-12 form-group">
-                                            <label>Địa chỉ giao hàng <span class="required">*</span></label></label>
+                                            <label>Địa chỉ <span class="required">*</span></label></label>
                                             <input name="address" class="form-control" type="text" value="{{Auth::user()->address}}" required>
                                         </div>
                                     </div>
@@ -177,9 +177,9 @@
                                     @endforeach
                                     <div style="border-bottom: 1px solid lightgray;margin: 2px 4px">
                                         <b>
-                                            <span style="color: rgb(47, 0, 255);">Phí vận chuyển: {{number_format(Session::get('fee'))}}đ</span><br>
-                                            <span style="color: rgb(255, 0, 200);">Mã giảm giá: {{number_format($order->coupon)}} đ</span><br>
-                                            <h5><span style="color: red;">===> Tổng thanh toán: {{number_format($order->total + Session::get('fee'),0, ',', '.')}} đ</span></h5>
+                                            <span>Phí vận chuyển: {{number_format($order->fee_ship)}}đ</span><br>
+                                            <span>Mã giảm giá: {{number_format($order->coupon)}} đ</span><br>
+                                            <h5><span style="color: rgb(19, 7, 7);">===> Tổng thanh toán: {{number_format($order->total + $order->fee_ship - $order->coupon)}} đ</span></h5>
                                         </b>
                                         
                                     </div>

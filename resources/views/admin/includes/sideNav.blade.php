@@ -16,15 +16,6 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                     Quản lý khách hàng
                 </a>
-                <a class="nav-link" href="{{route('admin.comment.index')}}">
-                    <div class="sb-nav-link-icon"><i class="fas fa-comment"></i></div>
-                    Quản lý bình luận
-                </a>
-                <div class="sb-sidenav-menu-heading">Vận chuyển</div>
-                <a class="nav-link" href="{{route('admin.transport.create')}}">
-                    <div class="sb-nav-link-icon"><i class="fas fa-truck"></i></div>
-                    Thêm vận chuyển
-                </a>
                 <div class="sb-sidenav-menu-heading">Sản phẩm</div>
                 <a class="nav-link" href="{{route('admin.categories.index')}}">
                     <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
@@ -38,6 +29,16 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                     Quản lý thương hiệu
                 </a>
+                <a class="nav-link" href="{{route('admin.comment.index')}}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-comment"></i></div>
+                    Quản lý bình luận
+                </a>
+                <div class="sb-sidenav-menu-heading">Quản lý Vận chuyển</div>
+                <a class="nav-link" href="{{route('admin.transport.create')}}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-truck"></i></div>
+                    Thêm vận chuyển
+                </a>
+                
                 <a class="nav-link" href="{{route('admin.coupon.index')}}">
                     <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                     Quản lý mã giảm giá
@@ -46,6 +47,11 @@
                 <a class="nav-link" href="{{route('admin.orders.index')}}">
                     <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                     Quản lý đơn hàng
+                </a>
+                <div class="sb-sidenav-menu-heading">Liên hệ</div>
+                <a class="nav-link" href="">
+                    <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                    Quản lý liên hệ
                 </a>
             </div>
         </div>

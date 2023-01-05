@@ -23,8 +23,8 @@
                     <thead>
                       <tr>
                         <th>ID</th>
-                        <th>Tên người comment</th>
-                        <th>Comment</th>
+                        <th>Tên người bình luận</th>
+                        <th>Nội dung bình luận</th>
                         <th>Email</th>
                         <th>Sản phẩm</th>
                         <th>Duyệt bình luận</th>
@@ -44,8 +44,8 @@
                         <td>
                             <select class="form-control select-active-comment">
                                 @if($comm->status==0)
-                                <option selected data-comment_id="{{$comm->id}}" value="0">Không</option>
-                                <option data-comment_id="{{$comm->id}}" value="1">Có</option>
+                                    <option selected data-comment_id="{{$comm->id}}" value="0">Không</option>
+                                    <option data-comment_id="{{$comm->id}}" value="1">Có</option>
                                 @else
                                 <option data-comment_id="{{$comm->id}}" value="0">Không</option>
                                 <option selected data-comment_id="{{$comm->id}}" value="1">Có</option>

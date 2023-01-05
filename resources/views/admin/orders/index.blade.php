@@ -43,7 +43,7 @@
                         <th class="min-w-125px" >Tổng tiền</th>
                         <th class="min-w-125px" style="text-align: center">Hình thức thanh toán</th>
                         <th class="min-w-125px" style="text-align: center">Trạng thái</th>
-                        <th class="min-w-125px">Người xác nhận</th>
+                        {{-- <th class="min-w-125px">Người xác nhận</th> --}}
                         <th class="min-w-125px" style="text-align: center">Ngày tạo</th>
                         <th
                             style="text-align: center;padding-left: 26px;text-transform: none !important;" class="min-w-125px">
@@ -113,7 +113,7 @@
                         { data: 'total', name: 'total' },
                         { data: 'payment_text', name: 'payment_text' },
                         { data: 'status', name: 'status' },
-                        { data: 'update_by', name: 'update_by' },
+                        // { data: 'update_by', name: 'update_by' },
                         { data: 'created_at', name: 'created_at' },
                         { data: 'action', name: 'action' },
                     ]
@@ -183,23 +183,6 @@
                 }
             });
         });
-
-        // $(document).on('click', '.viewDetail', function (event){
-        //     event.preventDefault();
-        //     let $this = $(this);
-        //     let URL = $this.attr('href');
-
-        //     $.ajax(
-        //         {
-        //             url: URL
-        //         }).done(function(results){
-        //             console.log(results)
-        //             $("#modal-preview-transaction .content").html(results.html);
-        //             $("#modal-preview-transaction").modal({
-        //             show : true
-        //         })
-        //         });
-        // });
 
         $(document).on('click', '.cancelOrder', function (){
             Swal.fire({

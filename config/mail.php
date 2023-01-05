@@ -36,7 +36,7 @@ return [
     'mailers' => [
         'smtp' => [
             'transport' => 'smtp',
-            'host' => 'smtp.gmail.com',
+            'host' => 'smtp.googlemail.com',
             'port' => 587,
             'encryption' => 'tls',
             'username' => 'nguyennga2700@gmail.com',

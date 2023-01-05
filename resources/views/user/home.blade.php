@@ -8,6 +8,69 @@
     <link rel="stylesheet" href="//cdn.datatables.net/1.10.7/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="/admin/css/user/index">
     <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
+    <style>
+        .content {
+            position: absolute;
+            right: 0;
+        }
+
+        .content:hover {
+            cursor: pointer;
+        }
+
+        .percent {
+            margin: 7px;
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .down {
+            color: white;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .BKTD5e {
+            background-color: rgba(255, 212, 36, 0.9);
+        }
+
+        .BKTD5e::after {
+            content: "";
+            width: 14px;
+            height: 3px;
+            left: 0px;
+            bottom: -11px;
+            position: absolute;
+            border-color: transparent rgba(255, 212, 36, 0.9);
+            border-style: solid;
+            border-width: 0px 23px 11px;
+        }
+
+        .yHNF9n {
+            width: 45px;
+            height: 55px;
+        }
+
+        ._3LjrMb {
+            display: inline-block;
+            box-sizing: border-box;
+            position: relative;
+            padding: 4px 2px 3px;
+            font-weight: 700;
+        }
+
+        .R6rql6 {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            position: relative;
+            font-weight: 400;
+            line-height: 0.8125rem;
+            color: rgb(238, 77, 45);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -23,29 +86,41 @@
                     </ol>
                     <div class="carousel-inner">
                         <div class="carousel-item position-relative active" style="height: 430px;">
-                            <img class="position-absolute w-100 h-100" src="https://bizweb.dktcdn.net/100/376/405/files/nhuong-quyen-gia-cong-my-pham-blog-coanmy-5-266bfc33-a35b-46d7-b0a2-9f8c3816676b.jpg?v=1596804140468" style="object-fit: cover;">
+                            <img class="position-absolute w-100 h-100"
+                                src="https://img3.thuthuatphanmem.vn/uploads/2019/09/16/anh-quang-cao-banner-cho-my-pham_083547066.jpg"
+                                style="object-fit: cover;">
                             <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                                 <div class="p-3" style="max-width: 700px;">
-                                    <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown">Mỹ phẩm chính hãng</h1>
-                                    <p class="mx-md-5 px-5 animate__animated animate__bounceIn">Mỹ phẩm chính hãng nam nữ nhập khẩu</p>
+                                    <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown">Mỹ phẩm
+                                        chính hãng</h1>
+                                    <p class="mx-md-5 px-5 animate__animated animate__bounceIn">Mỹ phẩm chính hãng nam nữ
+                                        nhập khẩu</p>
                                 </div>
                             </div>
                         </div>
                         <div class="carousel-item position-relative" style="height: 430px;">
-                            <img class="position-absolute w-100 h-100" src="http://cdn.tgdd.vn/Files/2021/03/16/1335716/top-8-thuong-hieu-my-pham-viet-nam-tot-nhat-hien-nay-202103161559257688.jpg" style="object-fit: cover;">
+                            <img class="position-absolute w-100 h-100"
+                                src="https://topprint.vn/wp-content/uploads/2021/07/banner-my-pham-dep-8.jpg"
+                                style="object-fit: cover;">
                             <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                                 <div class="p-3" style="max-width: 700px;">
-                                    <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown">Vẻ đẹp vượt thời gian</h1>
-                                    <p class="mx-md-5 px-5 animate__animated animate__bounceIn">Mỹ phẩm Hàn Quốc, Anh, Pháp, Đức, Mỹ, nội địa Trung nhập khẩu, xách tay</p>
+                                    <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown">Vẻ đẹp vượt
+                                        thời gian</h1>
+                                    <p class="mx-md-5 px-5 animate__animated animate__bounceIn">Mỹ phẩm Hàn Quốc, Anh, Pháp,
+                                        Đức, Mỹ, nội địa Trung nhập khẩu, xách tay</p>
                                 </div>
                             </div>
                         </div>
                         <div class="carousel-item position-relative" style="height: 430px;">
-                            <img class="position-absolute w-100 h-100" src="https://image.thanhnien.vn/w1024/Uploaded/2022/puqgfdmzs-co/2021_10_22/mai-han-duoc-my-pham-2-4439.png" style="object-fit: cover;">
+                            <img class="position-absolute w-100 h-100"
+                                src="https://bizweb.dktcdn.net/100/376/405/files/nhuong-quyen-gia-cong-my-pham-blog-coanmy-5-266bfc33-a35b-46d7-b0a2-9f8c3816676b.jpg?v=1596804140468"
+                                style="object-fit: cover;">
                             <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
                                 <div class="p-3" style="max-width: 700px;">
-                                    <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown">Chăm sóc làn da của bạn</h1>
-                                    <p class="mx-md-5 px-5 animate__animated animate__bounceIn">Thương hiệu nổi tiếng như: Clinique, Givenchy, Lancome, Whoo,..</p>
+                                    <h1 class="display-4 text-white mb-3 animate__animated animate__fadeInDown">Chăm sóc làn
+                                        da của bạn</h1>
+                                    <p class="mx-md-5 px-5 animate__animated animate__bounceIn">Thương hiệu nổi tiếng như:
+                                        Clinique, Givenchy, Lancome, Whoo,..</p>
                                 </div>
                             </div>
                         </div>
@@ -54,15 +129,19 @@
             </div>
             <div class="col-lg-4">
                 <div class="product-offer mb-30" style="height: 200px;">
-                    <img class="img-fluid" src="https://image.thanhnien.vn/w1024/Uploaded/2022/puqgfdmzs-co/2021_10_22/mai-han-duoc-my-pham-2-4439.png" alt="">
+                    <img class="img-fluid"
+                        src="https://img.lovepik.com/background/20211022/medium/lovepik-cosmetics-red-background-beautiful-poster-banner-image_605629266.jpg"
+                        alt="">
                     <div class="offer-text">
-                        <h6 class="text-white text-uppercase">Chăm sóc da tại nhà</h6>
+                        <h6 class="text-white text-uppercase">HÃY ĐẾN VỚI CHÚNG TÔI</h6>
                     </div>
                 </div>
                 <div class="product-offer mb-30" style="height: 200px;">
-                    <img class="img-fluid" src="http://cdn.tgdd.vn/Files/2021/03/16/1335716/top-8-thuong-hieu-my-pham-viet-nam-tot-nhat-hien-nay-202103161559257688.jpg" alt="">
+                    <img class="img-fluid"
+                        src="https://img4.thuthuatphanmem.vn/uploads/2020/12/25/anh-bia-my-pham-cosmetics-cuc-dep_094446811.jpg"
+                        alt="">
                     <div class="offer-text">
-                        <h6 class="text-white text-uppercase">Hiểu làn da của bạn</h6>
+                        <h6 class="text-white text-uppercase">LUÔN TẠO NIỀM TIN</h6>
                     </div>
                 </div>
             </div>
@@ -71,7 +150,7 @@
     <!-- Carousel End -->
 
     <div class="container-fluid pt-5">
-        <div class="row px-xl-5 pb-3"  style="cursor: pointer;">
+        <div class="row px-xl-5 pb-3" style="cursor: pointer;">
             <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
                 <div class="d-flex align-items-center bg-light mb-4" style="padding: 30px;">
                     <h1 class="fa fa-check text-primary m-0 mr-3"></h1>
@@ -103,77 +182,57 @@
 
     <!-- Products Start -->
     <div class="container-fluid pt-5 pb-3">
-        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Sản phẩm bán chạy</span></h2>
+        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Sản phẩm bán
+                chạy</span></h2>
         <div class="row px-xl-5">
-            @foreach($product_sellings as $product)
-            <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                <div class="product-item bg-light mb-4">
-                    <div class="product-img position-relative overflow-hidden">
-                        <a href="{{route('home.show',$product->id)}}">
-                            <img class="w-100" style="height: 400px !important"  src="{{$product->images[0]->image_url}}" alt="">
-                            <div class="product-action">
-                                <a class="btn btn-outline-dark btn-square" href="{{route('user.product.add',$product->id)}}"><i class="fa fa-shopping-cart"></i></a>
-                                <a class="btn btn-outline-dark btn-square" href="{{route('home.show',$product->id)}}"><i class="far fa-eye"></i></a>
-                                <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="text-center py-4">
-                        <a class="h6 text-decoration-none text-truncate"  href="{{route('home.show',$product->id)}}">
-                            @php     
-                            if (strlen($product->name)>50) {
-                                $str = substr($product->name, 0,50);
-                                $product->name =  $str. '...';
-                            };
-                            @endphp
-                            {{$product->name}}
-                        </a>
-                        <div class="d-flex align-items-center justify-content-center mt-2">
-                            <h5>{{number_format($product->sale_price,0, ',', '.')}}</h5><h6 class="text-muted ml-2"><del>{{number_format($product->sale_price+50000,0, ',', '.')}}</del></h6>
-                        </div>
-                        <div class="d-flex align-items-center justify-content-center mb-1">
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small class="fa fa-star text-primary mr-1"></small>
-                            <small>(99)</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @endforeach
-        </div>
-    </div>
-
-    <div class="container-fluid pt-5 pb-3">
-        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Sản phẩm mới</span></h2>
-        <div class="row px-xl-5">
-            @foreach($product_news as $product)
+            @foreach ($product_sellings as $product)
                 <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
                     <div class="product-item bg-light mb-4">
                         <div class="product-img position-relative overflow-hidden">
-                            <a href="{{route('home.show',$product->id)}}">
-                                <img class=" w-100" style="height: 400px !important"   src="{{$product->images[0]->image_url}}" alt="">
+                            <div class="content">
+                                <div class="_3LjrMb yHNF9n BKTD5e shopee-badge">
+                                    <div class="R6rql6">
+                                        <span class="percent">{{ round(((($product->sale_price + 50000) - $product->sale_price)/($product->sale_price + 50000))*100) }}%</span>
+                                        <span class="down">Giảm</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="{{ route('home.show', $product->id) }}">
+                                <img class="w-100" style="height: 400px !important"
+                                    src="{{ $product->images[0]->image_url }}" alt="">
                                 <div class="product-action">
-                                    <a class="btn btn-outline-dark btn-square" href="{{route('user.product.add',$product->id)}}"><i class="fa fa-shopping-cart"></i></a>
-                                    <a class="btn btn-outline-dark btn-square" href="{{route('home.show',$product->id)}}"><i class="far fa-eye"></i></a>
-                                    <a class="btn btn-outline-dark btn-square" href=""><i class="fa fa-sync-alt"></i></a>
+                                    <a class="btn btn-outline-dark btn-square"
+                                        href="{{ route('user.product.add', $product->id) }}"><i
+                                            class="fa fa-shopping-cart"></i></a>
+                                    <a class="btn btn-outline-dark btn-square"
+                                        href="{{ route('home.show', $product->id) }}"><i class="far fa-eye"></i></a>
+                                    <a class="btn btn-outline-dark btn-square" href=""><i
+                                            class="fa fa-sync-alt"></i></a>
                                 </div>
                             </a>
                         </div>
                         <div class="text-center py-4">
-                            <a class="h6 text-decoration-none text-truncate"  href="{{route('home.show',$product->id)}}"> 
-                                @php     
-                                if (strlen($product->name)>50) {
-                                    $str = substr($product->name, 0,50);
-                                    $product->name =  $str. '...';
-                                };
+                            <a class="h6 text-decoration-none text-truncate" href="{{ route('home.show', $product->id) }}">
+                                @php
+                                    if (strlen($product->name) > 50) {
+                                        $str = substr($product->name, 0, 50);
+                                        $product->name = $str . '...';
+                                    }
                                 @endphp
-                                {{$product->name}}
+                                {{ $product->name }}
                             </a>
                             <div class="d-flex align-items-center justify-content-center mt-2">
-                                <h5>{{number_format($product->sale_price,0, ',', '.')}}</h5><h6 class="text-muted ml-2"><del>{{number_format($product->sale_price+50000,0, ',', '.')}}</del></h6>
+                                <h5 style="color: #d93232;font-size: 25px;"><b
+                                        style="font-size: 18px;text-decoration: underline;">đ</b>{{ number_format($product->sale_price, 0, ',', '.') }}
+                                </h5>
+                                <h6 class="text-muted ml-2"><del
+                                        style="margin-right: 15px;color: #d7bbbb;">{{ number_format($product->sale_price + 50000, 0, ',', '.') }}đ</del>
+                                </h6>
+                                <p style="margin: 0 15px;"><b>Đã bán: </b>{{ $product->sold }} </p>
+                                {{-- <i class='fas fa-car-side' style="font-size: 25px;color: #0b7a8b;">Miễn phí vận chuyển</i> --}}
+                            </div>
+                            <div>
+                                <span style="font-family: Courier New"><i class='fa fa-truck' style="font-size: 15px;color: #0b7a8b;"></i> Miễn phí vận chuyển</span>
                             </div>
                             <div class="d-flex align-items-center justify-content-center mb-1">
                                 <small class="fa fa-star text-primary mr-1"></small>
@@ -189,6 +248,88 @@
             @endforeach
         </div>
     </div>
+
+    <div class="container-fluid pt-5 pb-3">
+        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Sản phẩm
+                mới</span></h2>
+        <div class="row px-xl-5">
+            @foreach ($product_news as $product)
+                <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
+                    <div class="product-item bg-light mb-4">
+                        <div class="product-img position-relative overflow-hidden">
+                            <div class="content">
+                                <div class="_3LjrMb yHNF9n BKTD5e shopee-badge">
+                                    <div class="R6rql6">
+                                        <span class="percent">{{ round(((($product->sale_price + 50000) - $product->sale_price)/($product->sale_price + 50000))*100) }}%</span>
+                                        <span class="down">Giảm</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <a href="{{ route('home.show', $product->id) }}">
+                                <img class=" w-100" style="height: 400px !important"
+                                    src="{{ $product->images[0]->image_url }}" alt="">
+                                <div class="product-action">
+                                    <a class="btn btn-outline-dark btn-square"
+                                        href="{{ route('user.product.add', $product->id) }}"><i
+                                            class="fa fa-shopping-cart"></i></a>
+                                    <a class="btn btn-outline-dark btn-square"
+                                        href="{{ route('home.show', $product->id) }}"><i class="far fa-eye"></i></a>
+                                    <a class="btn btn-outline-dark btn-square" href=""><i
+                                            class="fa fa-sync-alt"></i></a>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="text-center py-4">
+                            <a class="h6 text-decoration-none text-truncate"
+                                href="{{ route('home.show', $product->id) }}">
+                                @php
+                                    if (strlen($product->name) > 50) {
+                                        $str = substr($product->name, 0, 50);
+                                        $product->name = $str . '...';
+                                    }
+                                @endphp
+                                {{ $product->name }}
+                            </a>
+                            <div class="d-flex align-items-center justify-content-center mt-2">
+                                <h5 style="color: #d93232;font-size: 25px;"><b
+                                        style="font-size: 18px;
+                                    text-decoration: underline;">đ</b>{{ number_format($product->sale_price, 0, ',', '.') }}
+                                </h5>
+                                <h6 class="text-muted ml-2"><del
+                                        style="margin-right: 15px;color: #d7bbbb;">{{ number_format($product->sale_price + 50000, 0, ',', '.') }}đ</del>
+                                </h6>
+                                <p style="margin: 0 15px;"><b>Đã bán: </b>{{ $product->sold }} </p>
+                            </div>
+                            <div>
+                                <span style="font-family: Courier New"><i class='fa fa-truck' style="font-size: 15px;color: #0b7a8b;"></i> Miễn phí vận chuyển</span>
+                            </div>
+                            <div class="d-flex align-items-center justify-content-center mb-1">
+                                <small class="fa fa-star text-primary mr-1"></small>
+                                <small class="fa fa-star text-primary mr-1"></small>
+                                <small class="fa fa-star text-primary mr-1"></small>
+                                <small class="fa fa-star text-primary mr-1"></small>
+                                <small class="fa fa-star text-primary mr-1"></small>
+                                <small>(99)</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
+    <div class="container-fluid py-5">
+        <div class="row px-xl-5">
+            <div class="col">
+                <div class="owl-carousel vendor-carousel">
+                    @foreach ($trademarks as $trademark)
+                        <div class="bg-light p-4">
+                            <img {{ $trademark->images }} alt="">
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Products End -->
 @endsection
 @section('js')
@@ -197,7 +338,7 @@
     <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    @if(Session::has('success'))
+    @if (Session::has('success'))
         <script>
             toastr.success("{!! session()->get('success') !!}");
         </script>

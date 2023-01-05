@@ -26,6 +26,7 @@
                     <div class="navbar-nav mr-auto py-0">
                         <a href="{{route('home')}}" class="nav-item nav-link">Trang chủ</a>
                         <a href="{{route('home.listProduct')}}" class="nav-item nav-link">Sản phẩm</a>
+                        <a href="{{route('home.coupon')}}" class="nav-item nav-link">Mã giảm giá</a>
                         <a href="/contact" class="nav-item nav-link">Liên hệ</a>
                     </div>
                     <div class="navbar-nav ml-auto py-0 d-none d-lg-block">

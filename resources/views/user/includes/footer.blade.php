@@ -12,18 +12,18 @@
                 <div class="col-md-4 mb-5">
                     <h5 class="text-secondary text-uppercase mb-4">GHÉ NHANH</h5>
                     <div class="d-flex flex-column justify-content-start">
-                        <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Trang chủ</a>
-                        <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Sản phẩm</a>
-                        <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Giỏ hàng</a>
-                        <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Thanh toán</a>
-                        <a class="text-secondary" href="#"><i class="fa fa-angle-right mr-2"></i>Liên hệ</a>
+                        <a class="text-secondary mb-2" href="{{route('home')}}"><i class="fa fa-angle-right mr-2"></i>Trang chủ</a>
+                        <a class="text-secondary mb-2" href="{{route('home.listProduct')}}"><i class="fa fa-angle-right mr-2"></i>Sản phẩm</a>
+                        <a class="text-secondary mb-2" href="{{route('user.product.cart')}}"><i class="fa fa-angle-right mr-2"></i>Giỏ hàng</a>
+                        <a class="text-secondary mb-2" href="{{route('home.checkout')}}"><i class="fa fa-angle-right mr-2"></i>Thanh toán</a>
+                        <a class="text-secondary" href="{{route('home.contact')}}"><i class="fa fa-angle-right mr-2"></i>Liên hệ</a>
                     </div>
                 </div>
                 <div class="col-md-4 mb-5">
                     <h5 class="text-secondary text-uppercase mb-4">Tài khoản</h5>
                     <div class="d-flex flex-column justify-content-start">
-                        <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Đăng kí tài khoản</a>
-                        <a class="text-secondary" href="#"><i class="fa fa-angle-right mr-2"></i>Đăng nhập</a>
+                        <a class="text-secondary mb-2" href="{{route('user.register.form')}}"><i class="fa fa-angle-right mr-2"></i>Đăng kí tài khoản</a>
+                        <a class="text-secondary" href="{{route('login')}}"><i class="fa fa-angle-right mr-2"></i>Đăng nhập</a>
                     </div>
                 </div>
                 <div class="col-md-4 mb-5">
@@ -51,9 +51,8 @@
     <div class="row border-top mx-xl-5 py-4" style="border-color: rgba(256, 256, 256, .1) !important;">
         <div class="col-md-6 px-xl-0">
             <p class="mb-md-0 text-center text-md-left text-secondary">
-                &copy; <a class="text-primary" href="#">Domain</a>. All Rights Reserved. Designed
-                by
-                <a class="text-primary" href="https://htmlcodex.com">HTML Codex</a>
+                &copy; <a class="text-primary" href="#">CopyRight2022</a>. Copy by 
+                <a class="text-primary" href="https://htmlcodex.com">NTHN</a>
             </p>
         </div>
         <div class="col-md-6 px-xl-0 text-center text-md-right">

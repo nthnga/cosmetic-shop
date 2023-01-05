@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\Trademark;
 use App\Models\Rating;
 use App\Models\Comment;
+use App\Models\Coupon;
 use Illuminate\Http\Request;
 use App\Models\Transport;
 use DB;
@@ -33,22 +34,25 @@ class HomeController
 
         $product_sellings = Product::orderBy('sold', 'DESC')->limit(8)->get();
         $product_news = Product::orderBy('created_at', 'DESC')->limit(8)->get();
+        $trademarks = Trademark::orderBy('image', 'DESC')->get();
         return view('user.home')->with([
             'product_sellings' => $product_sellings,
             'product_news' => $product_news,
             'meta_des' => $meta_des,
             'meta_keywords' => $meta_keywords,
             'meta_title' => $meta_title,
-            'url_canonical' => $url_canonical
+            'url_canonical' => $url_canonical,
+            'trademarks' => $trademarks
         ]);
     }
 
     public function search(Request $request){
         session()->regenerate();
+        $keyword = Session::get('keywords');
         if($request->has('keywords')){
             Session::put('keywords',$request->keywords);
         }
-        $keyword = Session::get('keywords');;
+        // $keyword = Session::get('keywords');
         $category = Category::orderBy('name', 'DESC')->limit(8)->get();
         $trademark = Trademark::orderBy('name', 'DESC')->limit(8)->get();
 
@@ -113,6 +117,14 @@ class HomeController
         ]);
     }
 
+    public function coupon_user(){
+        
+        $coupons = Coupon::all();
+        return view('user.product.coupon')->with([
+            'coupons' => $coupons
+        ]);
+    }
+
     public function show($id){
         $product = Product::where('id',$id)->with(['category','images','trademark'])->first();
         
@@ -122,12 +134,29 @@ class HomeController
 
         $rating = Rating::where('product_id',$id)->avg('rating');
         $rating = round($rating);
+
+        //Hien thi danh gia tren form 
+        $ratingDashboard = Rating::groupBy('rating')
+        ->where('product_id',$id)
+        ->select(\DB::raw('count(rating) as count_rating'), \DB::raw('sum(rating) as total'))
+        ->addSelect('rating')
+        ->get()->toArray();
+
+        $ratingDefaut = $this->mapRatingDefault();
+        // dd($ratingDashboard);
+
+        foreach ($ratingDefaut as $key => $item){
+            $ratingDefaut[$item['rating']] = $item;
+        }
+        // dd($ratingDefaut);
+
         $comment = Comment::with('user')->where('product_id',$id)->get();
         return view('user.product.detail')->with([
             'product' => $product,
             // 'related' => $related_product,
             'product_news' => $product_news,
             'rating'=>$rating,
+            'ratingDefaut' => $ratingDefaut,
             'comment'=>$comment
         ]);
 
@@ -136,6 +165,19 @@ class HomeController
             'items' => $items,
         ]);
 
+    }
+
+    private function mapRatingDefault(){
+        $ratingDefaut = [];
+        for($i = 1; $i<=5; $i++){
+            $ratingDefaut[$i] = [
+                "count_number" => 0,
+                "total" => 0,
+                "rating" => 0
+            ];
+            // dd($ratingDefaut);
+        }
+        return $ratingDefaut;
     }
 
     public function checkout(){
@@ -202,8 +244,18 @@ class HomeController
         $rating->product_id = $data['product_id'];
         $rating->rating = $data['index'];
         $rating->save();
-        echo 'done';
+        // echo 'done';
+        
+        return 'done';
     }
+
+    public function staticRatingProduct($id, $number){
+        $product = Product::find($id);
+        $product->pro_review_total++;
+        $product->pro_review_star += $number;
+        product->save();
+    }
+
     public function comment_product(Request $request){
         $data = $request->all();
         $comment = new Comment();
@@ -213,13 +265,24 @@ class HomeController
         $comment->email = $data['email_comment'];
         $comment->content = $data['content_comment'];
         $comment->save();
-        echo 'done';
+        // echo 'done';
+        return 'done';
     }
 
     public function send_mail(){
-        $name = 'Nguyen Thi Hang Nga';
-        Mail::send('user.email.send', compact('name'), function($email) use($name){
-            $email->to('nthnga0703@gmail.com', $name);
-        });
-    }
+        //send mail
+               $to_name = "Cosmetic Shop";
+               $to_email = "nthnga0703@gmail.com";//send to this email
+              
+            
+               $data = array("name"=>"Cosmetic Shop","body"=>'Cảm ơn quý khách hàng đã tin tưởng và mua sản phẩm tại Cosmetic Shop'); //body of mail.blade.php
+               
+               Mail::send('mail.sendMail',$data,function($message) use ($to_name,$to_email){
+
+                   $message->to($to_email)->subject('Gửi mail cảm ơn khách hàng');//send this mail with subject
+                   $message->from($to_email,$to_name);//send from this mail
+               });
+               // return redirect('/')->with('message','');
+               //--send mail
+   }
 }
