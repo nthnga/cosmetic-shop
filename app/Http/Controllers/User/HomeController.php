@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Order;
@@ -19,12 +20,13 @@ use App\Models\Ward;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Support\Facades\Log;
+use Carbon\Carbon;
 
 session_start();
 
 class HomeController
 {
-
     public function index(Request $request){
         //seo-metagg
         $meta_des = "Mỹ phẩm hàng real. Cosmetic shop!";
@@ -36,6 +38,7 @@ class HomeController
         $product_news = Product::orderBy('created_at', 'DESC')->limit(8)->get();
         $trademarks = Trademark::orderBy('image', 'DESC')->get();
         return view('user.home')->with([
+            
             'product_sellings' => $product_sellings,
             'product_news' => $product_news,
             'meta_des' => $meta_des,
@@ -52,62 +55,64 @@ class HomeController
         if($request->has('keywords')){
             Session::put('keywords',$request->keywords);
         }
-        // $keyword = Session::get('keywords');
+        
         $category = Category::orderBy('name', 'DESC')->limit(8)->get();
         $trademark = Trademark::orderBy('name', 'DESC')->limit(8)->get();
 
         $search_product = Product::where('name','like','%'.$keyword.'%')->get();
+
         return view('user.product.search')->with([
             'keyword' => $keyword,
             'search_product' => $search_product
         ]);
     }
-    
 
     public function listProduct(Request $request){
-
         //Lọc theo giá
         $min = 0;
         $max = 0; 
-        $products = Product::orderBy('created_at', 'DESC')->get();
-        $trademarks = Trademark::orderBy('name', 'DESC')->get();
-        $categories = Category::orderBy('created_at', 'DESC')->get();
+        $size = 10;
+        if($request->has('category_id')){
+            $products = Product::where('category_id', $request->input('category_id'));
+        }
+
+        
         if (isset($_GET['sort_by'])){
+            Log::info('sort by');
             $sort_by = $_GET['sort_by'];
             if ($sort_by == 'giam_dan'){
-                $products = Product::orderBy('sale_price', 'DESC')->paginate(24);
+                $products = Product::orderBy('sale_price', 'DESC');
             } elseif ($sort_by == 'tang_dan'){
-                $products = Product::orderBy('sale_price', 'ASC')->paginate(24);
+                $products = Product::orderBy('sale_price', 'ASC');
             } elseif ($sort_by == 'kytu_az'){
-                $products = Product::orderBy('name', 'ASC')->paginate(24);
+                $products = Product::orderBy('name', 'ASC');
             } elseif ($sort_by == 'kytu_za'){
-                $products = Product::orderBy('name', 'DESC')->paginate(24);
+                $products = Product::orderBy('name', 'DESC');
             }
         }elseif (isset($_GET['amount_start']) && ($_GET['amount_end'])){
+            Log::info('amount');
             $min = $_GET['amount_start'];
             $max = $_GET['amount_end'];
-            $products = Product::whereBetween('sale_price', [$min, $max])->orderBy('sale_price', 'ASC')->paginate(9);
+            $products = Product::whereBetween('sale_price', [$min, $max])->orderBy('sale_price', 'ASC');
         }elseif (isset($_GET['trademark'])){
+            Log::info('trademark');
             $filter_trademark = $_GET['trademark'];
             $trademark_arr = explode(",", $filter_trademark);
-            $products = Product::whereIn('trademark_id', $trademark_arr)->orderBy('created_at', 'desc')->paginate(9)
-            ->appends(request()->query());
-
-        }elseif (isset($_GET['category'])){
-            $filter_category = $_GET['category'];
-            $cate_arr = explode(",", $filter_category);
-            $products = Product::whereIn('category_id', $cate_arr)->orderBy('created_at', 'desc')->paginate(9)
-            ->appends(request()->query());
+            $products = Product::whereIn('trademark_id', $trademark_arr)->orderBy('created_at', 'desc');
+            // ->appends(request()->query());
 
         }else{
-            $products = Product::orderBy('created_at', 'desc')->paginate(9);
+            $products = Product::orderBy('created_at', 'desc');
         }
 
         $trademark_name = Trademark::orderBy('name', 'DESC')->get();
         $category_name = Category::orderBy('created_at', 'DESC')->get();
+        $trademarks = Trademark::orderBy('name', 'DESC')->get();
+        $categories = Category::orderBy('created_at', 'DESC')->get();
+
 
         return view('user.product.all')->with([
-           'products' => $products,
+           'products' => $products->paginate(9),
            'amount_start' => $min,
            'amount_end' => $max,
            'trademarks' => $trademarks,
@@ -118,10 +123,22 @@ class HomeController
     }
 
     public function coupon_user(){
+         
         
-        $coupons = Coupon::all();
+        $now = Carbon::now();
+        // $coupons = Coupon::where('coupon_times', '=', 500)->get();
+
+        // dd($coupons);
+      
+        $couponShow = Coupon::where('start_time', '<=', $now)
+                            ->where('end_time', '>=', $now)
+                            ->get();
+        // dd($couponShow);
+
+        $coupons = Coupon::paginate(7);
         return view('user.product.coupon')->with([
-            'coupons' => $coupons
+            'coupons' => $coupons,
+            'couponShow' => $couponShow
         ]);
     }
 
@@ -131,32 +148,25 @@ class HomeController
         $product_news = Product::orderBy('created_at', 'DESC')->limit(4)->get();
         $cate_product = Category::orderBy('id', 'DESC')->get();
         $trademark_product = Trademark::orderBy('id', 'DESC')->get();
+        $totalRatingCount = Rating::where('product_id', $id)->count();
 
-        $rating = Rating::where('product_id',$id)->avg('rating');
-        $rating = round($rating);
+        //saotrungbinh
+        $avgRating = $this->getAvgRating($id);
+    
+        //dem sao
+        $ratings = $this->countRatings($id);
+        $currentRating = $this->getCurrentRating($id);
+        // dump($ratings);
 
-        //Hien thi danh gia tren form 
-        $ratingDashboard = Rating::groupBy('rating')
-        ->where('product_id',$id)
-        ->select(\DB::raw('count(rating) as count_rating'), \DB::raw('sum(rating) as total'))
-        ->addSelect('rating')
-        ->get()->toArray();
+        $comment = Comment::with('user')->where('product_id',$id)->where('status', 1)->get();
 
-        $ratingDefaut = $this->mapRatingDefault();
-        // dd($ratingDashboard);
-
-        foreach ($ratingDefaut as $key => $item){
-            $ratingDefaut[$item['rating']] = $item;
-        }
-        // dd($ratingDefaut);
-
-        $comment = Comment::with('user')->where('product_id',$id)->get();
         return view('user.product.detail')->with([
             'product' => $product,
-            // 'related' => $related_product,
             'product_news' => $product_news,
-            'rating'=>$rating,
-            'ratingDefaut' => $ratingDefaut,
+            'avgRating' => $avgRating,
+            'ratings' => $ratings,
+            'totalRatingCount' => $totalRatingCount,
+            'currentRating' => $currentRating,
             'comment'=>$comment
         ]);
 
@@ -167,17 +177,32 @@ class HomeController
 
     }
 
-    private function mapRatingDefault(){
-        $ratingDefaut = [];
-        for($i = 1; $i<=5; $i++){
-            $ratingDefaut[$i] = [
-                "count_number" => 0,
-                "total" => 0,
-                "rating" => 0
-            ];
-            // dd($ratingDefaut);
+    private function getCurrentRating($productId) {
+        $user = Auth::user();
+        if ($user) {
+            $model = Rating::where('user_id', Auth::user()->id)->where('product_id', $productId)
+                            ->get('rating')->first();
+            return $model ? $model->rating : 0;
         }
-        return $ratingDefaut;
+
+        return 0;
+    }    
+
+    //dem luot danh gia, tong so nguoi danh gia
+    private function countRatings($id)
+    {
+        $ratingCounts = [];
+        $totalRatingCount = Rating::where('product_id', $id)->count();
+
+        for($star = 0; $star < 5; $star++){
+            $count = Rating::where('rating', $star+1)->where('product_id', $id)->count();
+            
+            $ratingCounts[$star] = [
+              'count' => $count,
+              'percentage' => $totalRatingCount===0 ? 0 : ($count/$totalRatingCount) * 100
+            ];
+        }
+        return $ratingCounts;
     }
 
     public function checkout(){
@@ -237,18 +262,6 @@ class HomeController
     	
     }
 
-    public function insert_rating(Request $request){
-        $data = $request->all();
-        $rating = new Rating();
-        $rating->user_id = Auth::guard('web')->user()->id;
-        $rating->product_id = $data['product_id'];
-        $rating->rating = $data['index'];
-        $rating->save();
-        // echo 'done';
-        
-        return 'done';
-    }
-
     public function staticRatingProduct($id, $number){
         $product = Product::find($id);
         $product->pro_review_total++;
@@ -258,15 +271,42 @@ class HomeController
 
     public function comment_product(Request $request){
         $data = $request->all();
-        $comment = new Comment();
-        $comment->user_id = $data['user_id'];
-        $comment->product_id = $data['product_id'];
-        $comment->name = $data['name_comment'];
-        $comment->email = $data['email_comment'];
-        $comment->content = $data['content_comment'];
-        $comment->save();
-        // echo 'done';
+        $isUserRated = Rating::where('product_id', $data['product_id'])
+                             ->where('user_id', Auth::user()->id)->count() > 0;
+        if ($isUserRated) {
+            Rating::where('product_id', $data['product_id'])
+                 ->where('user_id', $data['user_id'])
+                 ->first()
+                 ->update([
+                    'rating' => $data['current_rating']
+                 ]);
+            if (strlen($data['content_comment']) > 0) {
+                Comment::where('user_id', $data['user_id'])
+                       ->where('product_id', $data['product_id'])
+                       ->update([
+                        'content' => $data['content_comment']
+                       ]);
+            }
+        } else {
+            $this->insertRating($data);
+            $comment = new Comment();
+            $comment->user_id = $data['user_id'];
+            $comment->product_id = $data['product_id'];
+            $comment->name = Auth::user()->name;
+            $comment->email = Auth::user()->email;
+            $comment->content = $data['content_comment'];
+            $comment->save();
+        }
+
         return 'done';
+    }
+
+    private function insertRating($data) {
+        $rating = new Rating();
+        $rating->user_id = Auth::guard('web')->user()->id;
+        $rating->product_id = $data['product_id'];
+        $rating->rating = $data['current_rating'];
+        $rating->save();
     }
 
     public function send_mail(){
@@ -284,5 +324,14 @@ class HomeController
                });
                // return redirect('/')->with('message','');
                //--send mail
+    }
+
+   public function getAvgRating($id){
+
+        $rating = Rating::where('product_id',$id)->avg('rating');
+        $rating = round($rating);
+
+       return $rating;
+    //    dd($productId);
    }
 }

@@ -30,19 +30,10 @@ class DashboardController
         $trademarks = Trademark::count();
         $orders = Order::where('status','5')->count();
         $orders=Order::orderByDesc('id')->limit(10)->get();
+        $revenue_total = DB::table('statistics')->sum('revenue');
+        // dd($revenue_total);
 
-        // $listDay = Date::getListDayInMonth();
-        // dd(listDay);
-
-        //Doanh thu theo tháng với đơn hàng có trạng thái đã giao thành công 5
-        // $revenueOrder = Order::where('status',5)
-        // ->whereMonth('created_at',date('m'))
-        // ->select(\DB::raw('sum(total) as totalMonth'),\DB::raw('DATE(created_at) day'))
-        // ->groupBy('day')->get()->toArray();
-
-        // dd($revenueOrder);
-
-        return view('admin.dashboard', compact('categories','products','trademarks','orders'));
+        return view('admin.dashboard', compact('categories','products','trademarks','orders','revenue_total'));
     }
 
 

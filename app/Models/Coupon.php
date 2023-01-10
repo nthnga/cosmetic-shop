@@ -29,9 +29,29 @@ class Coupon extends Model
         'MONEY' => 2
     ];
 
+    const TypeArr = [
+        [
+            'key' => self::TYPE['PERCENT'],
+            'name' => 'Giảm theo phần trăm'
+        ],
+        [
+            'key' => self::TYPE['MONEY'],
+            'name' => 'Giảm theo tiền mặt'
+        ]
+    ];
+
     const STATUS = [
         'ACTIVE' => 0,
         'NONACTIVE' => 1
+    ];
+
+    
+    const STATUS_UNLOCKED = 1;
+    const STATUS_LOCKED = 0;
+
+    protected $statusArr = [
+        self::STATUS_UNLOCKED => 'Mã giảm giá đang hoạt động',
+        self::STATUS_LOCKED => 'Mã đã bị khoá',
     ];
 
     public function getTypeAttribute()
@@ -44,13 +64,8 @@ class Coupon extends Model
         return $type;
     }
 
-    public function getstatusAttribute()
+    public function getStatusTextAttribute()
     {
-        if($this->coupon_status == self::STATUS['ACTIVE']){
-            $status = 'Kích hoạt';
-        } else{
-            $status = 'Ngừng kích hoạt';
-        }
-        return $status;
+        return $this->statusArr [$this->status];
     }
 }

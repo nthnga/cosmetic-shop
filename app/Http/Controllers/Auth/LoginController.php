@@ -25,6 +25,7 @@ class LoginController extends Controller
     }
 
     public function login(Request $request){
+        
         $user = User::where('email',$request->input('email'))->first();
         if($user && $user->status === User::STATUS['DE_ACTIVE']){
             return back()->withErrors([

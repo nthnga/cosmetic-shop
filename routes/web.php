@@ -16,8 +16,10 @@ use App\Http\Controllers\User\AccountController;
 use App\Http\Controllers\User\HomeController;
 use App\Http\Controllers\User\ContactController;
 use App\Http\Controllers\User\CartController;
+use App\Http\Controllers\User\ProductsController;
 use App\Http\Controllers\Admin\TrademarkController;
 use App\Http\Controllers\Admin\CouponController;
+use App\Http\Controllers\Admin\ConnectController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CommentController;
 use App\Http\Controllers\Admin\TransportController;
@@ -40,15 +42,14 @@ Route::post('/admin/login', [LoginController::class, 'login'])->name('login.stor
 Route::get('/admin/logout', [LogoutController::class,'logoutAdmin'])->name('logout');
 
 //Auth User
-// Route::get('/login', [LoginController::class,'showLoginForm'])->name('user.login.form');
 Route::get('/login', [LoginController::class,'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class,'loginUser'])->name('user.login.store');
 Route::get('/register', [RegisterController::class,'showRegisterForm'])->name('user.register.form');
 Route::post('/register', [RegisterController::class,'register'])->name('user.register.store');
 Route::get('/logout', [LogoutController::class,'logoutUser'])->name('user.logout');
 
+
 //Rating & Comment
-Route::post('/insert-rating',[HomeController::class,'insert_rating'])->name('insert-rating');
 Route::post('/comment-product',[HomeController::class,'comment_product'])->name('comment-product');
 
 //SendMail
@@ -89,6 +90,8 @@ Route::group([
     Route::group(['prefix' => 'customers'], function () {
         Route::get('/', [CustomerController::class, 'index'])->name('admin.customers.index');
         Route::get('/get-list', [CustomerController::class, 'getList'])->name('admin.customers.getList');
+        Route::get('/edit/{id}', [CustomerController::class, 'edit'])->name('admin.customers.edit');
+        Route::put('/{id}',[CustomerController::class, 'update'])->name('admin.customers.update');
         Route::post('/reset-password/{id}',[CustomerController::class,'resetPassword'])->name('admin.customers.reset');
         Route::put('/lock/{id}', [CustomerController::class,'lock'])->name('admin.customers.lock');
     });
@@ -165,23 +168,12 @@ Route::group([
             
     });
 
-    //Quản lý thông kê
-    // Route::group(['prefix' => 'statisticals'], function(){
-    //     Route::get('/', 'StatisticalController@index');
-    //     // ->name('backend.statistical.index');
-    //     Route::post('/filterByDate', 'StatisticalController@filterByDate');
-    //     // ->name('backend.statistical.filterByDate');
-    //     Route::post('/dayOrder', 'StatisticalController@dayOrder');
-    //     // ->name('backend.statistical.dayOrder');
-    //     Route::post('/filterAll', 'StatisticalController@filterAll');
-    //     // ->name('backend.statistical.filterAll');
-    // });
-
-    // //Quan lý liên hệ
-    // Route::group(['prefix' => 'transport'], function () {
-    //     Route::get('/', [TransportController::class, 'index'])->name('admin.contacts.index');  
-            
-    // });
+    //Quan lý liên hệ
+    Route::group(['prefix' => 'connect'], function () {
+        Route::get('/', [ConnectController::class, 'index'])->name('admin.contacts.index');
+        Route::get('/get-list', [ConnectController::class, 'getList'])->name('admin.contacts.getList');
+        Route::delete('/{id}',[ConnectController::class, 'destroy'])->name('admin.contacts.destroy');
+    });
 
 });
 
@@ -192,6 +184,7 @@ Route::group([
     Route::get('/search', [HomeController::class,'search'])->name('home.search');
     Route::get('/coupon', [HomeController::class,'coupon_user'])->name('home.coupon');
     Route::get('/show/{id}', [HomeController::class,'show'])->name('home.show');
+    Route::get('/avg-rating/{id}', [HomeController::class,'getAvgRating'])->name('home.getAvgRating');
 
     //Liên hệ 
     Route::get('/contact', [ContactController::class,'showContact'])->name('home.contact');
@@ -234,7 +227,6 @@ Route::group([
     Route::get('/product/cart/increment/{id}', [CartController::class, 'increment'])->name('user.product.increment');
     Route::get('/product/cart/decrement/{id}', [CartController::class, 'decrement'])->name('user.product.decrement');
 
-    
 });
 
 

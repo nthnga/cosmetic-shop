@@ -59,6 +59,13 @@
 
                     <div class="col-sm-6">
                         <div class="mb-10">
+                            <label class="form-label">Số lượng còn lại: </label><span style="color: red;"> *</span>
+                            <input type="text" name="remaining" class="form-control mb-2" placeholder="Nhập số lượng mã giảm giá..." value="{{old('remaining')}}" />
+                            @error('remaining')
+                            <div style="color: red;" class="">{{$message}}</div>
+                            @enderror
+                        </div>
+                        <div class="mb-10">
                             <label class="form-label">Số % / tiền giảm: </label><span style="color: red;"> *</span>
                             <input type="text" name="coupon_number" class="form-control mb-2" placeholder="Nhập số phần trăm hoặc số tiền giảm..." value="{{old('coupon_number')}}" />
                             @error('coupon_number')

@@ -68,6 +68,70 @@
             text-transform: uppercase;
             font-size: 0.75rem;
         }
+        @-webkit-keyframes my {
+            0% {
+                color: #0f93a5;
+            }
+
+            50% {
+                color: rgb(18, 179, 66);
+            }
+
+            100% {
+                color: #0b7f94;
+            }
+        }
+
+        @-moz-keyframes my {
+            0% {
+                color: #107688;
+            }
+
+            50% {
+                color: rgb(18, 182, 40);
+            }
+
+            100% {
+                color: #155f81;
+            }
+        }
+
+        @-o-keyframes my {
+            0% {
+                color: #0d677e;
+            }
+
+            50% {
+                color: rgb(19, 204, 34);
+            }
+
+            100% {
+                color: #10718a;
+            }
+        }
+
+        @keyframes my {
+            0% {
+                color: #0e7183;
+            }
+
+            50% {
+                color: rgb(18, 197, 48);
+            }
+
+            100% {
+                color: #0b5c75;
+            }
+        }
+
+        .fee_ship {
+            /* background:#3d3d3d; */
+            
+            -webkit-animation: my 700ms infinite;
+            -moz-animation: my 700ms infinite;
+            -o-animation: my 700ms infinite;
+            animation: my 700ms infinite;
+        }
     </style>
 @endsection
 
@@ -110,33 +174,6 @@
                                 class="filter_trademark" name="filter_trademark" data-filters="trademark"
                                 value="{{ $trademark->id }}" />
                             <label>{{ $trademark->name }}</label>
-                        </div>
-                    @endforeach
-                </div>
-
-                
-                <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Tất cả danh mục</span></h5>
-                @foreach ($category_name as $name)
-                @endforeach
-                <div class="bg-light p-4 mb-30">
-                    @php
-                        $cate_id = [];
-                        $cate_arr = [];
-                        
-                        $checked = [];
-                        if (isset($_GET['category'])) {
-                            $id = $_GET['category'];
-                        } else {
-                            $id = $name->cate_id . ',';
-                        }
-                        $cate_arr = explode(',', $id);
-                    @endphp
-                    @foreach ($categories as $cate)
-                        <div class="custom-control mb-3" style="padding-left: 0px;">
-                            <input type="checkbox" {{ in_array($cate->id,$cate_arr) ? 'checked' : '' }}
-                                class="filter_category" name="filter_category" data-filters="category"
-                                value="{{ $cate->id }}" />
-                            <label>{{ $cate->name }}</label>
                         </div>
                     @endforeach
                 </div>
@@ -210,15 +247,6 @@
                                         </form>
                                     </div>
                                 </div>
-                                {{-- <div class="btn-group ml-2">
-                                    <button type="button" class="btn btn-sm btn-light dropdown-toggle"
-                                        data-toggle="dropdown">Số lượng</button>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                        <a class="dropdown-item" href="#">10</a>
-                                        <a class="dropdown-item" href="#">20</a>
-                                        <a class="dropdown-item" href="#">30</a>
-                                    </div>
-                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -269,7 +297,8 @@
                                         <p style="margin: 0 15px;"><b>Đã bán: </b>{{$product->sold}} </p>
                                     </div>
                                     <div>
-                                        <span style="font-family: Courier New"><i class='fa fa-truck' style="font-size: 15px;color: #0b7a8b;"></i> Miễn phí vận chuyển</span>
+                                        <span class="fee_ship"
+                                        style="font-family: Courier New"><i class='fa fa-truck' style="font-size: 15px;color: #0b7a8b;"></i> Miễn phí vận chuyển</span>
                                     </div>
                                     <div class="d-flex align-items-center justify-content-center mb-1">
                                         <small class="fa fa-star text-primary mr-1"></small>

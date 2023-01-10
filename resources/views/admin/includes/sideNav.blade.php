@@ -49,7 +49,7 @@
                     Quản lý đơn hàng
                 </a>
                 <div class="sb-sidenav-menu-heading">Liên hệ</div>
-                <a class="nav-link" href="">
+                <a class="nav-link" href="{{ route('admin.contacts.index') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                     Quản lý liên hệ
                 </a>

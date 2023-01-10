@@ -34,7 +34,7 @@ class Order extends Model
     const CANCEL = 3;
     const SHIPPING = 4;
     const COMPLETE = 5;
-    // const REFUND = 6;
+    const REFUND = 6;
 
     const CASH = 0;
     const TRANSFER = 1;
@@ -46,7 +46,7 @@ class Order extends Model
         self::CANCEL => 'Đã hủy',
         self::SHIPPING => 'Đang giao',
         self::COMPLETE => 'Đã giao',
-        // self::COMPLETE => 'Hoàn hàng',
+        self::REFUND => 'Hoàn hàng',
     ];
 
     public $typePaymentArr = [

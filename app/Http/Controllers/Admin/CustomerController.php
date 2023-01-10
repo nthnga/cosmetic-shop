@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Customer;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Request;
+
+use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
 class CustomerController
@@ -16,20 +17,14 @@ class CustomerController
 
     public function getList(Request $request)
     {
-
-//        $customers = User::where(function ($query) use ($request){
-//            if ($request->search != '') {
-//                $query->where('name', 'like', "%" . $request->search . "%")
-//                    ->orWhere('email', 'like', "%" . $request->search . "%")
-//                    ->orWhere('phone', 'like', "%" . $request->search . "%");
-//            }
-//        }
         $customers = Customer::query()->orderBy('created_at','DESC')->get();
         return Datatables::of($customers)
             ->addIndexColumn()
             ->addColumn('action', function ($customer) {
                 return '
-                        <a style="cursor:pointer;" class="menu-link px-3 text-success reset_pass" data-id="'.$customer->id.'" data-token="{{csrf_token()}}" tooltip="Reset mật khẩu" flow="up">
+                <a href="'.route("admin.customers.edit",["id" => $customer->id]).'" style="cursor:pointer;text-decoration: none;" class="menu-link px-3 text-warning" tooltip="Cập nhật tài khoản" flow="up">
+                <i class="fa-solid fa-pen-to-square"></i>
+                        <a style="cursor:pointer;text-decoration: none;" class="menu-link px-3 text-success reset_pass" data-id="'.$customer->id.'" data-token="{{csrf_token()}}" tooltip="Reset mật khẩu" flow="up">
                             <i class="fa-solid fa-arrow-rotate-left"></i>
                         </a>';
             })
@@ -56,6 +51,32 @@ class CustomerController
             ->make(true);
     }
 
+    public function edit($id)
+    {
+        $customer = Customer::findOrFail($id);
+        return view('admin.customers.edit')->with([
+            'customer' => $customer
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $data = $request->all();
+        $customer = Customer::findOrFail($id);
+        $customer->name = $data['name'];
+        $customer->email = $data['email'];
+        $customer->phone = $data['phone'];
+        if($customer->gender){
+            $customer->gender = Customer::GENDER_MALE;
+        }else{
+            $customer->gender = Customer::GENDER_FEMALE;
+        }
+        $customer->address = $data['address'];
+        $customer->save();
+        $request->session()->flash('success', 'Cập nhật tài khoản khách hàng thành công');
+        return redirect()->route('admin.customers.index');
+    }
+
     public function lock($id)
     {
         $customer = Customer::findOrFail($id);
@@ -80,5 +101,7 @@ class CustomerController
             'status' => 200,
         ]);
     }
+
+
 
 }

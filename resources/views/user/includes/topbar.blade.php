@@ -46,11 +46,12 @@
                     <input type="text" class="form-control" name="keywords" placeholder="Tìm kiếm sản phẩm">
                     <div class="input-group-append">
                         <input type="submit" name="search_items" class="btn btn-warning" value="Tìm Kiếm">    
-                        {{-- <a href="{{route('hdome.search')}}">Tìm Kiếm</a> --}}
+                        
                     </div>
                 </div>
             </form>
         </div>
+        
         <div class="col-lg-4 col-6 text-right">
             <p class="m-0">Hỗ trợ 24/7</p>
             <h5 class="m-0">+012 345 6789</h5>

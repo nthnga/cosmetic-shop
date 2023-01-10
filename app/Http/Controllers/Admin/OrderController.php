@@ -10,6 +10,7 @@ use App\Models\Transport;
 use App\Models\Coupon;
 use App\Models\Product;
 use App\Models\Customer;
+use App\Models\Statistic;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -183,7 +184,7 @@ class OrderController extends Controller
                 return '<b>'. date("H:i | d/m/Y", strtotime($orders->created_at)).'</b>';
             })
             ->editColumn('total', function ($orders) {
-                return '<b>'. number_format((int)$orders->total + (int)$orders->fee_ship - (int)$orders->coupon).'</b>';
+                return '<b>'. number_format((int)$orders->total + (int)$orders->fee_ship).'</b>';
             })
             ->editColumn('id', function ($orders) {
                 return '<a href="#" style="text-decoration: none"><b>'.$orders->id.'</b></a>';
@@ -211,11 +212,34 @@ class OrderController extends Controller
         $order->status = $request->input('status');
 
         if( $order->status==Order::COMPLETE){
+            $profit = 0;
+            $quantity = 0;
+            $revenue = $order->total + $order->fee_ship - $order->coupon;
             foreach($order->order_details as $order_detail){
                 $product = Product::find($order_detail->product_id);
                 $product->sold += $order_detail->product_quantity;
                 $product->quantity -= $order_detail->product_quantity;
+                $profit += ($order_detail->product_quantity * $order_detail->product_origin_price);
+                $quantity += $order_detail->product_quantity;
                 $product->save();
+            }
+            $date= $order->created_at->format('Y-m-d');
+            $data_static = Statistic::where('order_date',$date)->get();
+            
+            if(count($data_static) > 0){
+                $data_static[0]->revenue += $revenue;
+                $data_static[0]->profit +=  $revenue - $profit;
+                $data_static[0]->quantity += $quantity;
+                $data_static[0]->total_order+=1;
+                $data_static[0]->save();
+            }else {
+                $data_static = new Statistic();
+                $data_static->order_date = $date;
+                $data_static->revenue = $revenue;
+                $data_static->profit = $revenue - $profit;
+                $data_static->quantity = $quantity;
+                $data_static->total_order = 1;
+                $data_static->save();
             }
         }
 

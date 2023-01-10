@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Gloudemans\Shoppingcart\Facades\Cart;
@@ -36,38 +37,31 @@ class CartController extends Controller
     function checkcoupon(Request $request){
         // dd(1);
         $data = $request->all();
-        $coupon = Coupon::where('coupon_code',$data['coupon'])->first();
-        if($coupon){
-            $count_coupon = $coupon->count();
-            if($count_coupon>0){ 
-                $coupon_session = Session::get('coupon');
-                if($coupon_session==true){
-                    $is_avaiable = 0;
-                    if($is_avaiable==0){
-                        $cou[] = array(
-                            'coupon_code' => $coupon->coupon_code,
-                            'coupon_condition' => (int)$coupon->coupon_condition,
-                            'coupon_number' => (int)$coupon->coupon_number,
+        $now = Carbon::now();
+        
+        $coupon = Coupon::where('coupon_code',$data['coupon'])
+                        ->where('remaining', '>', 0)
+                        ->first();
+                        // dd($coupon->start_time);       
+        $coupon_start = Carbon::createFromFormat('Y-m-d',$coupon->start_time);
+        $coupon_end = Carbon::createFromFormat('Y-m-d',$coupon->end_time);
+    
+        if ($coupon && $coupon_start<=$now && $now<$coupon_end) {
+            $coupon->remaining = $coupon->remaining - 1;
+            $coupon->save();
 
-                        );
-                        Session::put('coupon',$cou);
-                    }
-                }else{
-                    $cou[] = array(
-                            'coupon_code' => $coupon->coupon_code,
-                            'coupon_condition' => $coupon->coupon_condition,
-                            'coupon_number' => $coupon->coupon_number,
+            $cou[] = array(
+                'coupon_code' => $coupon->coupon_code,
+                'coupon_condition' => $coupon->coupon_condition,
+                'coupon_number' => $coupon->coupon_number,
+            );
+            Session::put('coupon',$cou);
+            Session::put('is_use_coupon',true);
+            Session::save();
 
-                        );
-                    Session::put('coupon',$cou);
-                }
-                Session::put('is_use_coupon',true);
-                Session::save();
-                return redirect()->back()->with('message','Thêm mã giảm giá thành công');
-            }
-
-        }else{
-            return redirect()->back()->with('error','Mã giảm giá không đúng');
+            return redirect()->back()->with('message','Thêm mã giảm giá thành công');
+        } else {
+            return redirect()->back()->with('error','Mã giảm giá không đúng hoặc đã hết hạn');
         }
     }
 
@@ -90,6 +84,8 @@ class CartController extends Controller
     {
         
     }
+
+    
 
     public function increment($rowId){
         $cart = Cart::get($rowId);

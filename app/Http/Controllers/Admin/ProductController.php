@@ -57,7 +57,7 @@ class ProductController extends Controller
                      <a href="' . route('admin.products.edit', ['id' => $product->id]) . '"
                        data-placement="top"
                        class="menu-link px-3" data-toggle="tooltip"
-                       style="cursor:pointer;"
+                       style="cursor:pointer;text-decoration: none"
                        tooltip="Chỉnh sửa"
                        flow="up"
                        class="btn btn-xs btn-primary">

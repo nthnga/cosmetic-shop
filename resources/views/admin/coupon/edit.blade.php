@@ -49,17 +49,29 @@
                         </div>
                         <div class="mb-10">
                             <label class="form-label">Tính năng: </label><span style="color: red;"> *</span>
-                            <select name="coupon_condition" class="form-control mb-2">
-                                <option>-----Chọn-----</option>
-                                <option value="{{\App\Models\Coupon::TYPE['PERCENT']}}">---Giảm theo phần trăm---</option>
-                                <option value="{{\App\Models\Coupon::TYPE['MONEY']}}">---Giảm theo tiền mặt---</option>
+                            
+                            <select class="form-control select2" name="coupon_condition"  style="width: 100%;" id="coupon" required>
+                                <option value="0">-- Chọn hình thức --</option>
+                                @foreach(\App\Models\Coupon::TypeArr as $value)
+                                    @php
+                                        $selected="";
+                                        if($coupon->coupon_condition == $value['key']){
+                                          $selected = "selected";
+                                        }
+                                    @endphp
+                                    <option value="{{$value['key']}}" {{$selected}}>{{$value['name']}}</option>
+                                @endforeach
                             </select>
-                            @error('coupon_condtion')
-                            <div style="color: red;" class="">{{$message}}</div>
-                            @enderror
                         </div>
                     </div>
                     <div class="col-sm-6">
+                        <div class="mb-10">
+                            <label class="form-label">Số lượng còn lại: </label><span style="color: red;"> *</span>
+                            <input type="text" name="remaining" class="form-control mb-2" placeholder="Nhập số lượng mã giảm giá..." value="@if(!empty(old("remaining"))){{old("remaining")}}@else {{$coupon->remaining}}@endif" />
+                            @error('remaining')
+                            <div style="color: red;" class="">{{$message}}</div>
+                            @enderror
+                        </div>
                         <div class="mb-10">
                             <label class="form-label">Số % / tiền giảm: </label><span style="color: red;"> *</span>
                             <input type="text" name="coupon_number" class="form-control mb-2" placeholder="Nhập số phần trăm hoặc số tiền giảm..." value="@if(!empty(old("coupon_number"))){{old("coupon_number")}}@else {{$coupon->coupon_number}}@endif" />                            

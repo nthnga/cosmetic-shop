@@ -16,23 +16,15 @@ class UserController
 
     public function getList(Request $request)
     {
-
-//        $users = User::where(function ($query) use ($request){
-//            if ($request->search != '') {
-//                $query->where('name', 'like', "%" . $request->search . "%")
-//                    ->orWhere('email', 'like', "%" . $request->search . "%")
-//                    ->orWhere('phone', 'like', "%" . $request->search . "%");
-//            }
-//        })
-            $users = User::query()->orderBy('created_at','DESC')->get();
+        $users = User::query()->orderBy('created_at','DESC')->get();
 
         return Datatables::of($users)
             ->addIndexColumn()
             ->addColumn('action', function ($user) {
                 return '
-                        <a href="'.route("admin.users.edit",["id" => $user->id]).'" class="menu-link px-3 text-warning" tooltip="Cập nhật tài khoản" flow="up">
+                        <a href="'.route("admin.users.edit",["id" => $user->id]).'" style="text-decoration: none;" class="menu-link px-3 text-warning" tooltip="Cập nhật tài khoản" flow="up">
 							<i class="fa-solid fa-pen-to-square"></i>
-                        <a style="color: red; cursor:pointer;" class="menu-link px-3 show_confirm" data-id="'.$user->id.'" data-token="{{csrf_token()}}" tooltip="Xoá tài khoản" flow="up">
+                        <a style="color: red; cursor:pointer;text-decoration: none" class="menu-link px-3 show_confirm" data-id="'.$user->id.'" data-token="{{csrf_token()}}" tooltip="Xoá tài khoản" flow="up">
                              <i class="fa-solid fa-trash"></i>
                         </a>
                         <a style="cursor:pointer;" class="menu-link px-3 text-success reset_pass" data-id="'.$user->id.'" data-token="{{csrf_token()}}" tooltip="Reset mật khẩu" flow="up">
@@ -58,6 +50,11 @@ class UserController
             })
             ->rawColumns(['action', 'status','name'])
             ->make(true);
+
+
+            DataTables::eloquent($users)->filter(function($query){if(request()->has('name'))
+                {$query->where('name','like',"%".request('name')."%");}if(request()->has('email'))
+                {$query->where('email','like',"%".request('email')."%");}});
     }
 
     public function create()
@@ -105,7 +102,7 @@ class UserController
     {
         User::destroy($id);
         return response()->json([
-            'success' => 'Record has been deleted successfully!',
+            'success' => 'Xóa thành công!',
             'status' => 200
         ]);
     }

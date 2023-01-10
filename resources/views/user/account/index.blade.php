@@ -44,10 +44,12 @@
             border: 1px solid #ccc;
             border-top: none;
         }
-        .active{
+
+        .active {
             display: block;
         }
-        .required{
+
+        .required {
             color: red;
         }
     </style>
@@ -58,7 +60,7 @@
         <div class="row px-xl-5">
             <div class="col-12">
                 <nav class="breadcrumb bg-light mb-30">
-                    <a class="breadcrumb-item text-dark" href="{{route('home')}}">Trang chủ</a>
+                    <a class="breadcrumb-item text-dark" href="{{ route('home') }}">Trang chủ</a>
                     <span class="breadcrumb-item active">Tài khoản</span>
                 </nav>
             </div>
@@ -69,143 +71,190 @@
             <div class="col-12">
                 <div class="tab">
                     <button class="tablinks" onclick="openCity(event, 'London')">Thông tin cá nhân</button>
-                    <button class="tablinks active"  onclick="openCity(event, 'Paris')">Đơn hàng</button>
+                    <button class="tablinks active" onclick="openCity(event, 'Paris')">Đơn hàng</button>
                 </div>
                 <div id="London" class="tabcontent">
                     <div class="row">
                         <div class="col-lg-6">
-                        <form action="{{route('home.account.update',Auth::id())}}" method="POST">
-                            @csrf
+                            <form action="{{ route('home.account.update', Auth::id()) }}" method="POST">
+                                @csrf
                                 <div class="bg-light p-30">
-                                    <h5 class="section-title text-uppercase text-center mb-3"><span class=" pr-3">Thông tin cá nhân</span></h5>
+                                    <h5 class="section-title text-uppercase text-center mb-3"><span class=" pr-3">Thông tin
+                                            cá nhân</span></h5>
                                     <div class="row">
                                         <div class="col-md-12 form-group">
                                             <label>Họ tên <span class="required">*</span></label>
-                                            <input name="name" class="form-control" type="text" value="{{Auth::user()->name}}" required>
+                                            <input name="name" class="form-control" type="text"
+                                                value="{{ Auth::user()->name }}" required>
+                                            @if ($errors->has('name'))
+                                                <span class="text-danger">{{ $errors->first('name') }}</span>
+                                            @endif
                                         </div>
                                         <div class="col-md-6 form-group">
                                             <label>E-mail <span class="required">*</span></label></label>
-                                            <input name="email" class="form-control" type="text" value="{{Auth::user()->email}}" required>
+                                            <input name="email" class="form-control" type="text"
+                                                value="{{ Auth::user()->email }}" required>
+                                            @if ($errors->has('email'))
+                                                <span class="text-danger">{{ $errors->first('email') }}</span>
+                                            @endif
                                         </div>
                                         <div class="col-md-6 form-group">
                                             <label>Số điện thoại <span class="required">*</span></label></label>
-                                            <input name="phone" class="form-control" type="text" value="{{Auth::user()->phone}}" required>
+                                            <input name="phone" class="form-control" type="text"
+                                                value="{{ Auth::user()->phone }}" required>
                                         </div>
+                                        @if ($errors->has('phone'))
+                                            <span class="text-danger">{{ $errors->first('phone') }}</span>
+                                        @endif
                                         <div class="col-md-12 form-group">
                                             <label>Địa chỉ <span class="required">*</span></label></label>
-                                            <input name="address" class="form-control" type="text" value="{{Auth::user()->address}}" required>
+                                            <input name="address" class="form-control" type="text"
+                                                value="{{ Auth::user()->address }}" required>
+                                            @if ($errors->has('address'))
+                                                <span class="text-danger">{{ $errors->first('address') }}</span>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <button type="submit" style="margin-left: 15px; width: 100px;height:60px;float:right" class="btn  btn-primary font-weight-bold">Cập nhật</button>
+                                        <button type="submit"
+                                            style="margin-left: 15px; width: 100px;height:60px;float:right"
+                                            class="btn  btn-primary font-weight-bold">Cập nhật</button>
                                     </div>
                                 </div>
-                        </form>
+                            </form>
                         </div>
                         <div class="col-lg-6">
-                        <form action="{{route('home.account.resetPassW',Auth::id())}}" method="POST">
-                            @csrf
-                            <div class="bg-light p-30">
-                                <h5 class="section-title text-center text-uppercase mb-3"><span class=" pr-3">Cập nhật mật khẩu</span></h5>
-                                <div class="row">
-                                    <div class="col-md-12 form-group">
-                                        <label>Nhập mật khẩu cũ <span class="required">*</span></label></label>
-                                        <input name="oldPassword" class="form-control" type="password"  required>
+                            <form action="{{ route('home.account.resetPassW', Auth::id()) }}" method="POST">
+                                @csrf
+                                <div class="bg-light p-30">
+                                    <h5 class="section-title text-center text-uppercase mb-3"><span class=" pr-3">Cập nhật
+                                            mật khẩu</span></h5>
+                                    <div class="row">
+                                        <div class="col-md-12 form-group">
+                                            <label>Nhập mật khẩu cũ <span class="required">*</span></label></label>
+                                            <input name="oldPassword" class="form-control" type="password" required>
+                                            @if ($errors->has('oldPassword'))
+                                            <span class="text-danger">{{ $errors->first('oldPassword') }}</span>
+                                        @endif
+                                        </div>
+                                        <div class="col-md-12 form-group">
+                                            <label>Nhập mật khẩu mới <span class="required">*</span></label></label>
+                                            <input name="newPassword" class="form-control" type="password" required>
+                                            @if ($errors->has('newPassword'))
+                                            <span class="text-danger">{{ $errors->first('newPassword') }}</span>
+                                        @endif
+                                        </div>
+                                        <div class="col-md-12 form-group">
+                                            <label>Xác nhận mật khẩu mới <span class="required">*</span></label></label>
+                                            <input name="confirmPassword" class="form-control" type="password" required>
+                                            @if ($errors->has('confirmPassword'))
+                                            <span class="text-danger">{{ $errors->first('confirmPassword') }}</span>
+                                        @endif
+                                        </div>
                                     </div>
-                                    <div class="col-md-12 form-group">
-                                        <label>Nhập mật khẩu mới <span class="required">*</span></label></label>
-                                        <input name="newPassword" class="form-control" type="password"  required>
-                                    </div>
-                                    <div class="col-md-12 form-group">
-                                        <label>Xác nhận mật khẩu mới <span class="required">*</span></label></label>
-                                        <input name="confirmPassword" class="form-control" type="password"  required>
+                                    <div class="row">
+                                        <button type="submit"
+                                            style="margin-left: 15px;width: 100px;height:60px;float:right"
+                                            class="btn btn-block btn-primary font-weight-bold py-3">Cập nhật</button>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <button type="submit" style="margin-left: 15px;width: 100px;height:60px;float:right" class="btn btn-block btn-primary font-weight-bold py-3">Cập nhật</button>
-                                </div>
-                            </div>
-                        </form>
+                            </form>
                         </div>
                     </div>
                 </div>
                 <div id="Paris" class="tabcontent active">
-                    @foreach($orders as $order)
-                       <div class="row bg-light ml-1 mr-1 mb-10 p-10" style="padding: 10px;margin-bottom: 20px;display: block">
-                           <div class="row">
-                               <div class="col-11">
-                                   <div class="row" style="margin-left: 0;">
-                                       <p>Mã đơn hàng: {{$order->id}}</p>
-                                       @if($order->status === \App\Models\Order::WAIT)
-                                           <span style="margin-left: 20px;background: orange;height: 22px;border-radius: 6px;padding: 0 2px;color: black;">
-                                       {{$order->status_text}}
-                                   </span>
-                                       @elseif($order->status === \App\Models\Order::CONFIRM)
-                                           <span style="margin-left: 20px;background: dodgerblue;height: 22px;border-radius: 6px;padding: 0 2px;color: black;">
-                                       {{$order->status_text}}
-                                   </span>
-                                       @elseif($order->status === \App\Models\Order::REQUESTCANEL)
-                                           <span style="margin-left: 20px;background: darkgray;height: 22px;border-radius: 6px;padding: 0 2px;color: black;">
-                                       {{$order->status_text}}
-                                   </span>
-                                       @elseif($order->status === \App\Models\Order::CANCEL)
-                                           <span style="margin-left: 20px;background: red;height: 22px;border-radius: 6px;padding: 0 2px;color: black;">
-                                       {{$order->status_text}}
-                                   </span>
-                                       @elseif($order->status === \App\Models\Order::SHIPPING)
-                                           <span style="margin-left: 20px;background: blueviolet;height: 22px;border-radius: 6px;padding: 0 2px;color: black;">
-                                       {{$order->status_text}}
-                                   </span>
-                                       @else
-                                           <span style="margin-left: 20px;background: limegreen;height: 22px;border-radius: 6px;padding: 0 2px;color: black;">
-                                   {{$order->status_text}}
-                                   </span>
-                                       @endif
-                                   </div>
-                                   @foreach($order->order_details as $product)
-                                       <div class="row" style="border-bottom: 1px solid lightgray;margin: 2px 4px">
-                                           <div class="col-1">
-                                               <img style="height: 100px;width: 100px" src="{{$product->product->images[0]->image_url}}" alt="ảnh">
-                                           </div>
-                                           <div class="col-11">
-                                               <span>Tên sản phẩm: {{$product->product_name}}</span><br>
-                                               <span>Số lượng: {{$product->product_quantity}}</span><br>
-                                               <span>Đơn giá sản phẩm: {{number_format($product->total,0, ',', '.')}} đ</span><br>
+                    @foreach ($orders as $order)
+                        <div class="row bg-light ml-1 mr-1 mb-10 p-10"
+                            style="padding: 10px;margin-bottom: 20px;display: block">
+                            <div class="row">
+                                <div class="col-11">
+                                    <div class="row" style="margin-left: 0;">
+                                        <p>Mã đơn hàng: {{ $order->id }}</p>
+                                        @if ($order->status === \App\Models\Order::WAIT)
+                                            <span
+                                                style="margin-left: 20px;background: orange;height: 22px;border-radius: 6px;padding: 0 2px;color: black;">
+                                                {{ $order->status_text }}
+                                            </span>
+                                        @elseif($order->status === \App\Models\Order::CONFIRM)
+                                            <span
+                                                style="margin-left: 20px;background: dodgerblue;height: 22px;border-radius: 6px;padding: 0 2px;color: black;">
+                                                {{ $order->status_text }}
+                                            </span>
+                                        @elseif($order->status === \App\Models\Order::REQUESTCANEL)
+                                            <span
+                                                style="margin-left: 20px;background: darkgray;height: 22px;border-radius: 6px;padding: 0 2px;color: black;">
+                                                {{ $order->status_text }}
+                                            </span>
+                                        @elseif($order->status === \App\Models\Order::CANCEL)
+                                            <span
+                                                style="margin-left: 20px;background: red;height: 22px;border-radius: 6px;padding: 0 2px;color: black;">
+                                                {{ $order->status_text }}
+                                            </span>
+                                        @elseif($order->status === \App\Models\Order::SHIPPING)
+                                            <span
+                                                style="margin-left: 20px;background: blueviolet;height: 22px;border-radius: 6px;padding: 0 2px;color: black;">
+                                                {{ $order->status_text }}
+                                            </span>
+                                        @else
+                                            <span
+                                                style="margin-left: 20px;background: limegreen;height: 22px;border-radius: 6px;padding: 0 2px;color: black;">
+                                                {{ $order->status_text }}
+                                            </span>
+                                        @endif
+                                    </div>
+                                    @foreach ($order->order_details as $product)
+                                        <div class="row" style="border-bottom: 1px solid lightgray;margin: 2px 4px">
+                                            <div class="col-1">
+                                                <img style="height: 100px;width: 100px"
+                                                    src="{{ $product->product->images[0]->image_url }}" alt="ảnh">
+                                            </div>
+                                            <div class="col-11">
+                                                <span>Tên sản phẩm: {{ $product->product_name }}</span><br>
+                                                <span>Số lượng: {{ $product->product_quantity }}</span><br>
+                                                <span>Đơn giá sản phẩm: {{ number_format($product->total, 0, ',', '.') }}
+                                                    đ</span><br>
+                                                <span>Tổng tiền:
+                                                    {{ number_format($product->total * $product->product_quantity, 0, ',', '.') }}
+                                                    đ </span>
 
-                                           </div>
-                                       </div>
+                                            </div>
+                                        </div>
                                     @endforeach
                                     <div style="border-bottom: 1px solid lightgray;margin: 2px 4px">
                                         <b>
-                                            <span>Phí vận chuyển: {{number_format($order->fee_ship)}}đ</span><br>
-                                            <span>Mã giảm giá: {{number_format($order->coupon)}} đ</span><br>
-                                            <h5><span style="color: rgb(19, 7, 7);">===> Tổng thanh toán: {{number_format($order->total + $order->fee_ship - $order->coupon)}} đ</span></h5>
+                                            <span>Phí vận chuyển: {{ number_format($order->fee_ship) }}đ</span><br>
+                                            <span>Mã giảm giá: {{ number_format($order->coupon) }} đ</span><br>
+                                            <h5><span style="color: rgb(19, 7, 7);">===> Tổng thanh toán:
+                                                    {{ number_format($order->total + $order->fee_ship) }} đ</span></h5>
                                         </b>
-                                        
+
                                     </div>
-                               </div>
-                               <div class="col-1">
-                                       @if($order->status===\App\Models\Order::WAIT || $order->status===\App\Models\Order::CONFIRM)
-                                       <form action="{{route('home.cancelOrder',$order->id)}}" method="post">
-                                           @csrf
-                                           <button type="submit" style="margin-left: 15px;width: 50px;height: 40px;float: right;background: red;font-weight: normal !important;" class="btn  btn-primary font-weight-bold">Huỷ</button>
-                                       </form>
-                                           @elseif($order->status===\App\Models\Order::REQUESTCANEL)
-                                       <form action="{{route('home.undoCancel',$order->id)}}" method="post">
-                                           @csrf
-                                           <button  type="submit" style="margin-left: 15px;width: 100px;height: 40px;float: right;background: darkgray;font-weight: normal !important;" class="btn  btn-primary font-weight-bold">Dừng huỷ</button>
-                                       </form>
-                                   @endif
-                               </div>
-                           </div>
-                        
-                       </div>
+                                </div>
+                                <div class="col-1">
+                                    @if ($order->status === \App\Models\Order::WAIT || $order->status === \App\Models\Order::CONFIRM)
+                                        <form action="{{ route('home.cancelOrder', $order->id) }}" method="post">
+                                            @csrf
+                                            <button type="submit"
+                                                style="margin-left: 15px;width: 50px;height: 40px;float: right;background: red;font-weight: normal !important;"
+                                                class="btn  btn-primary font-weight-bold">Huỷ</button>
+                                        </form>
+                                    @elseif($order->status === \App\Models\Order::REQUESTCANEL)
+                                        <form action="{{ route('home.undoCancel', $order->id) }}" method="post">
+                                            @csrf
+                                            <button type="submit"
+                                                style="margin-left: 15px;width: 100px;height: 40px;float: right;background: darkgray;font-weight: normal !important;"
+                                                class="btn  btn-primary font-weight-bold">Dừng huỷ</button>
+                                        </form>
+                                    @endif
+                                </div>
+                            </div>
+
+                        </div>
                     @endforeach
                 </div>
             </div>
         </div>
     </div>
-
 @endsection
 @section('js')
     <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
@@ -213,7 +262,7 @@
     <script src="http://cdn.bootcss.com/toastr.js/latest/js/toastr.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    @if(Session::has('success'))
+    @if (Session::has('success'))
         <script>
             toastr.success("{!! session()->get('success') !!}");
         </script>

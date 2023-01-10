@@ -70,6 +70,153 @@
             text-transform: uppercase;
             font-size: 0.75rem;
         }
+
+        .outline {
+            cursor: pointer;
+            position: relative;
+            padding: 10px 20px;
+            background: white;
+            font-size: 18px;
+            border-top-right-radius: 10px;
+            border-bottom-left-radius: 10px;
+            transition: all 1s;
+        }
+
+        .outline:after,
+        .outline:before {
+            content: " ";
+            width: 10px;
+            height: 10px;
+            position: absolute;
+            border: 0px solid #fff;
+            transition: all 1s;
+        }
+
+        .outline:after {
+            top: -1px;
+            left: -1px;
+            border-top: 3px solid rgb(85, 189, 15);
+            border-left: 3px solid rgb(197, 88, 25);
+        }
+
+        .outline:before {
+            bottom: -1px;
+            right: -1px;
+            border-bottom: 2px solid rgb(148, 9, 95);
+            border-right: 2px solid rgb(17, 130, 175);
+        }
+
+        .outline:hover {
+            border-top-right-radius: 0px;
+            border-bottom-left-radius: 0px;
+        }
+
+        .outline:hover:before,
+        .outline:hover:after {
+            width: 100%;
+            height: 100%;
+        }
+
+        @-webkit-keyframes my {
+            0% {
+                color: #0f93a5;
+            }
+
+            50% {
+                color: rgb(18, 179, 66);
+            }
+
+            100% {
+                color: #0b7f94;
+            }
+        }
+
+        @-moz-keyframes my {
+            0% {
+                color: #107688;
+            }
+
+            50% {
+                color: rgb(18, 182, 40);
+            }
+
+            100% {
+                color: #155f81;
+            }
+        }
+
+        @-o-keyframes my {
+            0% {
+                color: #0d677e;
+            }
+
+            50% {
+                color: rgb(19, 204, 34);
+            }
+
+            100% {
+                color: #10718a;
+            }
+        }
+
+        @keyframes my {
+            0% {
+                color: #0e7183;
+            }
+
+            50% {
+                color: rgb(18, 197, 48);
+            }
+
+            100% {
+                color: #0b5c75;
+            }
+        }
+
+        .fee_ship {
+            /* background:#3d3d3d; */
+
+            -webkit-animation: my 700ms infinite;
+            -moz-animation: my 700ms infinite;
+            -o-animation: my 700ms infinite;
+            animation: my 700ms infinite;
+        }
+
+        .center-outer {
+            display: table;
+            width: 100%;
+            height: 100%;
+        }
+
+        .center-inner {
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        /* Essential CSS - Makes the effect work */
+
+
+        .bubbles {
+            display: inline-block;
+            font-family: arial;
+            position: relative;
+        }
+
+        .bubbles h1 {
+            position: relative;
+            margin: 1em 0 0;
+            font-family: 'Luckiest Guy', cursive;
+            color: #fff;
+            z-index: 2;
+        }
+
+        .individual-bubble {
+            position: absolute;
+            border-radius: 100%;
+            bottom: 10px;
+            background-color: rgb(175, 24, 24);
+            z-index: 1;
+        }
     </style>
 @endsection
 
@@ -152,27 +299,27 @@
     <div class="container-fluid pt-5">
         <div class="row px-xl-5 pb-3" style="cursor: pointer;">
             <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="d-flex align-items-center bg-light mb-4" style="padding: 30px;">
+                <div class="d-flex align-items-center bg-light mb-4 outline" style="padding: 30px;">
                     <h1 class="fa fa-check text-primary m-0 mr-3"></h1>
-                    <h5 class="font-weight-semi-bold m-0">Sản phẩm chất lượng</h5>
+                    <h5 class="font-weight-semi-bold m-0 text">Sản phẩm chất lượng</h5>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="d-flex align-items-center bg-light mb-4" style="padding: 30px;">
+                <div class="d-flex align-items-center bg-light mb-4 outline" style="padding: 30px;">
                     <h1 class="fa fa-shipping-fast text-primary m-0 mr-2"></h1>
-                    <h5 class="font-weight-semi-bold m-0">Miễn phí vận chuyển</h5>
+                    <h5 class="font-weight-semi-bold m-0 ">Miễn phí vận chuyển</h5>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="d-flex align-items-center bg-light mb-4" style="padding: 30px;">
+                <div class="d-flex align-items-center bg-light mb-4 outline" style="padding: 30px;">
                     <h1 class="fas fa-exchange-alt text-primary m-0 mr-3"></h1>
-                    <h5 class="font-weight-semi-bold m-0">Hoàn hàng sau 3 ngày</h5>
+                    <h5 class="font-weight-semi-bold m-0 ">Hoàn hàng sau 3 ngày</h5>
                 </div>
             </div>
             <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
-                <div class="d-flex align-items-center bg-light mb-4" style="padding: 30px;">
+                <div class="d-flex align-items-center bg-light mb-4 outline" style="padding: 30px;">
                     <h1 class="fa fa-phone-volume text-primary m-0 mr-3"></h1>
-                    <h5 class="font-weight-semi-bold m-0">Hỗ trợ mọi khung giờ</h5>
+                    <h5 class="font-weight-semi-bold m-0 ">Hỗ trợ mọi khung giờ</h5>
                 </div>
             </div>
         </div>
@@ -182,8 +329,20 @@
 
     <!-- Products Start -->
     <div class="container-fluid pt-5 pb-3">
-        <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Sản phẩm bán
-                chạy</span></h2>
+        {{-- <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4"><span class="bg-secondary pr-3">Sản phẩm bán
+                chạy</span></h2> --}}
+
+        <div class="center-outer">
+            <div class="center-inner">
+
+                <div class="bubbles">
+                    <h2 class="section-title position-relative text-uppercase mx-xl-5 mb-4">
+                        <span class="bg-secondary pr-3">Sản phẩm bán chạy</span>
+                    </h2>
+                </div>
+
+            </div>
+        </div>
         <div class="row px-xl-5">
             @foreach ($product_sellings as $product)
                 <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
@@ -192,7 +351,8 @@
                             <div class="content">
                                 <div class="_3LjrMb yHNF9n BKTD5e shopee-badge">
                                     <div class="R6rql6">
-                                        <span class="percent">{{ round(((($product->sale_price + 50000) - $product->sale_price)/($product->sale_price + 50000))*100) }}%</span>
+                                        <span
+                                            class="percent">{{ round((($product->sale_price + 50000 - $product->sale_price) / ($product->sale_price + 50000)) * 100) }}%</span>
                                         <span class="down">Giảm</span>
                                     </div>
                                 </div>
@@ -212,7 +372,8 @@
                             </a>
                         </div>
                         <div class="text-center py-4">
-                            <a class="h6 text-decoration-none text-truncate" href="{{ route('home.show', $product->id) }}">
+                            <a class="h6 text-decoration-none text-truncate"
+                                href="{{ route('home.show', $product->id) }}">
                                 @php
                                     if (strlen($product->name) > 50) {
                                         $str = substr($product->name, 0, 50);
@@ -229,10 +390,10 @@
                                         style="margin-right: 15px;color: #d7bbbb;">{{ number_format($product->sale_price + 50000, 0, ',', '.') }}đ</del>
                                 </h6>
                                 <p style="margin: 0 15px;"><b>Đã bán: </b>{{ $product->sold }} </p>
-                                {{-- <i class='fas fa-car-side' style="font-size: 25px;color: #0b7a8b;">Miễn phí vận chuyển</i> --}}
                             </div>
                             <div>
-                                <span style="font-family: Courier New"><i class='fa fa-truck' style="font-size: 15px;color: #0b7a8b;"></i> Miễn phí vận chuyển</span>
+                                <span class="fee_ship" style="font-family: Courier New"><i class='fa fa-truck'
+                                        style="font-size: 15px;color: #0b7a8b;"></i> Miễn phí vận chuyển</span>
                             </div>
                             <div class="d-flex align-items-center justify-content-center mb-1">
                                 <small class="fa fa-star text-primary mr-1"></small>
@@ -260,7 +421,8 @@
                             <div class="content">
                                 <div class="_3LjrMb yHNF9n BKTD5e shopee-badge">
                                     <div class="R6rql6">
-                                        <span class="percent">{{ round(((($product->sale_price + 50000) - $product->sale_price)/($product->sale_price + 50000))*100) }}%</span>
+                                        <span
+                                            class="percent">{{ round((($product->sale_price + 50000 - $product->sale_price) / ($product->sale_price + 50000)) * 100) }}%</span>
                                         <span class="down">Giảm</span>
                                     </div>
                                 </div>
@@ -301,7 +463,8 @@
                                 <p style="margin: 0 15px;"><b>Đã bán: </b>{{ $product->sold }} </p>
                             </div>
                             <div>
-                                <span style="font-family: Courier New"><i class='fa fa-truck' style="font-size: 15px;color: #0b7a8b;"></i> Miễn phí vận chuyển</span>
+                                <span class="fee_ship" style="font-family: Courier New"><i class='fa fa-truck'
+                                        style="font-size: 15px;color: #0b7a8b;"></i> Miễn phí vận chuyển</span>
                             </div>
                             <div class="d-flex align-items-center justify-content-center mb-1">
                                 <small class="fa fa-star text-primary mr-1"></small>
@@ -330,6 +493,7 @@
             </div>
         </div>
     </div>
+
     <!-- Products End -->
 @endsection
 @section('js')
@@ -347,4 +511,48 @@
             toastr.error("{!! session()->get('error') !!}");
         </script>
     @endif
+
+    <script>
+        jQuery(document).ready(function($) {
+
+            // Define a blank array for the effect positions. This will be populated based on width of the title.
+            var bArray = [];
+            // Define a size array, this will be used to vary bubble sizes
+            var sArray = [4, 6, 8, 10];
+
+            // Push the header width values to bArray
+            for (var i = 0; i < $('.bubbles').width(); i++) {
+                bArray.push(i);
+            }
+
+            // Function to select random array element
+            // Used within the setInterval a few times
+            function randomValue(arr) {
+                return arr[Math.floor(Math.random() * arr.length)];
+            }
+
+            // setInterval function used to create new bubble every 350 milliseconds
+            setInterval(function() {
+
+                // Get a random size, defined as variable so it can be used for both width and height
+                var size = randomValue(sArray);
+                // New bubble appeneded to div with it's size and left position being set inline
+                // Left value is set through getting a random value from bArray
+                $('.bubbles').append('<div class="individual-bubble" style="left: ' + randomValue(bArray) +
+                    'px; width: ' + size + 'px; height:' + size + 'px;"></div>');
+
+                // Animate each bubble to the top (bottom 100%) and reduce opacity as it moves
+                // Callback function used to remove finsihed animations from the page
+                $('.individual-bubble').animate({
+                    'bottom': '100%',
+                    'opacity': '-=0.7'
+                }, 3000, function() {
+                    $(this).remove()
+                });
+
+
+            }, 350);
+
+        });
+    </script>
 @endsection

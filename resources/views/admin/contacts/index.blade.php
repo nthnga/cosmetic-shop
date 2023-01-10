@@ -1,7 +1,7 @@
 @extends('admin.layouts.master')
 
 @section('title')
-    Danh sách mã giảm giá
+    Danh sách liên hệ
 @endsection
 
 @section('css')
@@ -24,29 +24,26 @@
 
 @section('content')
     <div class="container-fluid px-4">
-        <h1 class="mt-4">Danh sách mã giảm giá</h1>
+        <h1 class="mt-4">Danh sách liên hệ</h1>
         <ol class="breadcrumb mb-4" style="margin-bottom: 50px!important;">
             <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Trang chủ</a></li>
-            <li class="breadcrumb-item active">Danh sách mã giảm giá</li>
+            <li class="breadcrumb-item active">Danh sách liên hệ từ khách hàng</li>
         </ol>
-            <a class="btn btn-primary btnAdd" href="{{route('admin.coupon.create')}}">Tạo mã giảm giá</a>
-            
+
         <div class="card mb-4">
             <div class="card-body">
                 <table class="table align-middle table-row-dashed fs-6 gy-5" id="table">
                     <!--begin::Table head-->
                     <thead>
                     <!--begin::Table row-->
-                    <tr style="text-transform: none !important;" class="text-start text-muted fw-bolder fs-7 gs-0" id="coupons">
-                        <th style="text-transform: none !important;" class="min-w-125px">Tên mã giảm giá</th>
-                        <th style="text-transform: none !important;" class="min-w-125px">Mã giảm giá</th>
-                        <th style="text-transform: none !important;" class="min-w-125px">Số lượng</th>
-                        <th style="text-transform: none !important;" class="min-w-125px">Còn lại</th>
-                        <th style="text-transform: none !important;" class="min-w-125px">Tính năng</th>
-                        <th style="text-transform: none !important;" class="min-w-125px">Số giảm</th>
-                        <th style="text-transform: none !important;" class="min-w-125px">Ngày bắt đầu</th>
-                        <th style="text-transform: none !important;" class="min-w-125px">Ngày kết thúc</th>
-                        <th style="text-align: start;text-transform: none !important;" class="min-w-125px">Chức năng</th>
+                    <tr style="text-transform: none !important;" class="text-start text-muted fw-bolder fs-7 gs-0" id="connects">
+                        <th style="text-transform: none !important;" class="min-w-125px">Tên khách hàng</th>
+                        <th style="text-transform: none !important;" class="min-w-125px">Email</th>
+                        <th style="text-transform: none !important;" class="min-w-125px">Số điện thoại</th>
+                        <th style="text-transform: none !important;" class="min-w-125px">Chủ đề</th>
+                        <th style="text-transform: none !important;" class="min-w-125px">Nội dung</th>
+                        <th style="text-transform: none !important;" class="min-w-125px">Ngày liên hệ</th>
+                        <th style="text-align: start;text-transform: none !important;" class="min-w-125px">Hành động</th>
                     </tr>
                     <!--end::Table row-->
                     </thead>
@@ -105,24 +102,22 @@
                 ajax:{
                     type: "GET",
                     datatype: "json",
-                    url: '/admin/coupons/get-list',
+                    url: '/admin/connect/get-list',
                     data: function (d) {
-                        d.search = $('#searchCoupons').val();
+                        d.search = $('#searchContacts').val();
                     },
                 },
                 columns: [
-                    {data: 'coupon_name', name: 'coupon_name'},
-                    {data: 'coupon_code', name: 'coupon_code'},
-                    {data: 'coupon_times', name: 'coupon_times'},
-                    {data: 'remaining', name: 'remaining'},
-                    {data: 'type', name: 'coupon_condition'},
-                    {data: 'coupon_number', name: 'coupon_number'},
-                    {data: 'start_time', name: 'start_time'},
-                    {data: 'end_time', name: 'end_time'},
+                    {data: 'name', name: 'name'},
+                    {data: 'email', name: 'email'},
+                    {data: 'phone', name: 'phone'},
+                    {data: 'title', name: 'title'},
+                    {data: 'message', name: 'message'},
+                    {data: 'created_at', name: 'created_at'},
                     {data: 'action', name: 'action'}
                 ]
             });
-            $('#searchCoupons').keyup(function(e){
+            $('#searchContacts').keyup(function(e){
                 table.draw();
                 e.preventDefault();
             });
@@ -144,7 +139,7 @@
                     var id = $(this).data("id");
                     var $this = $(this);
                     $.ajax({
-                        url: "/admin/coupons/"+id,
+                        url: "/admin/connect/"+id,
                         method: 'DELETE',
                         dataType: "JSON",
                         headers: {

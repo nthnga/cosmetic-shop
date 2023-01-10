@@ -117,6 +117,7 @@ class PaymentController extends Controller
         }
         
         $order->status = Order::WAIT;
+        $order->order_date = Carbon::now();
         $order->save();
 
         foreach ($items as $item){

@@ -22,7 +22,7 @@
                 <table class="table table-striped" id="comment">
                     <thead>
                       <tr>
-                        <th>ID</th>
+                        <th>Số TT</th>
                         <th>Tên người bình luận</th>
                         <th>Nội dung bình luận</th>
                         <th>Email</th>

@@ -24,7 +24,53 @@
             text-align: center !important;
         }
     </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+<style>
+    HTML CSSResult Skip Results Iframe
+EDIT ON
+/* Google Fonts */
+@import url(https://fonts.googleapis.com/css?family=Anonymous+Pro);
 
+/* Global */
+/* html{
+  min-height: 100%;
+  overflow: hidden;
+} */
+body{
+  height: calc(100vh - 8em);
+  padding: 4em;
+  color: rgba(255,255,255,.75);
+  font-family: 'Anonymous Pro', monospace;  
+  background-color: rgb(25,25,25);  
+}
+.line-1{
+    position: relative;
+    top: 50%;  
+    width: 24em;
+    margin: 0 auto;
+    border-right: 2px solid rgba(255,255,255,.75);
+    font-size: 180%;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    transform: translateY(-50%);    
+    color: rgb(212, 117, 8);
+}
+
+/* Animation */
+.anim-typewriter{
+  animation: typewriter 4s steps(44) 1s 1 normal both,
+             blinkTextCursor 500ms steps(44) infinite normal;
+}
+@keyframes typewriter{
+  from{width: 0;}
+  to{width: 24em;}
+}
+@keyframes blinkTextCursor{
+  from{border-right-color: rgba(255,255,255,.75);}
+  to{border-right-color: transparent;}
+}
+</style>
 @endsection
 
 @section('content')
@@ -37,11 +83,11 @@
             <div class="col-xl-3 col-md-6">
                 <div class="card bg-primary text-white mb-4">
                     <div class="card-body">
-                        Tổng đơn hàng
-                        <h2>{{50000000}}</h2>
+                        Tổng doanh thu
+                        <h2>{{ number_format($revenue_total, 0, ',', '.')}} </h2>
                     </div>
                     <div class="card-footer d-flex align-items-center justify-content-between">
-                        <a class="small text-white stretched-link" href="#">View Details</a>
+                        <a class="small text-white stretched-link" href="#"></a>
                         <div class="small text-white"><i class="fas fa-angle-right"></i></div>
                     </div>
                 </div>
@@ -86,7 +132,7 @@
             </div>
         </div>
 
-        <h4>Đơn hàng mới nhất</h4>
+        <h4><i class="fa fa-cloud-plus"></i> Đơn hàng mới nhất</h4>
         <div class="card mb-4 row">
             <div class="card-body">
                 <table class="table table-striped" id="order">
@@ -94,7 +140,6 @@
                       <tr>
                         <th>Mã đơn hàng</th>
                         <th>Khách hàng</th>
-                        {{-- <th>Tên sản phẩm</th> --}}
                         <th>Tổng tiền</th>
                         <th>Trạng thái</th>
                         <th>Ngày tạo</th>        
@@ -105,7 +150,6 @@
                             <tr>
                                 <td>{{$item->id}}</td>
                                 <td>{{$item->customer->name}}</td>
-                                {{-- <td>{{$item->}}</td> --}}
                                 <td>{{$item->total}}</td>
                                 <td>{{$item->status_text}}</td>
                                 <td>{{$item->created_at}}</td>
@@ -121,13 +165,14 @@
                 </div>
             </div>
         </div>
+        <br>
 
         <div class="row">
-            <h1>Doanh thu tháng</h1>
+            <h2 class="line-1 anim-typewriter"><i class="fa fa-solid fa-chart-simple"></i> Biểu đồ thống kê doanh thu</h2>
+            <p></p>
         </div>
     
         <div class="row">
-            <h3 class="mt-4 title_thongkedoanhso" style="text-align: center; color:rgb(100, 230, 237);">---Biểu đồ thống kê doanh số---</h3>
             <form action="" autocomplete="off" style="margin-right: 20px; display:flex;" method="POST">
                 @csrf
                 <div class="col-md-2" style="margin-right: 20px;">
@@ -169,7 +214,7 @@
 
         chart30daysorder();
 
-        var chart = new Morris.Area({
+        var chart = new Morris.Line({
             // ID of the element in which to draw the chart.
             element: 'chart',
 

@@ -45,11 +45,12 @@ class Customer extends Authenticatable
 
     static $genderArr = [
         self::GENDER_MALE => '1',
-        self::GENDER_FEMALE => '0'
+        self::GENDER_FEMALE => '0',
     ];
     public $genderTextArr = [
-        self::GENDER_MALE => 'Nam',
-        self::GENDER_FEMALE => 'Nữ'
+        self::GENDER_MALE => 'Nữ',
+        self::GENDER_FEMALE => 'Nam',
+
     ];
     protected $statusArr = [
         self::STATUS_UNLOCKED => 'Tài khoản đang hoạt động',
