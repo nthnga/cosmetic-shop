@@ -189,7 +189,7 @@
                                 Thanh toán bằng VNPAY
                             </label>
                         </div>
-                        <div class="vnPay" >
+                        {{-- <div class="vnPay" >
                             <input
                                 type="radio" id="g-option" class="circle-2"
                                 onclick="checkMoMo()" style="height: 18px;width: 20px;cursor: pointer"
@@ -198,7 +198,7 @@
                                 class="pay-text"> <img style="width: 20%;" src="" />
                                 Thanh toán bằng MOMO
                             </label>
-                        </div>
+                        </div> --}}
                         <button type="submit" style="margin-top: 15px" class="btn btn-block btn-primary font-weight-bold py-3">Đặt hàng</button>
                     </div>
                 </div>

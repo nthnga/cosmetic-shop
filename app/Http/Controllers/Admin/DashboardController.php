@@ -18,7 +18,6 @@ use Carbon\Carbon;
 use DB;
 use Session;
 use Cart;
-session_start();
 
 
 class DashboardController

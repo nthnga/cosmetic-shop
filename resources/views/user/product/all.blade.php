@@ -68,6 +68,7 @@
             text-transform: uppercase;
             font-size: 0.75rem;
         }
+
         @-webkit-keyframes my {
             0% {
                 color: #0f93a5;
@@ -126,7 +127,7 @@
 
         .fee_ship {
             /* background:#3d3d3d; */
-            
+
             -webkit-animation: my 700ms infinite;
             -moz-animation: my 700ms infinite;
             -o-animation: my 700ms infinite;
@@ -174,6 +175,31 @@
                                 class="filter_trademark" name="filter_trademark" data-filters="trademark"
                                 value="{{ $trademark->id }}" />
                             <label>{{ $trademark->name }}</label>
+                        </div>
+                    @endforeach
+                </div>
+
+                <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Lọc theo
+                        thương hiệu</span></h5>
+                <div class="bg-light p-4 mb-30">
+                    @php
+                        $category_id = [];
+                        $category_arr = [];
+                        
+                        $checked = [];
+                        if (isset($_GET['category'])) {
+                            $id = $_GET['category'];
+                        } else {
+                            $id = $name->category_id . ',';
+                        }
+                        $category_arr = explode(',', $id);
+                    @endphp
+                    @foreach ($categories as $category)
+                        <div class="custom-control mb-3" style="padding-left: 0px;">
+                            <input type="checkbox" {{ in_array($category->id, $category_arr) ? 'checked' : '' }}
+                                class="filter_category" name="filter_category" data-filters="category"
+                                value="{{ $category->id }}" />
+                            <label>{{ $category->name }}</label>
                         </div>
                     @endforeach
                 </div>
@@ -258,7 +284,8 @@
                                     <div class="content">
                                         <div class="_3LjrMb yHNF9n BKTD5e shopee-badge">
                                             <div class="R6rql6">
-                                                <span class="percent">{{ round(((($product->sale_price + 50000) - $product->sale_price)/($product->sale_price + 50000))*100) }}%</span>
+                                                <span
+                                                    class="percent">{{ round((($product->sale_price + 50000 - $product->sale_price) / ($product->sale_price + 50000)) * 100) }}%</span>
                                                 <span class="down">Giảm</span>
                                             </div>
                                         </div>
@@ -291,22 +318,49 @@
                                         {{ $product->name }}
                                     </a>
                                     <div class="d-flex align-items-center justify-content-center mt-2">
-                                        <h5 style="color: #d93232;font-size: 25px;"><b style="font-size: 18px;
-                                            text-decoration: underline;">đ</b>{{number_format($product->sale_price,0, ',', '.')}}</h5>
-                                        <h6 class="text-muted ml-2"><del style="margin-right: 15px;color: #d7bbbb;">{{number_format($product->sale_price+50000,0, ',', '.')}}đ</del></h6>
-                                        <p style="margin: 0 15px;"><b>Đã bán: </b>{{$product->sold}} </p>
+                                        <h5 style="color: #d93232;font-size: 25px;"><b
+                                                style="font-size: 18px;
+                                            text-decoration: underline;">đ</b>{{ number_format($product->sale_price, 0, ',', '.') }}
+                                        </h5>
+                                        <h6 class="text-muted ml-2"><del
+                                                style="margin-right: 15px;color: #d7bbbb;">{{ number_format($product->sale_price + 50000, 0, ',', '.') }}đ</del>
+                                        </h6>
+                                        <p style="margin: 0 15px;"><b>Đã bán: </b>{{ $product->sold }} </p>
                                     </div>
                                     <div>
-                                        <span class="fee_ship"
-                                        style="font-family: Courier New"><i class='fa fa-truck' style="font-size: 15px;color: #0b7a8b;"></i> Miễn phí vận chuyển</span>
+                                        <span class="fee_ship" style="font-family: Courier New"><i class='fa fa-truck'
+                                                style="font-size: 15px;color: #0b7a8b;"></i> Miễn phí vận chuyển</span>
                                     </div>
                                     <div class="d-flex align-items-center justify-content-center mb-1">
+                                        <ul class="d-flex flex-row list-inline" title="Average Rating">
+                                            @for ($count = 1; $count <= 5; $count++)
+                                                @php
+                                                    if ($count <= $product->avg_rating) {
+                                                        $color = 'color:#ffcc00;';
+                                                    } else {
+                                                        $color = 'color:#ccc;';
+                                                    }
+                                                    
+                                                @endphp
+        
+                                                @php
+                                                    $color = '#ccc';
+                                                @endphp
+                                                <li title="star_rating" id="{{ $product->id }}-{{ $count }}"
+                                                    data-index="{{ $count }}" data-product_id="{{ $product->id }}"
+                                                    data-rating="{{ $product->avg_rating }}" class="rating"
+                                                    style="cursor:pointer; color: {{ $color }}; font-size:20px;">
+                                                    &#9733;
+                                                </li>
+                                            @endfor
+                                        </ul>
+                                        <small>({{ $product->rating_count  }})</small>
+                                        {{-- <small class="fa fa-star text-primary mr-1"></small>
                                         <small class="fa fa-star text-primary mr-1"></small>
                                         <small class="fa fa-star text-primary mr-1"></small>
-                                        <small class="fa fa-star text-primary mr-1"></small>
-                                        <small class="fa fa-star text-primary mr-1"></small>
-                                        <small class="fa fa-star text-primary mr-1"></small>
-                                        <small>(99)</small>
+                                        <small class="far fa-star text-primary mr-1"></small>
+                                        <small class="far fa-star text-primary mr-1"></small> --}}
+                                        {{-- <small>(10)</small> --}}
                                     </div>
                                 </div>
                             </div>

@@ -395,13 +395,36 @@
                                 <span class="fee_ship" style="font-family: Courier New"><i class='fa fa-truck'
                                         style="font-size: 15px;color: #0b7a8b;"></i> Miễn phí vận chuyển</span>
                             </div>
-                            <div class="d-flex align-items-center justify-content-center mb-1">
+                            <div class="d-flex flex-row align-items-center justify-content-center mb-1">
+                                {{-- <ul class="d-flex flex-row list-inline" title="Average Rating">
+                                    @for ($count = 1; $count <= 5; $count++)
+                                        @php
+                                            if ($count <= $product->avg_rating) {
+                                                $color = 'color:#ffcc00;';
+                                            } else {
+                                                $color = 'color:#ccc;';
+                                            }
+                                            
+                                        @endphp
+
+                                        @php
+                                            $color = '#ccc';
+                                        @endphp
+                                        <li title="star_rating" id="{{ $product->id }}-{{ $count }}"
+                                            data-index="{{ $count }}" data-product_id="{{ $product->id }}"
+                                            data-rating="{{ $product->avg_rating }}" class="rating"
+                                            style="cursor:pointer; color: {{ $color }}; font-size:20px;">
+                                            &#9733;
+                                        </li>
+                                    @endfor
+                                </ul>
+                                <small>({{ $product->rating_count }})</small> --}}
                                 <small class="fa fa-star text-primary mr-1"></small>
                                 <small class="fa fa-star text-primary mr-1"></small>
                                 <small class="fa fa-star text-primary mr-1"></small>
-                                <small class="fa fa-star text-primary mr-1"></small>
-                                <small class="fa fa-star text-primary mr-1"></small>
-                                <small>(99)</small>
+                                <small class="far fa-star text-primary mr-1"></small>
+                                <small class="far fa-star text-primary mr-1"></small>
+                                <small>(5)</small>
                             </div>
                         </div>
                     </div>
@@ -467,12 +490,35 @@
                                         style="font-size: 15px;color: #0b7a8b;"></i> Miễn phí vận chuyển</span>
                             </div>
                             <div class="d-flex align-items-center justify-content-center mb-1">
+                                {{-- <ul class="d-flex flex-row list-inline" title="Average Rating">
+                                    @for ($count = 1; $count <= 5; $count++)
+                                        @php
+                                            if ($count <= $product->avg_rating) {
+                                                $color = 'color:#ffcc00;';
+                                            } else {
+                                                $color = 'color:#ccc;';
+                                            }
+                                            
+                                        @endphp
+
+                                        @php
+                                            $color = '#ccc';
+                                        @endphp
+                                        <li title="star_rating" id="{{ $product->id }}-{{ $count }}"
+                                            data-index="{{ $count }}" data-product_id="{{ $product->id }}"
+                                            data-rating="{{ $product->avg_rating }}" class="rating"
+                                            style="cursor:pointer; color: {{ $color }}; font-size:20px;">
+                                            &#9733;
+                                        </li>
+                                    @endfor
+                                </ul>
+                                <small>({{ $product->rating_count }})</small> --}}
                                 <small class="fa fa-star text-primary mr-1"></small>
                                 <small class="fa fa-star text-primary mr-1"></small>
                                 <small class="fa fa-star text-primary mr-1"></small>
-                                <small class="fa fa-star text-primary mr-1"></small>
-                                <small class="fa fa-star text-primary mr-1"></small>
-                                <small>(99)</small>
+                                <small class="far fa-star text-primary mr-1"></small>
+                                <small class="far fa-star text-primary mr-1"></small>
+                                <small>(10)</small>
                             </div>
                         </div>
                     </div>

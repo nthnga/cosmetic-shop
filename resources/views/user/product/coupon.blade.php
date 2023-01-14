@@ -377,13 +377,7 @@
                 <div class="container">
                     <div class="typed-out">Nhận mã khuyến mại tiết kiệm liền tay</div>
                     <br>
-                    <div class="input-group">
-                        <input type="text" class="form-control" name="keywords" placeholder="...">
-                        <div class="input-group-append">
-                            <input type="submit" name="search_items" class="btn btn-info" value="Tìm Kiếm">
-
-                        </div>
-                    </div>
+                    
                 </div>
                 <div style="margin-top: 20px; font-size: 20px;">
 

@@ -13,11 +13,16 @@
             </a>
             <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 bg-light" id="navbar-vertical" style="width: calc(100% - 30px); z-index: 999;">
                 <div class="navbar-nav w-100 overflow-hidden " style="background-color: rgb(182, 189, 145) ">
-                    @foreach($categories as $category)
-                        <a href=" " class="nav-item nav-link btn" 
-                        onclick="route('home.listProduct', ['category_id'  => $category->id])" style="color: rgb(16, 16, 149); font-size:20px;">{{$category->name}}</a>
                     
-                    @endforeach
+            
+                          @foreach($categories as $category)
+                            
+                                {{-- <input type="hidden"  id="category_id" value={{$category->category_id}}> --}}
+                                <a href="{{route('home.showProduct',$category->id)}}" class="nav-item nav-link btn"
+                                style="color: rgb(16, 16, 149); font-size:20px;">{{$category->name}}</a>
+                            
+                            @endforeach
+                   
                 </div>
             </nav>
         </div>

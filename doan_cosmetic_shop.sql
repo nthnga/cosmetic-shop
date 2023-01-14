@@ -11,7 +11,7 @@
  Target Server Version : 100427
  File Encoding         : 65001
 
- Date: 17/12/2022 17:28:21
+ Date: 14/01/2023 22:13:31
 */
 
 SET NAMES utf8mb4;
@@ -36,7 +36,7 @@ CREATE TABLE `categories`  (
 -- ----------------------------
 -- Records of categories
 -- ----------------------------
-INSERT INTO `categories` VALUES (1, 'Trang điểm', 'Đẹp và rạng ngời', 'images/NsF28vzqX8f4zrJ7eh28op9z66s8OjEFQSO13jwe.png', 1, NULL, '2022-10-13 05:53:59', '2022-12-16 07:41:50');
+INSERT INTO `categories` VALUES (1, 'Trang điểm vip', 'Đẹp và rạng ngời', 'images/NsF28vzqX8f4zrJ7eh28op9z66s8OjEFQSO13jwe.png', 1, NULL, '2022-10-13 05:53:59', '2022-12-22 08:57:31');
 INSERT INTO `categories` VALUES (2, 'Chăm sóc da', 'Da sáng rạng ngời', 'images/5BQAjkW9XQzMDYlDgPrqVmwhCLuM4ekpzVeA26Ea.jpg', 1, NULL, '2022-10-13 06:03:24', '2022-12-16 07:41:35');
 INSERT INTO `categories` VALUES (3, 'Chăm sóc tóc', 'Mềm mượt óng ả', 'images/DszQUVkzMn4d93w6CSFGNW2n7yhWcLZY48qZSENq.jpg', 1, NULL, '2022-10-13 06:04:42', '2022-12-16 07:41:25');
 INSERT INTO `categories` VALUES (4, 'Phụ kiện làm đẹp', 'Lan tỏa sắc đẹp', 'images/vVfWUvAzQvygDCWQIMDPOqNXKBdawhK1aWqPkZTH.jpg', 1, NULL, '2022-10-13 06:06:43', '2022-12-16 07:41:05');
@@ -54,21 +54,31 @@ DROP TABLE IF EXISTS `comments`;
 CREATE TABLE `comments`  (
   `id` int NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL,
-  `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `email` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `product_id` int NOT NULL,
   `status` int NOT NULL DEFAULT 0,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 37 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of comments
 -- ----------------------------
 INSERT INTO `comments` VALUES (2, 6, 'Sản phẩm này đẹp', 'nguyennga@gmail.com', 'Nguyễn Nga', 3, 0, '2022-12-16 14:15:43');
 INSERT INTO `comments` VALUES (7, 6, 'dasdsadsadas', 'Vladimir@gmail.com', 'Vladimir', 3, 1, '2022-12-16 14:16:17');
-INSERT INTO `comments` VALUES (10, 9, 'SP này dùng khá okeee ạ', 'mtduyen@gmail.com', 'Mai Thanh Duyên', 9, 1, '2022-12-16 15:30:00');
+INSERT INTO `comments` VALUES (10, 9, 'SP này dùng khá okeee ạ', 'mtduyen@gmail.com', 'Mai Thanh Duyên', 9, 1, '2022-12-21 23:05:48');
+INSERT INTO `comments` VALUES (11, 5, 'OKKKK', 'nthnga0703@gmail.com', 'Nguyễn Thị Hằng Nga', 4, 0, '2022-12-21 22:45:17');
+INSERT INTO `comments` VALUES (19, 5, '12346', 'nthnga0703@gmail.com', 'Nguyễn Thị Hằng Nga', 1, 0, '2022-12-22 12:40:50');
+INSERT INTO `comments` VALUES (24, 5, 'okkkkk', 'nthnga0703@gmail.com', 'Nguyễn Thị Hằng Nga', 23, 1, '2023-01-07 09:07:36');
+INSERT INTO `comments` VALUES (29, 12, 'Abc', 'duongthuy@gmail.com', 'Nguyễn Thùy Dương', 21, 1, '2023-01-08 12:26:47');
+INSERT INTO `comments` VALUES (30, 12, NULL, 'duongthuy@gmail.com', 'Nguyễn Thùy Dương', 17, 0, '2023-01-08 11:37:10');
+INSERT INTO `comments` VALUES (32, 12, 'SP khoong oke', 'duongthuy@gmail.com', 'Nguyễn Thùy Dương', 9, 1, '2023-01-08 14:14:04');
+INSERT INTO `comments` VALUES (33, 5, 'ad', 'nthnga0703@gmail.com', 'Nguyễn Thị Hằng Nga', 18, 0, '2023-01-09 10:05:46');
+INSERT INTO `comments` VALUES (34, 5, NULL, 'nthnga0703@gmail.com', 'Nguyễn Thị Hằng Nga', 17, 0, '2023-01-09 19:21:50');
+INSERT INTO `comments` VALUES (35, 11, 'dâda', 'linh@gmail.com', 'Trần Thùy Linh', 27, 1, '2023-01-10 13:34:51');
+INSERT INTO `comments` VALUES (36, 5, NULL, 'nthnga0703@gmail.com', 'Nguyễn Thị Hằng Nga', 22, 0, '2023-01-10 23:41:23');
 
 -- ----------------------------
 -- Table structure for contacts
@@ -84,11 +94,16 @@ CREATE TABLE `contacts`  (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of contacts
 -- ----------------------------
+INSERT INTO `contacts` VALUES (1, 'Bùi Lan Hương', 'blhuong78@gmail.com', '0999999999', 'Tư vấn mua sản phẩm', 'Mua giá sỉ', '2022-12-21 16:31:45', '2022-12-21 16:31:45');
+INSERT INTO `contacts` VALUES (3, 'Nguyễn Khánh Phương', 'nkphuong@gmail.com', '0986543761', 'Tư vấn mua hàng', 'Sản phẩm trị nám, tàn nhang', '2023-01-06 16:42:47', '2023-01-06 16:42:47');
+INSERT INTO `contacts` VALUES (4, 'Huỳnh Tuyết Mai', 'htmai@gmail.com', '0964321763', 'Lấy hàng sỉ', 'Chai lọ đựng tinh dầu', '2023-01-06 16:43:59', '2023-01-06 16:43:59');
+INSERT INTO `contacts` VALUES (5, 'Đinh Minh Khuê', 'dmkhue@gmail.com', '0947658428', 'Mua hàng', 'Mua nhiều sản phẩm', '2023-01-09 12:09:58', '2023-01-09 12:09:58');
+INSERT INTO `contacts` VALUES (6, 'Bùi Lan Hương', 'nthnga0703@gmail.com', '0947658329', 'sxz', 'c zxcx', '2023-01-10 06:17:08', '2023-01-10 06:17:08');
 
 -- ----------------------------
 -- Table structure for coupons
@@ -107,25 +122,29 @@ CREATE TABLE `coupons`  (
   `start_time` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `end_time` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `coupon_status` int NULL DEFAULT NULL,
+  `remaining` int NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of coupons
 -- ----------------------------
-INSERT INTO `coupons` VALUES (1, NULL, '2022-12-16 07:36:17', 'Giảm mạnh', 'HGOJIFDGM', '500', '-----Chọn-----', '10%', NULL, NULL, NULL, NULL);
-INSERT INTO `coupons` VALUES (2, NULL, NULL, 'Khuyến mại tháng 1', 'KMT1', '100', '2', '30000', NULL, NULL, NULL, NULL);
-INSERT INTO `coupons` VALUES (3, NULL, NULL, 'Khuyến mại tháng 2', 'KMT2', '70', '1', '15%', NULL, NULL, NULL, NULL);
-INSERT INTO `coupons` VALUES (4, NULL, NULL, 'Khuyến mại tháng 3', 'KMT3', '200', '2', '40000', NULL, NULL, NULL, NULL);
-INSERT INTO `coupons` VALUES (5, NULL, NULL, 'Khuyến mại tháng 4', 'KMT4', '97', '1', '18%', NULL, NULL, NULL, NULL);
-INSERT INTO `coupons` VALUES (6, NULL, NULL, 'Khuyến mại tháng 5', 'KMT5', '30', '2', '15000', NULL, NULL, NULL, NULL);
-INSERT INTO `coupons` VALUES (7, NULL, NULL, 'Khuyến mại tháng 6', 'KMT6', '120', '1', '10%', NULL, NULL, NULL, NULL);
-INSERT INTO `coupons` VALUES (8, NULL, NULL, 'Khuyến mại tháng 7', 'KMT7', '77', '2', '12000', NULL, NULL, NULL, NULL);
-INSERT INTO `coupons` VALUES (9, NULL, NULL, 'Khuyến mại tháng 8', 'KMT8', '10', '1', '35%', NULL, NULL, NULL, NULL);
-INSERT INTO `coupons` VALUES (10, NULL, NULL, 'Khuyến mại tháng 9', 'KMT9', '120', '2', '30000', NULL, NULL, NULL, NULL);
-INSERT INTO `coupons` VALUES (11, NULL, NULL, 'Khuyến mại tháng 10', 'KMT10', '100', '1', '25%', NULL, NULL, NULL, NULL);
-INSERT INTO `coupons` VALUES (12, NULL, NULL, 'Khuyến mại tháng 11', 'KMT11', '200', '2', '40000', NULL, NULL, NULL, NULL);
-INSERT INTO `coupons` VALUES (13, NULL, NULL, 'Khuyến mại tháng 12', 'KMT12', '350', '1', '20%', NULL, NULL, NULL, NULL);
+INSERT INTO `coupons` VALUES (1, NULL, '2023-01-11 03:44:14', 'Giảm mạnh', 'HGOJIFDGM', '500', '1', '10%', NULL, '2023-01-01', '2023-01-29', NULL, 488);
+INSERT INTO `coupons` VALUES (2, NULL, '2023-01-09 17:44:16', 'Khuyến mại tháng 1', 'KMT1', '100', '2', '30000', NULL, '2022-01-05', '2023-01-10', NULL, 92);
+INSERT INTO `coupons` VALUES (3, NULL, '2022-12-21 18:12:11', 'Khuyến mại tháng 2', 'KMT2', '70', '1', '15%', NULL, '2022-02-02', '2022-02-08', NULL, 70);
+INSERT INTO `coupons` VALUES (4, NULL, '2022-12-21 18:12:33', 'Khuyến mại tháng 3', 'KMT3', '200', '2', '40000', NULL, '2022-03-03', '2022-03-07', NULL, 200);
+INSERT INTO `coupons` VALUES (5, NULL, '2022-12-21 18:12:55', 'Khuyến mại tháng 4', 'KMT4', '97', '1', '18%', NULL, '2022-04-04', '2022-04-10', NULL, 97);
+INSERT INTO `coupons` VALUES (6, NULL, '2022-12-21 18:13:21', 'Khuyến mại tháng 5', 'KMT5', '30', '2', '15000', NULL, '2022-05-05', '2022-05-10', NULL, 30);
+INSERT INTO `coupons` VALUES (7, NULL, '2022-12-21 18:14:25', 'Khuyến mại tháng 6', 'KMT6', '120', '1', '10%', NULL, '2022-06-06', '2022-06-12', NULL, 120);
+INSERT INTO `coupons` VALUES (8, NULL, '2022-12-21 18:14:47', 'Khuyến mại tháng 7', 'KMT7', '77', '2', '12000', NULL, '2022-07-07', '2022-07-14', NULL, 77);
+INSERT INTO `coupons` VALUES (9, NULL, '2022-12-21 18:15:23', 'Khuyến mại tháng 8', 'KMT8', '10', '1', '35%', NULL, '2022-08-08', '2022-08-16', NULL, 10);
+INSERT INTO `coupons` VALUES (10, NULL, '2022-12-21 18:15:53', 'Khuyến mại tháng 9', 'KMT9', '120', '2', '30000', NULL, '2022-09-09', '2022-09-15', NULL, 120);
+INSERT INTO `coupons` VALUES (11, NULL, '2023-01-04 02:48:00', 'Khuyến mại tháng 10', 'KMT10', '100', '1', '25%', NULL, '2023-10-10', '2023-10-17', NULL, 100);
+INSERT INTO `coupons` VALUES (12, NULL, '2023-01-04 02:48:23', 'Khuyến mại tháng 11', 'KMT11', '200', '2', '40000', NULL, '2023-11-11', '2023-11-18', NULL, 200);
+INSERT INTO `coupons` VALUES (13, NULL, '2023-01-04 02:48:43', 'Khuyến mại tháng 12', 'KMT12', '350', '1', '20%', NULL, '2023-12-12', '2023-12-18', NULL, 350);
+INSERT INTO `coupons` VALUES (15, '2023-01-08 11:38:26', '2023-01-08 17:09:29', 'Giam gia tet', 'tet12', '80', '2', '30000', NULL, '2023-01-01', '2023-01-15', NULL, 77);
+INSERT INTO `coupons` VALUES (16, '2023-01-08 11:46:44', '2023-01-08 17:04:29', 'sdffsd', 'dsffffffffffffffffff', '500', '1', '15%', NULL, '2023-01-13', '2023-01-20', NULL, 500);
+INSERT INTO `coupons` VALUES (17, '2023-01-09 02:01:47', '2023-01-09 18:23:43', 'sada', 'ádđfdfd', '30', '2', '20%', NULL, '2023-01-09', '2023-01-30', NULL, 30);
 
 -- ----------------------------
 -- Table structure for customers
@@ -147,23 +166,27 @@ CREATE TABLE `customers`  (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
+  `customer_vip` int NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `customers_email_unique`(`email` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of customers
 -- ----------------------------
-INSERT INTO `customers` VALUES (1, 'Trần Thị Hạnh', 'hanh@gmail.com', '$2y$10$FLxsCp7FKFuLYtwz5troeeN5vt33Nrb5JtMHDzynzMY9rA1.c9cYG', '0124356789', 'Bình Lục - Hà Nam', 1, 1, NULL, NULL, NULL, NULL, '2022-10-13 07:41:03', '2022-10-13 07:41:03', NULL);
-INSERT INTO `customers` VALUES (2, 'Đinh Văn Nam', 'dvnam@gmail.com', '$2y$10$s9nkNPMfaX/F/kGdtl5T4eRZcHedttvcAYUm3qT/b6eovwLM9CEQy', '0315682933', 'Quảng Nam', 0, 1, NULL, NULL, NULL, NULL, '2022-10-14 05:43:30', '2022-10-14 05:43:30', NULL);
-INSERT INTO `customers` VALUES (3, 'Đinh Lan Anh', 'lananh@gmail.com', '$2y$10$Zy7RF039Wlob7TPK6LjDfuREpibMyys5QtLAd9z1J9w4tTAMFL5o.', '097865127', 'Nga Sơn - Thanh Hóa', 1, 0, NULL, NULL, NULL, NULL, '2022-10-23 14:14:09', '2022-11-25 10:08:36', NULL);
-INSERT INTO `customers` VALUES (4, 'Trần Thị Lan Anh', 'ttla@gmail.com', '$2y$10$pGAhJa6lQg9eBlG55J4Jpe8EOVfU/7B/NthSwYQB0cno1TBYXzgkm', '0869841274', 'Hải Phòng', 1, 1, NULL, NULL, NULL, NULL, '2022-10-28 07:09:09', '2022-10-28 07:09:09', NULL);
-INSERT INTO `customers` VALUES (5, 'Nguyễn Thị Hằng Nga', 'nthnga0703@gmail.com', '$2y$10$IVxGPaJjG5l4vXQ.LJplc.L3iSPBPWlx/Gu/xp50SAXDs6wBmqeH2', '0349719563', 'Xuân Trường - Nam Định', 1, 1, NULL, NULL, NULL, NULL, '2022-11-24 13:15:45', '2022-12-16 13:43:28', NULL);
-INSERT INTO `customers` VALUES (6, 'truongngoctanhieu2018@gmail.com', 'truongngoctanhieu2018@gmail.com', '$2y$10$SzNbkZtJ5aANzsMoOxZE8OfT.vvrdIxdH.qWxX.zTrBqZLSafh9jy', '0932023992', 'truongngoctanhieu2018@gmail.com', 0, 1, NULL, NULL, NULL, NULL, '2022-12-09 07:50:23', '2022-12-09 07:50:23', NULL);
-INSERT INTO `customers` VALUES (7, 'Phạm Kim Dung', 'pkdungg@gmail.com', '$2y$10$6HqFSvjR2GOezhRJnkqG0ec1LB.y1iOtakWqRx96FhfeL3dyIpR.6', '0856321746', 'Hà Nam', 1, 1, NULL, NULL, NULL, NULL, '2022-12-16 06:18:12', '2022-12-16 06:18:12', NULL);
-INSERT INTO `customers` VALUES (8, 'Hoàng Xuân Thủy', 'hxthuyy@gmail.com', '$2y$10$zgn.dtzG6B2tv3TN8ECPO.yKNiLywv0AghTDo7dndCj5DYEOhq/wW', '0684327159', 'Nghệ An', 0, 1, NULL, NULL, NULL, NULL, '2022-12-16 07:07:30', '2022-12-16 13:25:02', NULL);
-INSERT INTO `customers` VALUES (9, 'Mai Thanh Duyên', 'mtduyen@gmail.com', '$2y$10$1EyH3Owv1IjEIGMgh9zO4uIUR9ENYodfMd7SySgeTWLOQ/ZmuBQ2m', '0798453218', 'Điện Biên', 1, 1, NULL, NULL, NULL, NULL, '2022-12-16 08:18:37', '2022-12-16 13:12:31', NULL);
-INSERT INTO `customers` VALUES (10, 'Đinh Thanh Tuyền', 'dttuyen@gmail.com', '$2y$10$/VgHmA/XQeYwem2gx4DasuudtnJrFb5Saqa0eR2iWT84UVK7K9LGS', '0587432174', 'Hải Phòng', 0, 1, NULL, NULL, NULL, NULL, '2022-12-17 10:11:28', '2022-12-17 10:11:28', NULL);
+INSERT INTO `customers` VALUES (1, 'Trần Thị Hạnh', 'hanh@gmail.com', '$2y$10$FLxsCp7FKFuLYtwz5troeeN5vt33Nrb5JtMHDzynzMY9rA1.c9cYG', '0124356789', 'Bình Lục - Hà Nam', 1, 1, NULL, NULL, NULL, NULL, '2022-10-13 07:41:03', '2022-10-13 07:41:03', NULL, NULL);
+INSERT INTO `customers` VALUES (2, 'Đinh Văn Nam', 'dvnam@gmail.com', '$2y$10$dr9bzwgoaSATIn7jvFGyjuwQLYCGyJUCBYFIEuwPBD.qQWwoNyDK2', '0315682933', 'Quảng Nam', 0, 1, NULL, NULL, NULL, NULL, '2022-10-14 05:43:30', '2023-01-05 02:20:09', NULL, NULL);
+INSERT INTO `customers` VALUES (3, 'Đinh Lan Anh', 'lananh@gmail.com', '$2y$10$Zy7RF039Wlob7TPK6LjDfuREpibMyys5QtLAd9z1J9w4tTAMFL5o.', '097865127', 'Nga Sơn - Thanh Hóa', 1, 0, NULL, NULL, NULL, NULL, '2022-10-23 14:14:09', '2022-11-25 10:08:36', NULL, NULL);
+INSERT INTO `customers` VALUES (4, 'Trần Thị Lan Anh', 'ttla@gmail.com', '$2y$10$7iltNbkEDofD/DuBoXLkpula/kg2E/OZ3ETPEZbGueNnEyBVmt6da', '0869841274', 'Hải Phòng', 1, 1, NULL, NULL, NULL, NULL, '2022-10-28 07:09:09', '2023-01-05 02:19:41', NULL, NULL);
+INSERT INTO `customers` VALUES (5, 'Nguyễn Thị Hằng Nga', 'nthnga0703@gmail.com', '$2y$10$Ws3ZUyXRWQrFGK94XMomu.zdzgT2m4uwA1GIUELuWAVNnmel/lwe6', '0349719563', 'Xuân Trường - Nam Địnhhhhh', 1, 1, NULL, NULL, NULL, NULL, '2022-11-24 13:15:45', '2023-01-09 06:07:28', NULL, 1);
+INSERT INTO `customers` VALUES (6, 'truongngoctanhieu2018@gmail.com', 'truongngoctanhieu2018@gmail.com', '$2y$10$qG5FHMvs7y1Km9HNsdbTZegNzASU/uALIHOkxaenDPqTeI.3saf7i', '0932023992', 'truongngoctanhieu2018@gmail.com', 0, 1, NULL, NULL, NULL, NULL, '2022-12-09 07:50:23', '2023-01-05 02:19:32', NULL, 1);
+INSERT INTO `customers` VALUES (7, 'Phạm Kim Dung', 'pkdungg@gmail.com', '$2y$10$JyF3I23sw5BeJLMluI2HzeqYtGJO0tjsx9rqYh8bqmQ295GLjkXlq', '0856321746', 'Hà Nam', 1, 1, NULL, NULL, NULL, NULL, '2022-12-16 06:18:12', '2023-01-05 02:19:29', NULL, 1);
+INSERT INTO `customers` VALUES (8, 'Hoàng Xuân Thu', 'hxthuyy@gmail.com', '$2y$10$EborXDnrfjz4sEc8CwuvxON9oBYHe9cRgAPbEK6F5Nw2I3.nCLUbe', '0984327159', 'Nghệ An', 0, 1, NULL, NULL, NULL, NULL, '2022-12-16 07:07:30', '2023-01-08 18:06:44', NULL, NULL);
+INSERT INTO `customers` VALUES (9, 'Mai Thanh Duyên', 'mtduyen@gmail.com', '$2y$10$86WLeehQCXuMwGpH/My/yeLVrMewWndlVPklXPE8vpQJ6aYser9Mu', '0798453218', 'Điện Biên', 1, 1, NULL, NULL, NULL, NULL, '2022-12-16 08:18:37', '2023-01-05 02:19:24', NULL, NULL);
+INSERT INTO `customers` VALUES (10, 'Đinh Thanh Tuyền', 'dttuyen@gmail.com', '$2y$10$Z0xodzCBjYG1v/65yV/Et.eu1jkIxhbt/nrgYXHRfbbHnR90P2wLW', '0587432174', 'Hải Phòng', 0, 1, NULL, NULL, NULL, NULL, '2022-12-17 10:11:28', '2023-01-05 02:19:20', NULL, NULL);
+INSERT INTO `customers` VALUES (11, 'Trần Thùy Linh', 'linh@gmail.com', '$2y$10$ivIsHryq1W1uSpr5rm06V.X5R/kenrJBehvNO9uzmjfBliCbXdaKC', '0987536217', 'Xuân Trường - Nam Định', 0, 1, NULL, NULL, NULL, NULL, '2023-01-03 09:28:11', '2023-01-05 02:19:18', NULL, NULL);
+INSERT INTO `customers` VALUES (12, 'Nguyễn Thùy Dương', 'duongthuy@gmail.com', '$2y$10$fQwnaN/uQytj9gUH2I0eY.nqU2AfTFbNKZqfeF2IHy2I1u6h5/eju', '0912435672', 'Thanh Xuân - Hà Nội', 1, 1, NULL, NULL, NULL, NULL, '2023-01-07 03:06:07', '2023-01-08 01:24:49', NULL, NULL);
+INSERT INTO `customers` VALUES (18, 'Nguyễn Thị Huyền', 'hangg@gmail.com', '$2y$10$ds4MHNj6rwAo7S0422A62.OfuqmSt.res1QoLymEP8JANl/bJmW3G', '0123456789', 'Hưng Yên', 0, 1, NULL, NULL, NULL, NULL, '2023-01-07 03:26:46', '2023-01-09 09:23:12', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for failed_jobs
@@ -251,7 +274,7 @@ CREATE TABLE `migrations`  (
   `migration` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `batch` int NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 28 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 34 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of migrations
@@ -281,6 +304,12 @@ INSERT INTO `migrations` VALUES (24, '2022_12_07_033928_create_contacts_table', 
 INSERT INTO `migrations` VALUES (25, '2022_12_10_074239_add_status_to_coupons_table', 9);
 INSERT INTO `migrations` VALUES (26, '2022_12_16_065124_add_coupon_to_orders_table', 10);
 INSERT INTO `migrations` VALUES (27, '2022_12_16_065900_add_fee_ship_to_orders_table', 11);
+INSERT INTO `migrations` VALUES (28, '2022_12_21_121511_add_customer_vip_to_customers_table', 12);
+INSERT INTO `migrations` VALUES (29, '2023_01_05_124014_create_table_statistics_table', 13);
+INSERT INTO `migrations` VALUES (30, '2023_01_08_042907_make_comment_content_nullable', 14);
+INSERT INTO `migrations` VALUES (31, '2023_01_08_105229_add_use_time_for_coupons', 15);
+INSERT INTO `migrations` VALUES (32, '2023_01_08_110225_change_use_time_to_remaining_for_coupons', 16);
+INSERT INTO `migrations` VALUES (33, '2023_01_10_184509_edit_products_table', 17);
 
 -- ----------------------------
 -- Table structure for order_products
@@ -299,7 +328,7 @@ CREATE TABLE `order_products`  (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 27 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 57 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of order_products
@@ -330,6 +359,36 @@ INSERT INTO `order_products` VALUES (23, 'Bông Tẩy Trang Gấu Vịt Thỏ Si
 INSERT INTO `order_products` VALUES (24, 'Kem Dưỡng Bioderma CicabioCream 40ml', 'Chăm sóc da', 1, 20000, 280000, 280000, 19, 7, '2022-12-17 10:13:05', '2022-12-17 10:13:05');
 INSERT INTO `order_products` VALUES (25, 'Bông Tẩy Trang Gấu Vịt Thỏ Silubi Line Friends', 'Phụ kiện làm đẹp', 1, 27000, 47000, 47000, 19, 18, '2022-12-17 10:13:05', '2022-12-17 10:13:05');
 INSERT INTO `order_products` VALUES (26, 'Bông Tẩy Trang Gấu Vịt Thỏ Silubi Line Friends', 'Phụ kiện làm đẹp', 3, 27000, 47000, 47000, 20, 18, '2022-12-17 10:15:16', '2022-12-17 10:15:16');
+INSERT INTO `order_products` VALUES (27, 'Sơn Móng 3 Concept Eyes', 'Phụ kiện làm đẹp', 3, 70000, 110000, 110000, 21, 20, '2022-12-21 15:20:07', '2022-12-21 15:20:07');
+INSERT INTO `order_products` VALUES (28, 'Bông Tẩy Trang Gấu Vịt Thỏ Silubi Line Friends', 'Phụ kiện làm đẹp', 3, 27000, 47000, 47000, 22, 18, '2022-12-21 22:58:25', '2022-12-21 22:58:25');
+INSERT INTO `order_products` VALUES (29, 'Bộ Chiết Mỹ Phẩm Sakura Hồng 7 Món', 'Phụ kiện làm đẹp', 2, 15000, 40000, 40000, 22, 19, '2022-12-21 22:58:25', '2022-12-21 22:58:25');
+INSERT INTO `order_products` VALUES (30, 'Sơn Móng 3 Concept Eyes', 'Phụ kiện làm đẹp', 2, 70000, 110000, 110000, 24, 20, '2022-12-21 23:16:49', '2022-12-21 23:16:49');
+INSERT INTO `order_products` VALUES (31, 'Sữa Rửa Mặt Cerave Cho Da Thường Đến Da Dầu 355ml', 'Chăm sóc da', 1, 290000, 360000, 360000, 24, 4, '2022-12-21 23:16:49', '2022-12-21 23:16:49');
+INSERT INTO `order_products` VALUES (32, 'Nước Dưỡng Tóc Sa-Chi Cocoon 140ml', 'Chăm sóc tóc', 2, 80000, 131000, 131000, 25, 11, '2022-12-21 23:24:33', '2022-12-21 23:24:33');
+INSERT INTO `order_products` VALUES (33, 'Bông Đánh Kem Nền Vacosi Quarter Sponge', 'Phụ kiện làm đẹp', 1, 35000, 55000, 55000, 25, 13, '2022-12-21 23:24:33', '2022-12-21 23:24:33');
+INSERT INTO `order_products` VALUES (34, 'Bảng Che Khuyết Điểm Mangogo 6gr', 'Trang điểm', 1, 40000, 65000, 65000, 26, 1, '2022-12-22 05:55:52', '2022-12-22 05:55:52');
+INSERT INTO `order_products` VALUES (35, 'Nước Hoa Suddenly Mamade Glamour', 'Nước hoa', 1, 130000, 180000, 180000, 26, 23, '2022-12-22 05:55:52', '2022-12-22 05:55:52');
+INSERT INTO `order_products` VALUES (36, 'Bảng Che Khuyết Điểm Mangogo 6gr', 'Trang điểm', 7, 40000, 65000, 65000, 27, 1, '2022-12-22 08:32:30', '2022-12-22 08:32:30');
+INSERT INTO `order_products` VALUES (37, 'Sơn Móng 3 Concept Eyes', 'Phụ kiện làm đẹp', 1, 70000, 110000, 110000, 28, 20, '2023-01-04 12:27:13', '2023-01-04 12:27:13');
+INSERT INTO `order_products` VALUES (38, 'Dao Cạo Chân Mày Dream Kiss Eyebrow Razor', 'Phụ kiện làm đẹp', 2, 24000, 54000, 54000, 28, 17, '2023-01-04 12:27:13', '2023-01-04 12:27:13');
+INSERT INTO `order_products` VALUES (39, 'Sơn Móng Innisfree Real Color Nail Winter', 'Phụ kiện làm đẹp', 2, 20000, 55000, 55000, 29, 21, '2023-01-06 15:53:34', '2023-01-06 15:53:34');
+INSERT INTO `order_products` VALUES (40, 'Xịt Thơm Victoria\'s Secret Fragrance 250ml', 'Nước hoa', 1, 250000, 320000, 320000, 29, 22, '2023-01-06 15:53:34', '2023-01-06 15:53:34');
+INSERT INTO `order_products` VALUES (41, 'Serum siêu cấp ẩm sáng da Hyaluronic Acid 1.5% 30ml', 'Chăm sóc da', 1, 339000, 389000, 389000, 30, 27, '2023-01-07 01:50:07', '2023-01-07 01:50:07');
+INSERT INTO `order_products` VALUES (42, 'Xịt Thơm Victoria\'s Secret Fragrance 250ml', 'Nước hoa', 2, 250000, 320000, 320000, 30, 22, '2023-01-07 01:50:07', '2023-01-07 01:50:07');
+INSERT INTO `order_products` VALUES (43, 'Xịt Thơm Victoria\'s Secret Fragrance 250ml', 'Nước hoa', 1, 250000, 320000, 320000, 32, 22, '2023-01-07 07:13:08', '2023-01-07 07:13:08');
+INSERT INTO `order_products` VALUES (44, 'Nước Hoa Nam BVLGARI', 'Nước hoa', 2, 205000, 250000, 250000, 32, 24, '2023-01-07 07:13:08', '2023-01-07 07:13:08');
+INSERT INTO `order_products` VALUES (45, 'Bấm Mi Youse High End Beauty Tool', 'Phụ kiện làm đẹp', 1, 15000, 32000, 32000, 33, 15, '2023-01-07 07:33:56', '2023-01-07 07:33:56');
+INSERT INTO `order_products` VALUES (46, 'Nước Cân Bằng Innisfree Bija Trouble Skin', 'Chăm sóc da', 1, 240000, 315000, 315000, 33, 8, '2023-01-07 07:33:56', '2023-01-07 07:33:56');
+INSERT INTO `order_products` VALUES (47, 'Phấn Nước KLAVUU Blue Pearlsation High Coverage', 'Trang điểm vip', 1, 290000, 350000, 350000, 34, 2, '2023-01-07 07:37:57', '2023-01-07 07:37:57');
+INSERT INTO `order_products` VALUES (48, 'Kem Dưỡng Bioderma CicabioCream 40ml', 'Chăm sóc da', 2, 20000, 280000, 280000, 34, 7, '2023-01-07 07:37:57', '2023-01-07 07:37:57');
+INSERT INTO `order_products` VALUES (49, 'Dao Cạo Chân Mày Dream Kiss Eyebrow Razor', 'Phụ kiện làm đẹp', 20, 24000, 54000, 54000, 35, 17, '2023-01-09 02:35:26', '2023-01-09 02:35:26');
+INSERT INTO `order_products` VALUES (50, 'Serum siêu cấp ẩm sáng da Hyaluronic Acid 1.5% 30ml', 'Chăm sóc da', 4, 339000, 389000, 389000, 36, 27, '2023-01-10 06:23:40', '2023-01-10 06:23:40');
+INSERT INTO `order_products` VALUES (51, 'Nước Hoa Nam BVLGARI', 'Nước hoa', 2, 205000, 250000, 250000, 37, 24, '2023-01-10 06:26:08', '2023-01-10 06:26:08');
+INSERT INTO `order_products` VALUES (52, 'Serum siêu cấp ẩm sáng da Hyaluronic Acid 1.5% 30ml', 'Chăm sóc da', 2, 339000, 389000, 389000, 37, 27, '2023-01-10 06:26:08', '2023-01-10 06:26:08');
+INSERT INTO `order_products` VALUES (53, 'Serum siêu cấp ẩm sáng da Hyaluronic Acid 1.5% 30ml', 'Chăm sóc da', 1, 339000, 389000, 389000, 38, 27, '2023-01-11 03:18:15', '2023-01-11 03:18:15');
+INSERT INTO `order_products` VALUES (54, 'Nước Hoa Nam BVLGARI', 'Nước hoa', 1, 205000, 250000, 250000, 38, 24, '2023-01-11 03:18:15', '2023-01-11 03:18:15');
+INSERT INTO `order_products` VALUES (55, 'Xịt Thơm Victoria\'s Secret Fragrance 250ml', 'Nước hoa', 1, 250000, 320000, 320000, 39, 22, '2023-01-11 03:44:25', '2023-01-11 03:44:25');
+INSERT INTO `order_products` VALUES (56, 'Dao Cạo Chân Mày Dream Kiss Eyebrow Razor', 'Phụ kiện làm đẹp', 1, 24000, 54000, 54000, 39, 17, '2023-01-11 03:44:25', '2023-01-11 03:44:25');
 
 -- ----------------------------
 -- Table structure for orders
@@ -344,35 +403,49 @@ CREATE TABLE `orders`  (
   `customer_id` int NULL DEFAULT NULL,
   `product_id` int NULL DEFAULT NULL,
   `note` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `order_date` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `coupon` int NULL DEFAULT NULL,
-  `fee_ship` int NULL DEFAULT NULL,
+  `coupon` int NULL DEFAULT 0,
+  `fee_ship` int NULL DEFAULT 0,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 40 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of orders
 -- ----------------------------
-INSERT INTO `orders` VALUES (2, '0', 3, 0, 350000, 1, 2, NULL, '2022-10-13 14:30:19', '2022-10-14 13:56:42', NULL, NULL);
-INSERT INTO `orders` VALUES (3, '0', 3, 0, 110000, 2, 20, NULL, '2022-10-14 05:45:03', '2022-12-17 10:14:05', NULL, NULL);
-INSERT INTO `orders` VALUES (4, '0', 5, 0, 131000, 3, 5, 'Mua ngay', '2022-10-23 14:16:03', '2022-12-16 07:05:06', NULL, NULL);
-INSERT INTO `orders` VALUES (5, '0', 5, 0, 350000, 4, 2, NULL, '2022-11-06 01:03:58', '2022-11-25 10:11:31', NULL, NULL);
-INSERT INTO `orders` VALUES (6, '0', 3, 0, 45000, 4, 6, 'okkm', '2022-11-27 09:34:19', '2022-11-27 09:34:31', NULL, NULL);
-INSERT INTO `orders` VALUES (7, '0', 5, 0, 360000, 4, 4, NULL, '2022-11-27 09:42:32', '2022-12-16 07:11:07', NULL, NULL);
-INSERT INTO `orders` VALUES (8, '0', 5, 0, 360000, 4, 4, NULL, '2022-11-27 09:43:23', '2022-12-16 07:11:03', NULL, NULL);
-INSERT INTO `orders` VALUES (9, '0', 3, 0, 13000, 4, 3, NULL, '2022-11-27 13:45:13', '2022-11-27 14:15:51', NULL, NULL);
-INSERT INTO `orders` VALUES (10, '0', 5, 0, 13000, 4, 3, NULL, '2022-11-27 14:15:30', '2022-11-27 14:17:08', NULL, NULL);
-INSERT INTO `orders` VALUES (11, '0', 5, 0, 13000, 4, 3, NULL, '2022-11-27 14:17:50', '2022-12-16 12:11:17', NULL, NULL);
-INSERT INTO `orders` VALUES (12, '0', 5, 0, 65000, 6, NULL, NULL, '2022-12-11 08:09:50', '2022-12-16 12:11:09', NULL, NULL);
-INSERT INTO `orders` VALUES (13, '0', 3, 0, 275000, 6, NULL, NULL, '2022-12-11 08:13:32', '2022-12-11 18:32:25', NULL, NULL);
-INSERT INTO `orders` VALUES (14, '0', 1, 0, 90000, 6, NULL, NULL, '2022-12-11 18:30:23', '2022-12-17 10:13:49', NULL, NULL);
-INSERT INTO `orders` VALUES (15, '0', 1, 0, 557000, 7, NULL, NULL, '2022-12-16 07:02:59', '2022-12-17 10:14:14', 40000, NULL);
-INSERT INTO `orders` VALUES (16, '0', 0, 0, 430000, 8, NULL, NULL, '2022-12-16 07:12:23', '2022-12-16 07:12:23', 0, NULL);
-INSERT INTO `orders` VALUES (17, '1', 1, 0, 880000, 9, NULL, NULL, '2022-12-16 08:20:24', '2022-12-17 10:13:53', 40000, NULL);
-INSERT INTO `orders` VALUES (18, '0', 0, 0, 297000, 10, NULL, NULL, '2022-12-17 10:12:29', '2022-12-17 10:12:29', 30000, NULL);
-INSERT INTO `orders` VALUES (19, '0', 0, 0, 327000, 10, NULL, NULL, '2022-12-17 10:13:05', '2022-12-17 10:13:05', 0, NULL);
-INSERT INTO `orders` VALUES (20, '0', 0, 0, 141000, 10, NULL, NULL, '2022-12-17 10:15:16', '2022-12-17 10:15:16', 0, NULL);
+INSERT INTO `orders` VALUES (4, '0', 5, 0, 131000, 3, 5, 'Mua ngay', '2022-10-23', '2022-10-23 14:16:03', '2023-01-06 17:06:27', 0, 0);
+INSERT INTO `orders` VALUES (5, '0', 5, 0, 350000, 4, 2, NULL, '2022-11-06', '2022-11-06 01:03:58', '2023-01-06 17:06:32', 0, 0);
+INSERT INTO `orders` VALUES (6, '0', 5, 0, 45000, 4, 6, 'okkm', '2022-11-27', '2022-11-27 09:34:19', '2023-01-07 02:09:38', 0, 0);
+INSERT INTO `orders` VALUES (7, '0', 5, 0, 360000, 4, 4, NULL, '2022-11-27', '2022-11-27 09:42:32', '2023-01-06 17:06:23', 0, 0);
+INSERT INTO `orders` VALUES (8, '0', 5, 0, 360000, 4, 4, NULL, '2022-11-27', '2022-11-27 09:43:23', '2023-01-06 17:06:37', 0, 0);
+INSERT INTO `orders` VALUES (9, '0', 3, 0, 13000, 4, 3, NULL, '2022-11-27', '2022-11-27 13:45:13', '2022-11-27 14:15:51', 0, 0);
+INSERT INTO `orders` VALUES (10, '0', 4, 0, 13000, 4, 3, NULL, '2022-11-27', '2022-11-27 14:15:30', '2022-11-27 14:17:08', 0, 0);
+INSERT INTO `orders` VALUES (11, '0', 5, 0, 13000, 4, 3, NULL, '2022-11-27', '2022-11-27 14:17:50', '2023-01-07 02:13:38', 0, 0);
+INSERT INTO `orders` VALUES (12, '0', 5, 0, 65000, 6, NULL, NULL, '2022-12-11', '2022-12-11 08:09:50', '2023-01-07 02:14:03', 0, 0);
+INSERT INTO `orders` VALUES (13, '0', 3, 0, 275000, 6, NULL, NULL, '2022-12-11', '2022-12-11 08:13:32', '2022-12-11 18:32:25', 0, 0);
+INSERT INTO `orders` VALUES (14, '0', 5, 0, 90000, 6, NULL, NULL, '2022-12-11', '2022-12-11 18:30:23', '2023-01-07 02:13:48', 0, 0);
+INSERT INTO `orders` VALUES (15, '0', 5, 0, 557000, 7, NULL, NULL, '2022-12-16', '2022-12-16 07:02:59', '2023-01-06 14:41:33', 40000, 25000);
+INSERT INTO `orders` VALUES (16, '0', 5, 0, 430000, 8, NULL, NULL, '2022-12-16', '2022-12-16 07:12:23', '2022-12-21 18:07:21', 0, 20000);
+INSERT INTO `orders` VALUES (17, '1', 5, 0, 880000, 9, NULL, NULL, '2022-12-16', '2022-12-16 08:20:24', '2023-01-07 02:13:57', 40000, 30000);
+INSERT INTO `orders` VALUES (18, '0', 5, 0, 297000, 10, NULL, NULL, '2022-12-17', '2022-12-17 10:12:29', '2023-01-07 02:13:53', 30000, 25000);
+INSERT INTO `orders` VALUES (19, '0', 5, 0, 327000, 10, NULL, NULL, '2022-12-17', '2022-12-17 10:13:05', '2023-01-04 12:17:22', 0, 25000);
+INSERT INTO `orders` VALUES (20, '0', 3, 0, 141000, 10, NULL, NULL, '2022-12-17', '2022-12-17 10:15:16', '2023-01-06 14:25:21', 0, 30000);
+INSERT INTO `orders` VALUES (21, '0', 5, 0, 264000, 7, NULL, NULL, '2022-12-21', '2022-12-21 15:20:07', '2023-01-07 02:09:41', 66000, 35000);
+INSERT INTO `orders` VALUES (22, '1', 5, 0, 176800, 2, NULL, NULL, '2022-12-21', '2022-12-21 22:58:25', '2023-01-06 17:06:41', 44200, 0);
+INSERT INTO `orders` VALUES (24, '0', 5, 0, 580000, 2, NULL, NULL, '2022-12-21', '2022-12-21 23:16:49', '2023-01-07 02:13:43', 0, 0);
+INSERT INTO `orders` VALUES (25, '0', 3, 0, 317000, 5, NULL, NULL, '2022-12-21', '2022-12-21 23:24:33', '2023-01-06 15:44:13', 0, 0);
+INSERT INTO `orders` VALUES (26, '0', 5, 0, 245000, 5, NULL, NULL, '2022-12-22', '2022-12-22 05:55:52', '2023-01-07 02:09:50', 0, 35000);
+INSERT INTO `orders` VALUES (27, '0', 5, 0, 364000, 5, NULL, NULL, '2022-12-22', '2022-12-22 08:32:30', '2023-01-07 02:09:46', 91000, 20000);
+INSERT INTO `orders` VALUES (28, '0', 5, 0, 178760, 11, NULL, NULL, '2023-01-04', '2023-01-04 12:27:13', '2023-01-06 15:40:57', 39240, 25000);
+INSERT INTO `orders` VALUES (32, '0', 1, 0, 780000, 18, NULL, NULL, '2023-01-07 07:13:08', '2023-01-07 07:13:08', '2023-01-09 02:38:16', 40000, 20000);
+INSERT INTO `orders` VALUES (33, '0', 5, 0, 277600, 18, NULL, NULL, '2023-01-07 07:33:56', '2023-01-07 07:33:56', '2023-01-09 02:38:10', 69400, 25000);
+INSERT INTO `orders` VALUES (34, '0', 4, 0, 895000, 18, NULL, NULL, '2023-01-07 07:37:57', '2023-01-07 07:37:57', '2023-01-09 02:38:20', 15000, 20000);
+INSERT INTO `orders` VALUES (35, '1', 0, 0, 1080000, 5, NULL, NULL, '2023-01-09 02:35:26', '2023-01-09 02:35:26', '2023-01-09 02:35:26', 0, 20000);
+INSERT INTO `orders` VALUES (36, '1', 0, 0, 1400400, 11, NULL, NULL, '2023-01-10 06:23:40', '2023-01-10 06:23:40', '2023-01-10 06:23:40', 155600, 20000);
+INSERT INTO `orders` VALUES (37, '0', 5, 0, 1150200, 11, NULL, NULL, '2023-01-10 06:26:08', '2023-01-10 06:26:08', '2023-01-11 03:32:04', 127800, 25000);
+INSERT INTO `orders` VALUES (38, '0', 5, 0, 575100, 5, NULL, NULL, '2023-01-11 03:18:15', '2023-01-11 03:18:15', '2023-01-11 03:30:56', 63900, 20);
+INSERT INTO `orders` VALUES (39, '0', 1, 0, 336600, 5, NULL, NULL, '2023-01-11 03:44:25', '2023-01-11 03:44:25', '2023-01-11 03:45:08', 37400, 0);
 
 -- ----------------------------
 -- Table structure for password_resets
@@ -406,13 +479,17 @@ CREATE TABLE `payment_vnpay`  (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of payment_vnpay
 -- ----------------------------
 INSERT INTO `payment_vnpay` VALUES (1, 9, 17, 'VNPTF1671178824', '880000', 'Thanh toan don hang vnpay', 1, 'NCB', '20221216152135', '2022-12-16 08:20:24', '2022-12-16 08:21:42');
 INSERT INTO `payment_vnpay` VALUES (2, 9, 17, 'VNPTF1671178824', '880000', 'Thanh toan don hang vnpay', 0, NULL, NULL, '2022-12-16 08:20:24', '2022-12-16 08:20:24');
+INSERT INTO `payment_vnpay` VALUES (3, 2, 22, 'VNPTF1671663505', '176800', 'Thanh toan don hang vnpay', 0, NULL, NULL, '2022-12-21 22:58:25', '2022-12-21 22:58:25');
+INSERT INTO `payment_vnpay` VALUES (4, 2, 22, 'VNPTF1671663505', '176800', 'Thanh toan don hang vnpay', 0, NULL, NULL, '2022-12-21 22:58:25', '2022-12-21 22:58:25');
+INSERT INTO `payment_vnpay` VALUES (5, 5, 35, 'VNPTF1673231726', '1080000', 'Thanh toan don hang vnpay', 0, NULL, NULL, '2023-01-09 02:35:26', '2023-01-09 02:35:26');
+INSERT INTO `payment_vnpay` VALUES (6, 11, 36, 'VNPTF1673331820', '1400400', 'Thanh toan don hang vnpay', 0, NULL, NULL, '2023-01-10 06:23:40', '2023-01-10 06:23:40');
 
 -- ----------------------------
 -- Table structure for personal_access_tokens
@@ -456,37 +533,39 @@ CREATE TABLE `products`  (
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
   `trademark_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `rating_count` int NOT NULL,
+  `avg_rating` int NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 28 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 29 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of products
 -- ----------------------------
-INSERT INTO `products` VALUES (1, 'Bảng Che Khuyết Điểm Mangogo 6gr', 'Bảng che khuyết điểm Mangogo Concealer nhỏ nhắn dễ mang theo\r\n\r\n- Bao gồm 2 tông màu cho da có nhiều hay ít khuyết điểm đều có thể sử dụng được. Chất kem dễ tán không gây vón cục hay bết da Che đi những khuyết điểm tạo lớp da đều màu, không tì vết}}', 49, 1, 40000, 65000, 1, 1, 1, '2022-10-13 06:19:12', '2022-12-16 12:11:09', NULL, '12');
-INSERT INTO `products` VALUES (2, 'Phấn Nước KLAVUU Blue Pearlsation High Coverage', 'Phấn nước che phủ cực tốt những khuyết điểm trên khuôn mặt còn cung cấp độ ẩm, làm sáng da. Với chiết xuất từ ngọc trai và rong biển, tảo biển chứa nhiều vitamin và collagen ngăn sự sự lão hoá cho da. Bảo vệ da khỏi ánh nắng mặt trời nhờ SPF 50 / PA +++', 30, 0, 290000, 350000, 1, 1, 0, '2022-10-13 06:24:26', '2022-10-13 06:24:26', NULL, NULL);
-INSERT INTO `products` VALUES (3, 'Miếng Giảm Mụn Đầu Đen Ciracle Goodbye 5ml', 'Miếng Giảm Mụn Đầu Đen Ciracle Goodbye Blackhead thật sự là phương pháp giảm mụn đầu đen và mụn cám rất hiệu quả.\r\n\r\n- Giải quyết được 80-90% vấn đề mụn đầu đen trên mũi.\r\n\r\n- Dưỡng ấm cho vùng da sau khi sử dụng tốt, kiểu bóng bóng như mũi sao Hàn.\r\n\r\n- Không gây tổn hại đến bề mặt da nhờ cơ chế serum thấm vào các lỗ chân lông.', 99, 1, 5000, 13000, 1, 2, 1, '2022-10-13 06:43:32', '2022-12-16 12:11:17', NULL, NULL);
-INSERT INTO `products` VALUES (4, 'Sữa Rửa Mặt Cerave Cho Da Thường Đến Da Dầu 355ml', 'Sữa rửa mặt CeraVe dòng màu xanh dành cho da thường đến da dầu\r\n\r\n- Dung tích 355ml thoải mái sử dụng\r\n\r\n- Sản phẩm thiết kế dạng ống bơm tiện lợi, sạch sẽ\r\n\r\n- Khả năng tạo bọt nhẹ, làm sạch không khô căng da\r\n\r\n- Sản phẩm lành tính, không màu và không chất tạo mùi', 48, 2, 290000, 360000, 1, 2, 1, '2022-10-13 06:46:04', '2022-12-16 07:11:07', NULL, NULL);
-INSERT INTO `products` VALUES (5, 'Tẩy Da Chết Mặt Cà Phê Đắk Lắk Cocoon Coffee Face Polish 150ml', 'Những hạt cà phê Đắk Lắk xay nhuyễn giàu cafeine hòa quyện với bơ cacao Tiền Giang giúp bạn loại bỏ lớp tế bào chết già cỗi và xỉn màu, đánh thức làn da tươi mới đầy năng lượng cùng cảm giác mượt mà và mềm mịn lan tỏa', 29, 1, 99000, 131000, 1, 2, 2, '2022-10-13 06:48:03', '2022-12-16 07:05:06', NULL, NULL);
-INSERT INTO `products` VALUES (6, 'Nước Tẩy Trang Simple Kind To Skin', 'Nước tẩy trang Simple Micellar Water với hàng triệu bong bóng thông minh giúp loại bỏ bụi bẩn và làm sạch lớp trang điểm hiệu quả, giữ ẩm cho da lên đến 4 giờ}', 300, 0, 29000, 45000, 1, 2, 1, '2022-10-13 06:51:37', '2022-12-16 07:59:38', NULL, '10');
-INSERT INTO `products` VALUES (7, 'Kem Dưỡng Bioderma CicabioCream 40ml', '- Khôi phục lớp biểu bì\r\n\r\n- Làm giảm cảm giác ngứa và khó chịu\r\n\r\n- Dưỡng ẩm, thanh lọc da\r\n\r\n- Tạo một lớp màng thoáng khí bảo vệ da tối ưu và thoải mái}', 200, 0, 20000, 280000, 1, 2, 1, '2022-10-13 06:53:37', '2022-12-16 08:00:19', NULL, '0');
-INSERT INTO `products` VALUES (8, 'Nước Cân Bằng Innisfree Bija Trouble Skin', '-Nước Hoa Hồng Innisfree Bija Trouble Skin chuyên dùng cho da dầu, da bị mụn hay có vấn đề về da.\r\n\r\n- Chăm sóc điều trị mụn hiệu quả, cân bằng độ pH trên da, se khít lỗ chân lông.\r\n\r\n- Chăm sóc vùng da bị hư tổn do mụn và có tác dụng tẩy tế bào chết nhẹ nhàng cho da.\r\n\r\n- Giúp thông thoáng lỗ chân lông, ngăn ngừa phát sinh mụn, không gây kích ứng da.}', 150, 0, 240000, 315000, 1, 2, 1, '2022-10-13 06:55:46', '2022-12-16 07:59:58', NULL, '7');
-INSERT INTO `products` VALUES (9, 'Dưỡng Tóc Ogx Renewing-Argan Oil Of Morocco', '- Chiết xuất từ tinh dầu Argan có tác dụng dưỡng ẩm và giữ ẩm cho tóc cực hiệu quả\r\n\r\n- Thấm sâu và nuôi dưỡng từ bên trong, phục hồi tóc hư tổn gãy rụng\r\n\r\n- Cung cấp dưỡng chất giúp nuôi dưỡng tóc dày bóng mượt tự nhiên\r\n\r\n- Hương thơm dịu nhẹ dễ chịu, mang lại cảm giác thư thái thoải mái cho người dùng', 50, 0, 145000, 195000, 1, 3, 2, '2022-10-13 06:58:21', '2022-10-13 06:58:21', NULL, NULL);
-INSERT INTO `products` VALUES (10, 'Bộ Gội - Xả TIGI Resurrection', '- Tái sinh mái tóc mới, phục hồi tóc hư tổn trả lại cho bạn mái tóc mềm mại\r\n\r\n- Cải thiện tình trạng xơ rối giúp tóc vào nếp, gọn gàng hơn\r\n\r\n- Lớp màng nano siêu nhỏ làm lớp chắn bảo vệ và tăng cường sức đề kháng cho tóc.', 70, 0, 450000, 530000, 1, 3, 1, '2022-10-13 07:00:24', '2022-10-13 07:00:24', NULL, NULL);
-INSERT INTO `products` VALUES (11, 'Nước Dưỡng Tóc Sa-Chi Cocoon 140ml', '- Cải thiện độ chắc khoẻ và tăng cường độ bóng của tóc.\r\n\r\n- Bảo vệ tóc khỏi các tác nhân gây hại từ hóa chất và môi trường. \r\n\r\n- Loại bỏ lớp tế bào da chết tích tụ trên da đầu, bụi bẩn bám trên sợi tóc}', 30, 0, 80000, 131000, 1, 3, 1, '2022-10-13 07:04:38', '2022-12-16 07:58:57', NULL, '0');
-INSERT INTO `products` VALUES (12, 'Dầu Gội Khô CoLab Dry Shampoo 200ml', '-Loại bỏ bụi bẩn, dầu nhờn ngay tức thì \r\n- Hô biến mái tóc trở nên bồng bềnh, khô ráo \r\n- Làm sạch tóc mà không cần dùng nước \r\n- Khử mùi và làm phồng chân tóc', 100, 0, 110000, 160000, 1, 3, 0, '2022-10-13 07:12:16', '2022-10-13 07:12:16', NULL, NULL);
-INSERT INTO `products` VALUES (13, 'Bông Đánh Kem Nền Vacosi Quarter Sponge', '- Khả năng tán kem nền cực tốt\r\n\r\n- Độ dẻo và mềm mịn cao.\r\n\r\n- Thiết kế vừa vặn, dễ cầm và dặm phấn.', 100, 0, 35000, 55000, 1, 4, 1, '2022-10-13 07:14:25', '2022-10-13 07:14:25', NULL, NULL);
-INSERT INTO `products` VALUES (14, 'Bông Mút Nee Ni Coo Set Kitten Puff', '- Set bông mút hình giọt nước với bao bì xinh xắn\r\n\r\n- Chiếc hộp hình mèo để đựng bông mút vệ sinh hơn\r\n\r\n- Chất bông xốp mịn, độ đàn hồi, co giãn tốt\r\n\r\n- Có thể dùng che phủ đến những vùng khó tán đều kem nền như cánh mùi, hốc mắt', 60, 0, 79000, 110000, 1, 4, 1, '2022-10-13 07:16:05', '2022-10-13 07:16:05', NULL, NULL);
-INSERT INTO `products` VALUES (15, 'Bấm Mi Youse High End Beauty Tool', '- Bấm mi Youse High-End Beauty Tool Eyelash Curler với thiết kế tay cầm đuôi cá độc đáo cũng màu sắc nhẹ nhàng bắt mắt.\r\n\r\n- Phần kẹp mi có độ cong bầu nhẹ, phù hợp với đường cong mắt của người Châu Á', 500, 0, 15000, 32000, 1, 4, 1, '2022-10-13 07:18:35', '2022-10-13 07:18:35', NULL, NULL);
-INSERT INTO `products` VALUES (16, 'BỘ CỌ TRANG ĐIỂM 7 MÓN dụng cụ makeup', 'Mô tả sản phẩm BỘ CỌ TRANG ĐIỂM CÁ NHÂN 7 MÓN Dụng cụ trang điểm giá rẻ Đồ nghề makeup Combo make up Make-up tools Cọ phấn mặt Cọ phấn má hồng Đồ trang điểm teen Bộ trang điểm nhỏ gọn tiện lợi Chổi đánh phấn\r\nSet gồm 7 cây cọ: cọ má hồng, cọ kem nền, cọ tán phấn mắt vừa và nhỏ, cọ vẽ son môi, cọ kẻ viền mắt (hoặc vẽ bột mày), cọ mút tán phấn mắt (hoặc phủ nhũ kim tuyến)\r\nKích thước hộp: 6x14.5x3cm', 90, 0, 50000, 101000, 1, 4, 1, '2022-10-13 07:21:37', '2022-10-13 07:21:37', NULL, NULL);
-INSERT INTO `products` VALUES (17, 'Dao Cạo Chân Mày Dream Kiss Eyebrow Razor', '+ Điều chỉnh lông mày \r\n\r\n+ Dễ linh hoạt khi thao tác\r\n\r\n+ Thiết kế nhỏ gọn, vừa tay', 500, 0, 24000, 54000, 1, 4, 1, '2022-10-13 07:23:42', '2022-10-13 07:23:42', NULL, NULL);
-INSERT INTO `products` VALUES (18, 'Bông Tẩy Trang Gấu Vịt Thỏ Silubi Line Friends', '- Chất bông sạch sẽ, mịn màng\r\n\r\n- Chứa thành phần từ bông cotton nguyên chất\r\n\r\n- Nhẹ nhàng lướt nhẹ trên da không gây trầy xước\r\n\r\n- Bao bì bộ 3 Gấu Vịt Thỏ Line Friends xinh xắn', 500, 0, 27000, 47000, 1, 4, 1, '2022-10-13 07:25:57', '2022-10-13 07:25:57', NULL, NULL);
-INSERT INTO `products` VALUES (19, 'Bộ Chiết Mỹ Phẩm Sakura Hồng 7 Món', '- Bộ chiết mỹ phẩm bao gồm 7 món \r\n\r\n- Tiện lợi cho việc du lịch\r\n\r\n- Không mất quá nhiều diện tích khi di chuyển', 300, 0, 15000, 40000, 1, 4, 1, '2022-10-13 07:28:09', '2022-10-13 07:28:09', NULL, NULL);
-INSERT INTO `products` VALUES (20, 'Sơn Móng 3 Concept Eyes', 'Sơn móng 3CE Eyes Nail Lacquer trơn, không nhũ, nước sơn trong & bền màu, nhiều tone màu hiện đại, trẻ trung. Lên màu chuẩn không làm khô gãy móng, với thành phần cao cấp không làm vàng móng, giòn móng..\r\n-Những bộ móng của bạn sẽ thật sự tuyệt vời với màu sắc đa dạng và chất sơn cực đẹp của Sơn móng 3CE\r\n\r\n- Dưỡng móng rất tốt, tôn lên nét đẹp của đôi bàn tay của nữ giới\r\n\r\n- Ngoài các hạt màu rất đẹp, sơn móng 3CE còn chứa dưỡng chất bảo vệ, giúp móng không bị ố vàng}', 100, 0, 70000, 110000, 1, 4, 0, '2022-10-13 07:31:45', '2022-12-16 07:58:34', NULL, '6');
-INSERT INTO `products` VALUES (21, 'Sơn Móng Innisfree Real Color Nail Winter', '-Với thiết kế đầu chổi đặc biệt từ lông Du Pont giúp sơn không bị vón cục, lên màu đều.\r\n\r\n-Chứa thành phần từ quýt Cheju (quýt nổi tiếng nhất của Hàn Quốc) cung cấp dinh dưỡng và vitamin cho móng, giúp móng không bị biến màu.\r\n\r\n-Với bảng màu vô cùng đa dạng cho các nàng thoải mái lựa chọn, cải tiến đầu cọ bản to dễ dùng hơn, chất sơn mịn và bền hơn nhiều.\r\n\r\n- Thích hợp cho mọi loại da!}', 50, 0, 20000, 55000, 1, 4, 1, '2022-10-13 09:04:58', '2022-12-16 07:58:13', NULL, '7');
-INSERT INTO `products` VALUES (22, 'Xịt Thơm Victoria\'s Secret Fragrance 250ml', '- Hương thơm đa dạng, ngọt ngào, quyến rũ.\r\n\r\n- Lưu hương suốt nhiều giờ.\r\n\r\n- Thiết kế sang trọng, bắt mắt.}', 100, 0, 250000, 320000, 1, 5, 1, '2022-10-13 09:07:46', '2022-12-16 07:58:22', NULL, '0');
-INSERT INTO `products` VALUES (23, 'Nước Hoa Suddenly Mamade Glamour', '- Hương thơm dai, bền mùi, không gắt\r\n\r\n- Mùi hương nhẹ tạo cảm giác rất dễ chịu\r\n\r\n- Nữ tính, dịu dàng nhưng cũng đầy quyến rũ}}', 100, 0, 130000, 180000, 1, 5, 0, '2022-10-13 09:11:46', '2022-12-16 07:57:45', NULL, '16');
-INSERT INTO `products` VALUES (24, 'Nước Hoa Nam BVLGARI', '}', 30, 0, 205000, 250000, 1, 5, 0, '2022-10-13 09:14:28', '2022-12-16 07:57:52', NULL, '16');
-INSERT INTO `products` VALUES (27, 'Serum siêu cấp ẩm sáng da Hyaluronic Acid 1.5% 30ml', 'Tinh Chất Hyaluronic Acid Cấp Ẩm Sáng Da L\'Oreal Revitalift 1.5% Hyaluronic Acid là dòng sản phẩm serum đến từ thương hiệu L\'Oréal Paris nổi tiếng của Pháp, chứa 2 loại Hyaluronic Acid cô đặc ở nồng độ 1.5% giúp cung cấp độ ẩm tối đa cho làn da căng mịn và tươi sáng rạng rỡ, hứa hẹn sẽ là giải pháp chăm sóc da hiệu quả dành cho những làn da khô mất nước, lão hóa & nếp nhăn', 100, 0, 449000, 349000, 1, 2, 0, '2022-12-16 08:03:12', '2022-12-16 08:03:12', NULL, '11');
+INSERT INTO `products` VALUES (1, 'Bảng Che Khuyết Điểm Mangogo 6gr', 'Bảng che khuyết điểm Mangogo Concealer nhỏ nhắn dễ mang theo\r\n\r\n- Bao gồm 2 tông màu cho da có nhiều hay ít khuyết điểm đều có thể sử dụng được. Chất kem dễ tán không gây vón cục hay bết da Che đi những khuyết điểm tạo lớp da đều màu, không tì vết}}', 15, 35, 40000, 65000, 1, 1, 1, '2022-10-13 06:19:12', '2023-01-07 02:14:03', NULL, '12', 4, 4);
+INSERT INTO `products` VALUES (2, 'Phấn Nước KLAVUU Blue Pearlsation High Coverage', 'Phấn nước che phủ cực tốt những khuyết điểm trên khuôn mặt còn cung cấp độ ẩm, làm sáng da. Với chiết xuất từ ngọc trai và rong biển, tảo biển chứa nhiều vitamin và collagen ngăn sự sự lão hoá cho da. Bảo vệ da khỏi ánh nắng mặt trời nhờ SPF 50 / PA +++}', 28, 2, 290000, 350000, 1, 1, 0, '2022-10-13 06:24:26', '2023-01-09 04:14:46', NULL, '11', 0, 0);
+INSERT INTO `products` VALUES (3, 'Miếng Giảm Mụn Đầu Đen Ciracle Goodbye 5ml', 'Miếng Giảm Mụn Đầu Đen Ciracle Goodbye Blackhead thật sự là phương pháp giảm mụn đầu đen và mụn cám rất hiệu quả.\r\n\r\n- Giải quyết được 80-90% vấn đề mụn đầu đen trên mũi.\r\n\r\n- Dưỡng ấm cho vùng da sau khi sử dụng tốt, kiểu bóng bóng như mũi sao Hàn.\r\n\r\n- Không gây tổn hại đến bề mặt da nhờ cơ chế serum thấm vào các lỗ chân lông.', 98, 2, 5000, 13000, 1, 2, 1, '2022-10-13 06:43:32', '2023-01-07 02:13:38', NULL, NULL, 0, 0);
+INSERT INTO `products` VALUES (4, 'Sữa Rửa Mặt Cerave Cho Da Thường Đến Da Dầu 355ml', 'Sữa rửa mặt CeraVe dòng màu xanh dành cho da thường đến da dầu\r\n\r\n- Dung tích 355ml thoải mái sử dụng\r\n\r\n- Sản phẩm thiết kế dạng ống bơm tiện lợi, sạch sẽ\r\n\r\n- Khả năng tạo bọt nhẹ, làm sạch không khô căng da\r\n\r\n- Sản phẩm lành tính, không màu và không chất tạo mùi', 44, 6, 290000, 360000, 1, 2, 1, '2022-10-13 06:46:04', '2023-01-07 02:13:43', NULL, NULL, 0, 0);
+INSERT INTO `products` VALUES (5, 'Tẩy Da Chết Mặt Cà Phê Đắk Lắk Cocoon Coffee Face Polish 150ml', 'Những hạt cà phê Đắk Lắk xay nhuyễn giàu cafeine hòa quyện với bơ cacao Tiền Giang giúp bạn loại bỏ lớp tế bào chết già cỗi và xỉn màu, đánh thức làn da tươi mới đầy năng lượng cùng cảm giác mượt mà và mềm mịn lan tỏa', 27, 3, 99000, 131000, 1, 2, 2, '2022-10-13 06:48:03', '2023-01-06 17:06:27', NULL, NULL, 0, 0);
+INSERT INTO `products` VALUES (6, 'Nước Tẩy Trang Simple Kind To Skin', 'Nước tẩy trang Simple Micellar Water với hàng triệu bong bóng thông minh giúp loại bỏ bụi bẩn và làm sạch lớp trang điểm hiệu quả, giữ ẩm cho da lên đến 4 giờ}', 298, 2, 29000, 45000, 1, 2, 1, '2022-10-13 06:51:37', '2023-01-07 02:09:38', NULL, '10', 3, 3);
+INSERT INTO `products` VALUES (7, 'Kem Dưỡng Bioderma CicabioCream 40ml', '- Khôi phục lớp biểu bì\r\n\r\n- Làm giảm cảm giác ngứa và khó chịu\r\n\r\n- Dưỡng ẩm, thanh lọc da\r\n\r\n- Tạo một lớp màng thoáng khí bảo vệ da tối ưu và thoải mái}}', 197, 3, 20000, 280000, 1, 2, 1, '2022-10-13 06:53:37', '2023-01-09 04:14:25', NULL, '9', 4, 4);
+INSERT INTO `products` VALUES (8, 'Nước Cân Bằng Innisfree Bija Trouble Skin', '-Nước Hoa Hồng Innisfree Bija Trouble Skin chuyên dùng cho da dầu, da bị mụn hay có vấn đề về da.\r\n\r\n- Chăm sóc điều trị mụn hiệu quả, cân bằng độ pH trên da, se khít lỗ chân lông.\r\n\r\n- Chăm sóc vùng da bị hư tổn do mụn và có tác dụng tẩy tế bào chết nhẹ nhàng cho da.\r\n\r\n- Giúp thông thoáng lỗ chân lông, ngăn ngừa phát sinh mụn, không gây kích ứng da.}', 149, 1, 240000, 315000, 1, 2, 1, '2022-10-13 06:55:46', '2023-01-09 02:38:10', NULL, '7', 0, 0);
+INSERT INTO `products` VALUES (9, 'Dưỡng Tóc Ogx Renewing-Argan Oil Of Morocco', '- Chiết xuất từ tinh dầu Argan có tác dụng dưỡng ẩm và giữ ẩm cho tóc cực hiệu quả\r\n\r\n- Thấm sâu và nuôi dưỡng từ bên trong, phục hồi tóc hư tổn gãy rụng\r\n\r\n- Cung cấp dưỡng chất giúp nuôi dưỡng tóc dày bóng mượt tự nhiên\r\n\r\n- Hương thơm dịu nhẹ dễ chịu, mang lại cảm giác thư thái thoải mái cho người dùng', 46, 4, 145000, 195000, 1, 3, 2, '2022-10-13 06:58:21', '2023-01-07 02:13:57', NULL, NULL, 0, 0);
+INSERT INTO `products` VALUES (10, 'Bộ Gội - Xả TIGI Resurrection', '- Tái sinh mái tóc mới, phục hồi tóc hư tổn trả lại cho bạn mái tóc mềm mại\r\n\r\n- Cải thiện tình trạng xơ rối giúp tóc vào nếp, gọn gàng hơn\r\n\r\n- Lớp màng nano siêu nhỏ làm lớp chắn bảo vệ và tăng cường sức đề kháng cho tóc.', 68, 2, 450000, 530000, 1, 3, 1, '2022-10-13 07:00:24', '2023-01-07 02:13:57', NULL, NULL, 0, 0);
+INSERT INTO `products` VALUES (11, 'Nước Dưỡng Tóc Sa-Chi Cocoon 140ml', '- Cải thiện độ chắc khoẻ và tăng cường độ bóng của tóc.\r\n\r\n- Bảo vệ tóc khỏi các tác nhân gây hại từ hóa chất và môi trường. \r\n\r\n- Loại bỏ lớp tế bào da chết tích tụ trên da đầu, bụi bẩn bám trên sợi tóc}', 24, 6, 80000, 131000, 1, 3, 1, '2022-10-13 07:04:38', '2023-01-06 15:44:13', NULL, '0', 4, 5);
+INSERT INTO `products` VALUES (12, 'Dầu Gội Khô CoLab Dry Shampoo 200ml', '-Loại bỏ bụi bẩn, dầu nhờn ngay tức thì \r\n- Hô biến mái tóc trở nên bồng bềnh, khô ráo \r\n- Làm sạch tóc mà không cần dùng nước \r\n- Khử mùi và làm phồng chân tóc', 100, 0, 110000, 160000, 1, 3, 0, '2022-10-13 07:12:16', '2022-10-13 07:12:16', NULL, NULL, 0, 0);
+INSERT INTO `products` VALUES (13, 'Bông Đánh Kem Nền Vacosi Quarter Sponge', '- Khả năng tán kem nền cực tốt\r\n\r\n- Độ dẻo và mềm mịn cao.\r\n\r\n- Thiết kế vừa vặn, dễ cầm và dặm phấn.}', 97, 3, 35000, 55000, 1, 4, 1, '2022-10-13 07:14:25', '2023-01-09 04:14:15', NULL, '15', 0, 0);
+INSERT INTO `products` VALUES (14, 'Bông Mút Nee Ni Coo Set Kitten Puff', '- Set bông mút hình giọt nước với bao bì xinh xắn\r\n\r\n- Chiếc hộp hình mèo để đựng bông mút vệ sinh hơn\r\n\r\n- Chất bông xốp mịn, độ đàn hồi, co giãn tốt\r\n\r\n- Có thể dùng che phủ đến những vùng khó tán đều kem nền như cánh mùi, hốc mắt', 60, 0, 79000, 110000, 1, 4, 1, '2022-10-13 07:16:05', '2022-10-13 07:16:05', NULL, NULL, 0, 0);
+INSERT INTO `products` VALUES (15, 'Bấm Mi Youse High End Beauty Tool', '- Bấm mi Youse High-End Beauty Tool Eyelash Curler với thiết kế tay cầm đuôi cá độc đáo cũng màu sắc nhẹ nhàng bắt mắt.\r\n\r\n- Phần kẹp mi có độ cong bầu nhẹ, phù hợp với đường cong mắt của người Châu Á}', 499, 1, 15000, 32000, 1, 4, 1, '2022-10-13 07:18:35', '2023-01-09 04:14:02', NULL, '15', 0, 0);
+INSERT INTO `products` VALUES (16, 'BỘ CỌ TRANG ĐIỂM 7 MÓN dụng cụ makeup', 'Mô tả sản phẩm BỘ CỌ TRANG ĐIỂM CÁ NHÂN 7 MÓN Dụng cụ trang điểm giá rẻ Đồ nghề makeup Combo make up Make-up tools Cọ phấn mặt Cọ phấn má hồng Đồ trang điểm teen Bộ trang điểm nhỏ gọn tiện lợi Chổi đánh phấn\r\nSet gồm 7 cây cọ: cọ má hồng, cọ kem nền, cọ tán phấn mắt vừa và nhỏ, cọ vẽ son môi, cọ kẻ viền mắt (hoặc vẽ bột mày), cọ mút tán phấn mắt (hoặc phủ nhũ kim tuyến)\r\nKích thước hộp: 6x14.5x3cm', 88, 2, 50000, 101000, 1, 4, 1, '2022-10-13 07:21:37', '2023-01-06 14:41:33', NULL, NULL, 3, 5);
+INSERT INTO `products` VALUES (17, 'Dao Cạo Chân Mày Dream Kiss Eyebrow Razor', '+ Điều chỉnh lông mày \r\n\r\n+ Dễ linh hoạt khi thao tác\r\n\r\n+ Thiết kế nhỏ gọn, vừa tay', 494, 6, 24000, 54000, 1, 4, 1, '2022-10-13 07:23:42', '2023-01-06 15:40:57', NULL, NULL, 0, 0);
+INSERT INTO `products` VALUES (18, 'Bông Tẩy Trang Gấu Vịt Thỏ Silubi Line Friends', '- Chất bông sạch sẽ, mịn màng\r\n\r\n- Chứa thành phần từ bông cotton nguyên chất\r\n\r\n- Nhẹ nhàng lướt nhẹ trên da không gây trầy xước\r\n\r\n- Bao bì bộ 3 Gấu Vịt Thỏ Line Friends xinh xắn}', 488, 12, 27000, 47000, 1, 4, 1, '2022-10-13 07:25:57', '2023-01-09 04:13:47', NULL, '16', 0, 0);
+INSERT INTO `products` VALUES (19, 'Bộ Chiết Mỹ Phẩm Sakura Hồng 7 Món', '- Bộ chiết mỹ phẩm bao gồm 7 món \r\n\r\n- Tiện lợi cho việc du lịch\r\n\r\n- Không mất quá nhiều diện tích khi di chuyển}', 296, 4, 15000, 40000, 1, 4, 1, '2022-10-13 07:28:09', '2023-01-09 04:13:40', NULL, '14', 4, 4);
+INSERT INTO `products` VALUES (20, 'Sơn Móng 3 Concept Eyes', 'Sơn móng 3CE Eyes Nail Lacquer trơn, không nhũ, nước sơn trong & bền màu, nhiều tone màu hiện đại, trẻ trung. Lên màu chuẩn không làm khô gãy móng, với thành phần cao cấp không làm vàng móng, giòn móng..\r\n-Những bộ móng của bạn sẽ thật sự tuyệt vời với màu sắc đa dạng và chất sơn cực đẹp của Sơn móng 3CE\r\n\r\n- Dưỡng móng rất tốt, tôn lên nét đẹp của đôi bàn tay của nữ giới\r\n\r\n- Ngoài các hạt màu rất đẹp, sơn móng 3CE còn chứa dưỡng chất bảo vệ, giúp móng không bị ố vàng}}', 87, 13, 70000, 110000, 1, 8, 0, '2022-10-13 07:31:45', '2023-01-10 17:13:19', NULL, '6', 0, 0);
+INSERT INTO `products` VALUES (21, 'Sơn Móng Innisfree Real Color Nail Winter', '-Với thiết kế đầu chổi đặc biệt từ lông Du Pont giúp sơn không bị vón cục, lên màu đều.\r\n\r\n-Chứa thành phần từ quýt Cheju (quýt nổi tiếng nhất của Hàn Quốc) cung cấp dinh dưỡng và vitamin cho móng, giúp móng không bị biến màu.\r\n\r\n-Với bảng màu vô cùng đa dạng cho các nàng thoải mái lựa chọn, cải tiến đầu cọ bản to dễ dùng hơn, chất sơn mịn và bền hơn nhiều.\r\n\r\n- Thích hợp cho mọi loại da!}', 48, 2, 20000, 55000, 1, 4, 1, '2022-10-13 09:04:58', '2023-01-07 02:24:00', NULL, '7', 3, 5);
+INSERT INTO `products` VALUES (22, 'Xịt Thơm Victoria\'s Secret Fragrance 250ml', '- Hương thơm đa dạng, ngọt ngào, quyến rũ.\r\n\r\n- Lưu hương suốt nhiều giờ.\r\n\r\n- Thiết kế sang trọng, bắt mắt.}}', 97, 3, 250000, 320000, 1, 5, 1, '2022-10-13 09:07:46', '2023-01-09 04:13:33', NULL, '14', 0, 0);
+INSERT INTO `products` VALUES (23, 'Nước Hoa Suddenly Mamade Glamour', '- Hương thơm dai, bền mùi, không gắt\r\n\r\n- Mùi hương nhẹ tạo cảm giác rất dễ chịu\r\n\r\n- Nữ tính, dịu dàng nhưng cũng đầy quyến rũ}}', 96, 4, 130000, 180000, 1, 5, 0, '2022-10-13 09:11:46', '2023-01-07 02:09:50', NULL, '16', 2, 3);
+INSERT INTO `products` VALUES (24, 'Nước Hoa Nam BVLGARI', '}', 26, 4, 205000, 250000, 1, 5, 0, '2022-10-13 09:14:28', '2023-01-11 03:32:04', NULL, '16', 0, 0);
+INSERT INTO `products` VALUES (27, 'Serum siêu cấp ẩm sáng da Hyaluronic Acid 1.5% 30ml', 'Tinh Chất Hyaluronic Acid Cấp Ẩm Sáng Da L\'Oreal Revitalift 1.5% Hyaluronic Acid là dòng sản phẩm serum đến từ thương hiệu L\'Oréal Paris nổi tiếng của Pháp, chứa 2 loại Hyaluronic Acid cô đặc ở nồng độ 1.5% giúp cung cấp độ ẩm tối đa cho làn da căng mịn và tươi sáng rạng rỡ, hứa hẹn sẽ là giải pháp chăm sóc da hiệu quả dành cho những làn da khô mất nước, lão hóa & nếp nhăn', 96, 4, 339000, 389000, 1, 2, 0, '2022-12-16 08:03:12', '2023-01-11 03:32:04', NULL, '11', 0, 0);
 
 -- ----------------------------
 -- Table structure for quanhuyen
@@ -1227,24 +1306,79 @@ CREATE TABLE `ratings`  (
   `product_id` int NOT NULL,
   `user_id` int NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 110 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of ratings
 -- ----------------------------
-INSERT INTO `ratings` VALUES (1, 3, 3, 6);
 INSERT INTO `ratings` VALUES (2, 5, 3, 6);
-INSERT INTO `ratings` VALUES (3, 2, 3, 6);
-INSERT INTO `ratings` VALUES (4, 4, 3, 6);
-INSERT INTO `ratings` VALUES (5, 3, 3, 6);
 INSERT INTO `ratings` VALUES (6, 2, 3, 6);
 INSERT INTO `ratings` VALUES (7, 4, 1, 6);
 INSERT INTO `ratings` VALUES (8, 3, 8, 6);
 INSERT INTO `ratings` VALUES (9, 1, 8, 6);
-INSERT INTO `ratings` VALUES (10, 3, 1, 6);
 INSERT INTO `ratings` VALUES (11, 3, 1, 6);
 INSERT INTO `ratings` VALUES (12, 4, 9, 9);
 INSERT INTO `ratings` VALUES (13, 4, 5, 5);
+INSERT INTO `ratings` VALUES (15, 4, 16, 5);
+INSERT INTO `ratings` VALUES (17, 4, 27, 5);
+INSERT INTO `ratings` VALUES (21, 5, 20, 5);
+INSERT INTO `ratings` VALUES (22, 3, 7, 2);
+INSERT INTO `ratings` VALUES (31, 5, 7, 5);
+INSERT INTO `ratings` VALUES (32, 2, 7, 5);
+INSERT INTO `ratings` VALUES (33, 4, 1, 5);
+INSERT INTO `ratings` VALUES (34, 4, 27, 5);
+INSERT INTO `ratings` VALUES (35, 4, 19, 5);
+INSERT INTO `ratings` VALUES (50, 3, 23, 2);
+INSERT INTO `ratings` VALUES (52, 3, 23, 2);
+INSERT INTO `ratings` VALUES (54, 4, 3, 2);
+INSERT INTO `ratings` VALUES (55, 4, 3, 2);
+INSERT INTO `ratings` VALUES (56, 1, 19, 2);
+INSERT INTO `ratings` VALUES (58, 4, 19, 2);
+INSERT INTO `ratings` VALUES (59, 3, 19, 2);
+INSERT INTO `ratings` VALUES (60, 3, 19, 2);
+INSERT INTO `ratings` VALUES (63, 3, 19, 2);
+INSERT INTO `ratings` VALUES (65, 3, 19, 2);
+INSERT INTO `ratings` VALUES (66, 2, 19, 2);
+INSERT INTO `ratings` VALUES (69, 3, 2, 2);
+INSERT INTO `ratings` VALUES (70, 3, 2, 2);
+INSERT INTO `ratings` VALUES (71, 3, 2, 2);
+INSERT INTO `ratings` VALUES (73, 5, 2, 2);
+INSERT INTO `ratings` VALUES (74, 3, 16, 2);
+INSERT INTO `ratings` VALUES (75, 3, 1, 2);
+INSERT INTO `ratings` VALUES (76, 4, 1, 2);
+INSERT INTO `ratings` VALUES (77, 3, 1, 2);
+INSERT INTO `ratings` VALUES (78, 3, 1, 2);
+INSERT INTO `ratings` VALUES (79, 4, 20, 8);
+INSERT INTO `ratings` VALUES (80, 3, 9, 18);
+INSERT INTO `ratings` VALUES (81, 1, 9, 18);
+INSERT INTO `ratings` VALUES (82, 4, 9, 18);
+INSERT INTO `ratings` VALUES (83, 3, 21, 5);
+INSERT INTO `ratings` VALUES (84, 5, 21, 12);
+INSERT INTO `ratings` VALUES (85, 5, 21, 12);
+INSERT INTO `ratings` VALUES (86, 4, 21, 12);
+INSERT INTO `ratings` VALUES (87, 1, 21, 12);
+INSERT INTO `ratings` VALUES (88, 1, 21, 12);
+INSERT INTO `ratings` VALUES (89, 1, 21, 12);
+INSERT INTO `ratings` VALUES (90, 2, 21, 12);
+INSERT INTO `ratings` VALUES (91, 4, 21, 12);
+INSERT INTO `ratings` VALUES (92, 4, 21, 12);
+INSERT INTO `ratings` VALUES (93, 5, 21, 12);
+INSERT INTO `ratings` VALUES (94, 5, 21, 12);
+INSERT INTO `ratings` VALUES (95, 5, 21, 12);
+INSERT INTO `ratings` VALUES (96, 4, 21, 12);
+INSERT INTO `ratings` VALUES (97, 5, 21, 12);
+INSERT INTO `ratings` VALUES (98, 5, 21, 12);
+INSERT INTO `ratings` VALUES (99, 3, 19, 12);
+INSERT INTO `ratings` VALUES (100, 3, 19, 12);
+INSERT INTO `ratings` VALUES (101, 2, 17, 12);
+INSERT INTO `ratings` VALUES (102, 4, 17, 12);
+INSERT INTO `ratings` VALUES (103, 4, 17, 12);
+INSERT INTO `ratings` VALUES (104, 4, 17, 12);
+INSERT INTO `ratings` VALUES (105, 2, 9, 12);
+INSERT INTO `ratings` VALUES (106, 5, 18, 5);
+INSERT INTO `ratings` VALUES (107, 5, 17, 5);
+INSERT INTO `ratings` VALUES (108, 5, 27, 11);
+INSERT INTO `ratings` VALUES (109, 5, 22, 5);
 
 -- ----------------------------
 -- Table structure for sessions
@@ -1265,10 +1399,8 @@ CREATE TABLE `sessions`  (
 -- ----------------------------
 -- Records of sessions
 -- ----------------------------
-INSERT INTO `sessions` VALUES ('EJiRgCwnzxp9AMoCLwG96rkPoNkk0fJH9CZT3JCJ', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoicjQ4OVQ4VG5tMW1FUTdtRDZKd0hDUXU5dEpJUUJEOUV0S2ZxZGl5ZCI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MjoibG9naW5fYWRtaW5fNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO3M6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjUwOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYWRtaW4vb3JkZXJzL29yZGVyLWRldGFpbC8xNiI7fX0=', 1671197305);
-INSERT INTO `sessions` VALUES ('lMLY59nFGXMy6bJypMYzA4oj9fwavSopRjSY7NVf', 5, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36', 'YTo3OntzOjM6InVybCI7YToxOntzOjg6ImludGVuZGVkIjtzOjI5OiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYWNjb3VudCI7fXM6OToiX3ByZXZpb3VzIjthOjE6e3M6MzoidXJsIjtzOjQ5OiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvc2hvdy9zd2VldGFsZXJ0Mi5hbGwubWluLmpzIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo2OiJfdG9rZW4iO3M6NDA6IlFLTXpjblIxREg4eWVoNDVmYlpLOUJDQ2NJcHZRdVZieXdMVTBzZWgiO3M6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjU7czoxNzoicGFzc3dvcmRfaGFzaF93ZWIiO3M6NjA6IiQyeSQxMCRJVnhHUGFKakc1bDR2WFEuTEpwbGMuTDNpU1BCUFdseC9HdS94cDUwU0FYRHM2d0JtcWVIMiI7czo0OiJjYXJ0IjthOjE6e3M6NzoiZGVmYXVsdCI7TzoyOToiSWxsdW1pbmF0ZVxTdXBwb3J0XENvbGxlY3Rpb24iOjI6e3M6ODoiACoAaXRlbXMiO2E6MTp7czozMjoiYjM4Mzc5Mjk3NjI3NzRmOTgyYTVhMDVkMTkzZDFhYzUiO086MzI6Ikdsb3VkZW1hbnNcU2hvcHBpbmdjYXJ0XENhcnRJdGVtIjoxMTp7czo1OiJyb3dJZCI7czozMjoiYjM4Mzc5Mjk3NjI3NzRmOTgyYTVhMDVkMTkzZDFhYzUiO3M6MjoiaWQiO2k6NTtzOjM6InF0eSI7czoxOiIyIjtzOjQ6Im5hbWUiO3M6NzU6IlThuql5IERhIENo4bq/dCBN4bq3dCBDw6AgUGjDqiDEkOG6r2sgTOG6r2sgQ29jb29uIENvZmZlZSBGYWNlIFBvbGlzaCAxNTBtbCI7czo1OiJwcmljZSI7ZDoxMzEwMDA7czo2OiJ3ZWlnaHQiO2Q6MDtzOjc6Im9wdGlvbnMiO086Mzk6Ikdsb3VkZW1hbnNcU2hvcHBpbmdjYXJ0XENhcnRJdGVtT3B0aW9ucyI6Mjp7czo4OiIAKgBpdGVtcyI7YToxOntzOjU6ImltYWdlIjtzOjI4OiJpbWFnZXMvcHJvZHVjdHMvY2FwaGV0ZGMuanBnIjt9czoyODoiACoAZXNjYXBlV2hlbkNhc3RpbmdUb1N0cmluZyI7YjowO31zOjc6InRheFJhdGUiO2k6MjE7czo0OToiAEdsb3VkZW1hbnNcU2hvcHBpbmdjYXJ0XENhcnRJdGVtAGFzc29jaWF0ZWRNb2RlbCI7TjtzOjQ2OiIAR2xvdWRlbWFuc1xTaG9wcGluZ2NhcnRcQ2FydEl0ZW0AZGlzY291bnRSYXRlIjtpOjA7czo4OiJpbnN0YW5jZSI7czo3OiJkZWZhdWx0Ijt9fXM6Mjg6IgAqAGVzY2FwZVdoZW5DYXN0aW5nVG9TdHJpbmciO2I6MDt9fX0=', 1671199489);
-INSERT INTO `sessions` VALUES ('MRsrEMQgNBWmCyG1oDCEZdnsoZe8Ba1FuMk5g6DK', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiMnhzYkg1OFY0a2FsRldYN0padzZJN2U5OWRNd3oyMzUyZ3YxMGFNUiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6NTA6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9vcmRlcnMvb3JkZXItZGV0YWlsLzIwIjt9czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo1MjoibG9naW5fYWRtaW5fNTliYTM2YWRkYzJiMmY5NDAxNTgwZjAxNGM3ZjU4ZWE0ZTMwOTg5ZCI7aToxO30=', 1671272517);
-INSERT INTO `sessions` VALUES ('zC6WeXKWMeizPShJkK3GjkC35FmGGiK45bCcjgpB', 10, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36', 'YTo4OntzOjY6Il90b2tlbiI7czo0MDoibXJzOWFvUlFaeFNwblFzc1Z4cFZtV1BZNktNU3Ewb0lla21OeUpoVSI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6Mjk6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hY2NvdW50Ijt9czo1MDoibG9naW5fd2ViXzU5YmEzNmFkZGMyYjJmOTQwMTU4MGYwMTRjN2Y1OGVhNGUzMDk4OWQiO2k6MTA7czoxNzoicGFzc3dvcmRfaGFzaF93ZWIiO3M6NjA6IiQyeSQxMCQvVmdIbUEvWFFlWXdlbTJneDREYXN1dWR0bkpyRmI1U2FxYTBlUjJpV1Q4NFVWSzdLOUxHUyI7czo0OiJjYXJ0IjthOjA6e31zOjEzOiJpc191c2VfY291cG9uIjtiOjE7czozOiJmZWUiO2k6MjUwMDA7fQ==', 1671272116);
+INSERT INTO `sessions` VALUES ('iOUrAKCzUyPqzhlYo5xWzCAeinKpM1IooMt70ZRQ', 5, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36', 'YTo3OntzOjY6Il90b2tlbiI7czo0MDoiaEJRTzV3MU5pMEtEeXBxWjVhY0pZekhBaEZLUjJxTDJOUHdISjVlVyI7czo2OiJfZmxhc2giO2E6Mjp7czozOiJvbGQiO2E6MDp7fXM6MzoibmV3IjthOjA6e319czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzY6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9zaG93X1Byb2R1Y3QvMyI7fXM6NTA6ImxvZ2luX3dlYl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjU7czoxNzoicGFzc3dvcmRfaGFzaF93ZWIiO3M6NjA6IiQyeSQxMCRXczNaVXlYUldRckZHSzk0WE1vbXUuemR6Z1QybTR1d0ExR0lVRUx1V0FWTm5tZWwvbHdlNiI7czo0OiJjYXJ0IjthOjA6e31zOjEzOiJpc191c2VfY291cG9uIjtiOjE7fQ==', 1673413811);
+INSERT INTO `sessions` VALUES ('WMZAgrphU3oY7OD87eIzE9w8ax5DIFprTNaSXTLG', NULL, '127.0.0.1', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/108.0.0.0 Safari/537.36', 'YTo0OntzOjY6Il90b2tlbiI7czo0MDoiSXVUVEZlOGlwbGhrZzNEcHR2TGlUZWNQTWRwWVg1b3RleGJJZTUxZiI7czo5OiJfcHJldmlvdXMiO2E6MTp7czozOiJ1cmwiO3M6MzQ6Imh0dHA6Ly8xMjcuMC4wLjE6ODAwMC9hZG1pbi9vcmRlcnMiO31zOjY6Il9mbGFzaCI7YToyOntzOjM6Im9sZCI7YTowOnt9czozOiJuZXciO2E6MDp7fX1zOjUyOiJsb2dpbl9hZG1pbl81OWJhMzZhZGRjMmIyZjk0MDE1ODBmMDE0YzdmNThlYTRlMzA5ODlkIjtpOjE7fQ==', 1673408678);
 
 -- ----------------------------
 -- Table structure for statistics
@@ -1276,26 +1408,32 @@ INSERT INTO `sessions` VALUES ('zC6WeXKWMeizPShJkK3GjkC35FmGGiK45bCcjgpB', 10, '
 DROP TABLE IF EXISTS `statistics`;
 CREATE TABLE `statistics`  (
   `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
-  `order_date` datetime NOT NULL,
-  `revenue` int NOT NULL,
-  `profit` int NOT NULL,
-  `quantity` int NOT NULL,
-  `total_order` int NOT NULL,
+  `order_date` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `revenue` int NULL DEFAULT NULL,
+  `profit` int NULL DEFAULT NULL,
+  `quantity` int NULL DEFAULT NULL,
+  `total_order` int NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of statistics
 -- ----------------------------
-INSERT INTO `statistics` VALUES (1, '2022-10-08 18:50:32', 5000000, 3000000, 30, 10, '2022-10-13 18:52:52', '2022-10-07 18:53:07');
-INSERT INTO `statistics` VALUES (2, '2022-10-15 09:53:24', 10000000, 7500000, 55, 40, '2022-10-05 18:54:38', '2022-10-12 18:54:48');
-INSERT INTO `statistics` VALUES (3, '2022-10-25 06:54:58', 2000000, 1500000, 5, 18, '2022-10-28 18:55:47', '2022-10-29 18:55:57');
-INSERT INTO `statistics` VALUES (4, '2022-11-09 14:56:11', 30000000, 23500000, 145, 257, '2022-11-07 16:57:05', '2022-11-12 18:57:15');
-INSERT INTO `statistics` VALUES (5, '2022-11-28 18:57:28', 570000, 500000, 6, 6, '2022-11-29 18:59:03', '2022-11-30 10:59:10');
-INSERT INTO `statistics` VALUES (6, '2022-12-07 22:45:28', 20000000, 13562000, 87, 48, '2022-12-09 22:46:55', '2022-12-11 22:47:00');
-INSERT INTO `statistics` VALUES (7, '2022-12-04 16:41:16', 50000000, 44000000, 1000, 1146, '2022-12-12 23:42:22', '2022-12-12 23:42:28');
+INSERT INTO `statistics` VALUES (11, '2023-01-04', 164520, 46520, 3, 1, '2023-01-06 15:40:57', '2023-01-06 15:40:57');
+INSERT INTO `statistics` VALUES (12, '2022-12-22', 1146000, 246000, 18, 4, '2023-01-06 15:41:54', '2023-01-07 02:09:50');
+INSERT INTO `statistics` VALUES (13, '2022-12-21', 1262600, 316600, 14, 4, '2023-01-06 15:44:13', '2023-01-07 02:13:43');
+INSERT INTO `statistics` VALUES (14, '2022-11-27', 778000, 164000, 4, 4, '2023-01-06 17:06:23', '2023-01-07 02:13:38');
+INSERT INTO `statistics` VALUES (15, '2022-10-23', 131000, 32000, 1, 1, '2023-01-06 17:06:27', '2023-01-06 17:06:27');
+INSERT INTO `statistics` VALUES (16, '2022-11-06', 350000, 60000, 1, 1, '2023-01-06 17:06:32', '2023-01-06 17:06:32');
+INSERT INTO `statistics` VALUES (17, '2022-12-11', 155000, 75000, 2, 2, '2023-01-07 02:13:48', '2023-01-07 02:14:03');
+INSERT INTO `statistics` VALUES (18, '2022-12-17', 292000, 245000, 2, 1, '2023-01-07 02:13:53', '2023-01-07 02:13:53');
+INSERT INTO `statistics` VALUES (19, '2022-12-16', 870000, 130000, 3, 1, '2023-01-07 02:13:57', '2023-01-07 02:13:57');
+INSERT INTO `statistics` VALUES (20, '2023-01-06', 430000, 140000, 3, 1, '2023-01-07 02:24:00', '2023-01-07 02:24:00');
+INSERT INTO `statistics` VALUES (21, '2023-01-07', 576900, 517100, 5, 2, '2023-01-07 02:24:03', '2023-01-09 02:38:10');
+INSERT INTO `statistics` VALUES (22, '2023-01-11', 511220, -32780, 2, 1, '2023-01-11 03:30:56', '2023-01-11 03:30:56');
+INSERT INTO `statistics` VALUES (23, '2023-01-10', 1047400, -40600, 4, 1, '2023-01-11 03:32:04', '2023-01-11 03:32:04');
 
 -- ----------------------------
 -- Table structure for tinhthanhpho
@@ -1388,7 +1526,7 @@ CREATE TABLE `trademarks`  (
   `deleted_at` timestamp NULL DEFAULT NULL,
   `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of trademarks
@@ -1409,6 +1547,7 @@ INSERT INTO `trademarks` VALUES (13, 'Thương hiệu Chanel', 'chanel-hang-xach
 INSERT INTO `trademarks` VALUES (14, 'Thương hiệu  Elysium', 'elysium-nuoc-hoa-nam', '2022-11-25 09:59:25', '2022-12-16 07:44:34', NULL, 'images/K9xrAmmTVAYLw17Vj9tkALq022V2hZsHOnKY7tWy.jpg');
 INSERT INTO `trademarks` VALUES (15, 'Thương hiệu D&G', 'D-G-nuoc-hoa-nam', '2022-11-25 10:05:25', '2022-12-16 07:43:59', NULL, 'images/zB8cv6QybqQzn5c0emkNp2mlrxEbDCIT58w1qaNb.jpg');
 INSERT INTO `trademarks` VALUES (16, 'Thương hiệu Dior Jadore Parfume D\'eau', 'thuong-hieu-DIOR-JADORE-PARFUME-D\'EAU', '2022-11-25 10:08:08', '2022-12-16 07:44:10', NULL, 'images/cRPCEZmwcXrLDK3abMWRUOiHSlhLISP3aVnxqxlR.jpg');
+INSERT INTO `trademarks` VALUES (17, 'Chăm sóc vipppppppppppppp', 'thuong-hieu-laneige-vn', '2022-12-22 08:59:09', '2022-12-22 08:59:09', NULL, 'images/9FH9aZuJYkDW4gUf97lccYm5u88iE7jMavngGnob.jpg');
 
 -- ----------------------------
 -- Table structure for transport
@@ -1421,12 +1560,16 @@ CREATE TABLE `transport`  (
   `transport_xaid` int NOT NULL,
   `fee_ship` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of transport
 -- ----------------------------
-INSERT INTO `transport` VALUES (1, 96, 964, 32029, '29000');
+INSERT INTO `transport` VALUES (5, 11, 100, 3352, '35.000');
+INSERT INTO `transport` VALUES (6, 1, 4, 118, '20.000');
+INSERT INTO `transport` VALUES (8, 22, 195, 6760, '25.000');
+INSERT INTO `transport` VALUES (9, 37, 373, 14470, '30.000');
+INSERT INTO `transport` VALUES (10, 19, 167, 5545, '25.000');
 
 -- ----------------------------
 -- Table structure for users
@@ -1449,7 +1592,7 @@ CREATE TABLE `users`  (
   `deleted_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `users_email_unique`(`email` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of users
@@ -1459,6 +1602,7 @@ INSERT INTO `users` VALUES (2, 'Nguyễn Văn Nam', 'nvnam@gmailcom', 'Nam Đị
 INSERT INTO `users` VALUES (3, 'Nguyễn Thị Hằng Nga', 'nthnga0703@gmail.com', 'Hà Nội', '0349719563', 1, NULL, '$2y$10$xVNTHzrpcpsgY33MpJtTOe7jNL1A1sbRW/rzCoFifeVf1Xp5/RwBi', NULL, NULL, NULL, '2022-10-13 07:37:19', '2022-12-09 10:03:17', NULL);
 INSERT INTO `users` VALUES (5, 'Trần Hoàng Oanh', 'tho@gmail.com', 'Quảng Bình', '0951285378', 1, NULL, '1234567890', NULL, NULL, NULL, '2022-11-25 10:09:41', '2022-11-25 10:09:41', NULL);
 INSERT INTO `users` VALUES (6, 'Vũ Viết Duyến', 'vvd@gmail.com', 'Nam Định', '0931762964', 1, NULL, '123456', NULL, NULL, NULL, '2022-11-25 10:10:39', '2022-11-25 10:10:58', NULL);
+INSERT INTO `users` VALUES (7, 'Nguyen Hoang Nam', 'nam0703@gmail.com', 'Ngọc Thụy Long biên Hà Nội', '0349752783', 1, NULL, '$2y$10$y9VMSRSNA14BdORLdQtdBOawNpo.k9FRjq0gSBH2Kwd0g9s4V5CaO', NULL, NULL, NULL, '2023-01-08 09:09:47', '2023-01-09 07:12:58', NULL);
 
 -- ----------------------------
 -- Table structure for xaphuongthitran

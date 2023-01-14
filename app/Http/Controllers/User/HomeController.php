@@ -37,6 +37,12 @@ class HomeController
         $product_sellings = Product::orderBy('sold', 'DESC')->limit(8)->get();
         $product_news = Product::orderBy('created_at', 'DESC')->limit(8)->get();
         $trademarks = Trademark::orderBy('image', 'DESC')->get();
+
+        if($request->has('category_id'))
+        {
+            $products = Product::where('category_id', $request->input('category_id'));
+        }
+
         return view('user.home')->with([
             
             'product_sellings' => $product_sellings,
@@ -49,15 +55,31 @@ class HomeController
         ]);
     }
 
+    public function showProduct($id){
+
+        // dd($id);die();
+
+
+        $products = Product::where('category_id', $id)->get();
+        $trademark_name = Trademark::orderBy('name', 'DESC')->get();
+        $category_name = Category::orderBy('created_at', 'DESC')->get();
+        $trademarks = Trademark::orderBy('name', 'DESC')->get();
+
+        // dd($products);
+
+        return view('user.product.all')->with([
+            'products' => $products,
+            'trademarks' => $trademarks,
+            'trademark_name' => $trademark_name
+        ]);
+    }
+
     public function search(Request $request){
         session()->regenerate();
         $keyword = Session::get('keywords');
         if($request->has('keywords')){
             Session::put('keywords',$request->keywords);
         }
-        
-        $category = Category::orderBy('name', 'DESC')->limit(8)->get();
-        $trademark = Trademark::orderBy('name', 'DESC')->limit(8)->get();
 
         $search_product = Product::where('name','like','%'.$keyword.'%')->get();
 
@@ -66,6 +88,7 @@ class HomeController
             'search_product' => $search_product
         ]);
     }
+
 
     public function listProduct(Request $request){
         //Lọc theo giá
@@ -95,10 +118,16 @@ class HomeController
             $max = $_GET['amount_end'];
             $products = Product::whereBetween('sale_price', [$min, $max])->orderBy('sale_price', 'ASC');
         }elseif (isset($_GET['trademark'])){
-            Log::info('trademark');
+            // Log::info('trademark');
             $filter_trademark = $_GET['trademark'];
             $trademark_arr = explode(",", $filter_trademark);
             $products = Product::whereIn('trademark_id', $trademark_arr)->orderBy('created_at', 'desc');
+            // ->appends(request()->query());
+
+        }elseif (isset($_GET['category'])){
+            $filter_category = $_GET['category'];
+            $cate_arr = explode(",", $filter_category);
+            $products = Product::whereIn('category_id', $cate_arr)->orderBy('created_at', 'desc');
             // ->appends(request()->query());
 
         }else{

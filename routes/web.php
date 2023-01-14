@@ -227,6 +227,7 @@ Route::group([
     Route::get('/product/cart/increment/{id}', [CartController::class, 'increment'])->name('user.product.increment');
     Route::get('/product/cart/decrement/{id}', [CartController::class, 'decrement'])->name('user.product.decrement');
 
+    Route::get('/show_Product/{id}', [HomeController::class,'showProduct'])->name('home.showProduct');
 });
 
 
